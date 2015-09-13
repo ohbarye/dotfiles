@@ -1,0 +1,9 @@
+[user]
+	name = ohbarye
+	email = over.rye@gmail.com
+[color]
+	ui = auto
+[push]
+	default = simple
+[core]
+	editor = vim
