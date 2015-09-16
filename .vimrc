@@ -30,6 +30,9 @@ syntax on " enable syntax highlight
 au BufNewFile,Bufread *.ru        set filetype=ruby
 au BufNewFile,Bufread Gemfile     set filetype=ruby
 au BufNewFile,Bufread Vagrantfile set filetype=ruby
+au BufNewFile,BufRead *.jbuilder  set filetype=ruby
+au BufNewFile,BufRead Guardfile   set filetype=ruby
+au BufNewFile,BufRead .pryrc      set filetype=ruby
 
 inoremap <silent> jj <ESC>
 

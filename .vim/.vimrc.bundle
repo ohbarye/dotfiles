@@ -4,6 +4,9 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 let g:neobundle#types#git#default_protocol = 'git'
 
+NeoBundle 'scrooloose/nerdtree'
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+
 " 連続で行うような操作をサブモジュールとして登録できるPlugin
 NeoBundle 'kana/vim-submode'
 
