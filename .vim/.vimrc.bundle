@@ -4,7 +4,6 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 
 let g:neobundle#types#git#default_protocol = 'git'
 
-NeoBundle 'scrooloose/nerdtree'
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " 連続で行うような操作をサブモジュールとして登録できるPlugin
@@ -60,6 +59,27 @@ if has("lua")
        \   'insert' : 1,
        \ }}
 endif
+
+NeoBundle 'marcus/rsense'
+
+NeoBundleLazy 'supermomonga/neocomplete-rsense.vim', { 'autoload' : {
+  \ 'insert' : 1,
+  \ 'filetypes': 'ruby',
+  \ }}
+
+let g:rsenseUseOmniFunc = 1
+
+let g:acp_enableAtStartup = 0
+let g:neocomplete#enable_at_startup = 1
+let g:neocomplete#enable_smart_case = 1
+" .や::を入力したときにオムニ補完が有効になるようにする
+if !exists('g:neocomplete#force_omni_input_patterns')
+  let g:neocomplete#force_omni_input_patterns = {}
+endif
+let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
+
+" 環境変数RSENSE_HOMEに'/usr/local/bin/rsense'を指定しても動く
+let g:neocomplete#sources#rsense#home_directory = '/usr/local/bin/rsense'
 
 " 言語用のsnippet plugin
 NeoBundle 'Shougo/neosnippet.vim'

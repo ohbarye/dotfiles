@@ -24,6 +24,7 @@ set cursorline
 set cursorcolumn
 set expandtab
 set mouse=a " enable tap scroll
+set wildmode=longest:full,full
 
 syntax on " enable syntax highlight
 
