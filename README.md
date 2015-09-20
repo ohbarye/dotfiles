@@ -4,11 +4,12 @@ Setup procedure for myself.
 
 ## Installation
 
-1. install **Xcode** and **Xcode Command Line Developer Tools**
+1. install **Xcode**
+
+1. install **Xcode Command Line Developer Tools**
 
   ```sh
-  $ sudo xcodebuild -license
-  $ xcode-select –install
+  $ xcode-select -–install
   ```
 
 1. install **Homebrew**
@@ -25,7 +26,7 @@ Setup procedure for myself.
 
   ```sh
   $ cd ~
-  $ git clone https://github.com/ohbarye/dotfiles.git
+  $ git clone git@github.com:ohbarye/dotfiles.git
   $ git submodule init
   $ git submodule update
   ```
@@ -40,6 +41,6 @@ Setup procedure for myself.
 
   ```sh
   $ cd ~/dotfiles
-  $ brew tap Homebrew/brewdler
+  $ brew tap homebrew/brewdler
   $ brew brewdle
   ```
