@@ -48,3 +48,4 @@ colorscheme jellybeans
 " after :set paste, return preference automaticallly
 autocmd InsertLeave * set nopaste
 
+set noswapfile
