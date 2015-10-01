@@ -14,3 +14,15 @@ if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
   . $(brew --prefix)/etc/bash_completion
 fi
+
+# ciopen / propen command
+export GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
+export GIT_CURRENT_REPO=$( git config --get remote.origin.url | awk -F: '{print $2}'| sed 's/\.git$//g' )
+
+propen() {
+  open "https://github.com/${GIT_CURRENT_REPO}/pull/${GIT_CURRENT_BRANCH}"
+}
+
+ciopen() {
+  open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
+}
