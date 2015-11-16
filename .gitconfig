@@ -7,6 +7,7 @@
 	default = simple
 [core]
 	editor = vim
+	excludesfile = /Users/ohbarye/.gitignore_global
 [alias]
   st = status
   cm = commit
