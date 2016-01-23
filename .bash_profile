@@ -26,3 +26,9 @@ propen() {
 ciopen() {
   open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
+
+# aliases
+alias bi='bundle install'
+alias be='bundle exec'
+alias ber='bundle exec rspec'
+
