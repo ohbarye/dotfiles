@@ -43,8 +43,6 @@ au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
 " Don't write backup file if vim is being called by "chpass"
 au BufWrite /private/etc/pw.* set nowritebackup nobackup
 
-colorscheme jellybeans
-
 " after :set paste, return preference automaticallly
 autocmd InsertLeave * set nopaste
 
