@@ -41,6 +41,5 @@ Setup procedure for myself.
 
   ```sh
   $ cd ~/dotfiles
-  $ brew tap homebrew/brewdler
-  $ brew brewdle
+  $ brew bundle
   ```
