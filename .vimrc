@@ -17,6 +17,7 @@ filetype plugin indent on
 
 source ~/.vim/.vimrc.indent
 
+set t_Co=256
 set modelines=0		" Configuration file for vim CVE-2007-2438
 set backspace=2		" more powerful backspacing
 set number  " display row number
@@ -64,3 +65,5 @@ if &term =~ "xterm"
     cnoremap <special> <Esc>[200~ <nop>
     cnoremap <special> <Esc>[201~ <nop>
 endif
+
+colorscheme jellybeans
