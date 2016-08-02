@@ -28,8 +28,14 @@ ciopen() {
   open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
 
-# aliases
+# rails
+alias r='rails'
+
+# bundler
 alias bi='bundle install'
 alias be='bundle exec'
 alias ber='bundle exec rspec'
+
+# git
+alias g='git'
 
