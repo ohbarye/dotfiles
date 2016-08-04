@@ -1,0 +1,1 @@
+osascript -e 'tell application "iTunes"' -e 'return name of current track & " / " & artist of current track' -e 'end tell'
