@@ -2,5 +2,5 @@
 	path = .vim/neobundle.vim
 	url = https://github.com/Shougo/neobundle.vim.git
 [submodule "/Users/ohbarye/dotfiles/.tmux/plugins/tpm"]
-	path = /Users/ohbarye/dotfiles/.tmux/plugins/tpm
+	path = .tmux/plugins/tpm
 	url = git@github.com:tmux-plugins/tpm.git
