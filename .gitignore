@@ -2,3 +2,5 @@
 *.swp
 .vim/bundle
 .bundle/cache
+.tmux/plugins
+.tmux/resurrect
