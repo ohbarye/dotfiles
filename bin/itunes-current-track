@@ -4,4 +4,6 @@ tell application "iTunes"
 end tell
 EOF)
 
-echo '[🎵  '$CURRENT_TRACK']'
+if [ -n "$CURRENT_TRACK" ]; then
+  echo '[🎵  '$CURRENT_TRACK']'
+fi
