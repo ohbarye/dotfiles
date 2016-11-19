@@ -57,6 +57,7 @@ brew 'tmux'
 brew 'tree'
 brew 'typesafe-activator'
 brew 'vim', args: ['with-lua']
+brew 'yarn'
 brew 'homebrew/boneyard/rbenv-readline'
 brew 'homebrew/boneyard/rsense'
 brew 'homebrew/versions/node4-lts'
