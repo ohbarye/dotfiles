@@ -11,6 +11,7 @@ brew 'libpng'
 brew 'freetype'
 brew 'gdbm'
 brew 'git'
+brew 'ghq'
 brew 'gmp'
 brew 'gradle'
 brew 'jpeg'
@@ -35,8 +36,10 @@ brew 'mongodb', restart_service: true
 brew 'neo4j'
 brew 'nkf'
 brew 'node'
+brew 'node@4'
 brew 'nvm'
 brew 'pandoc'
+brew 'peco'
 brew 'phantomjs'
 brew 'pkg-config'
 brew 'readline'
@@ -61,7 +64,6 @@ brew 'vim', args: ['with-lua']
 brew 'yarn'
 brew 'homebrew/boneyard/rbenv-readline'
 brew 'homebrew/boneyard/rsense'
-brew 'homebrew/versions/node4-lts'
 cask 'alfred'
 cask 'atom'
 cask 'bathyscaphe'
@@ -92,14 +94,14 @@ cask 'vagrant'
 cask 'virtualbox'
 cask 'vlc'
 cask 'xtrafinder'
-mas 'Xcode', id: 497799835
-mas 'SpeakLine', id: 441968334
-mas 'Keynote', id: 409183694
-mas 'iMovie', id: 408981434
-mas 'iPhoto', id: 408981381
 mas 'Quiver', id: 866773894
-mas 'Pages', id: 409201541
-mas 'LINE', id: 539883307
-mas 'GarageBand', id: 682658836
-mas 'BetterSnapTool', id: 417375580
 mas 'Numbers', id: 409203825
+mas 'BetterSnapTool', id: 417375580
+mas 'GarageBand', id: 682658836
+mas 'iMovie', id: 408981434
+mas 'Xcode', id: 497799835
+mas 'Pages', id: 409201541
+mas 'Keynote', id: 409183694
+mas 'LINE', id: 539883307
+mas 'SpeakLine', id: 441968334
+mas 'iPhoto', id: 408981381
