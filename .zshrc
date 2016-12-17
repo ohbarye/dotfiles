@@ -11,6 +11,8 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+export LC_ALL='ja_JP.UTF-8'
+
 source $HOME/dotfiles/antigen/antigen.zsh
 
 antigen bundle sorin-ionescu/prezto
