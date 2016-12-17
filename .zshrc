@@ -46,6 +46,11 @@ alias g='git'
 alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
+bindkey '^a' beginning-of-line
+bindkey '^e' end-of-line
+bindkey "^[u" undo
+bindkey "^[r" redo
+
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
 alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
 
