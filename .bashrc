@@ -38,4 +38,6 @@ alias ber='bundle exec rspec'
 
 # git
 alias g='git'
+alias gr='cd $(ghq root)/$(ghq list | peco)'
+alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
