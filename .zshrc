@@ -12,6 +12,8 @@ fi
 
 # Customize to your needs...
 export LC_ALL='ja_JP.UTF-8'
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 
 source $HOME/dotfiles/antigen/antigen.zsh
 
