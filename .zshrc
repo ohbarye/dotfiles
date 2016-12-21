@@ -48,6 +48,9 @@ alias g='git'
 alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
+# RubyMine
+alias mine='mine $(ghq root)/$(ghq list | peco)'
+
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
 bindkey "^[u" undo
