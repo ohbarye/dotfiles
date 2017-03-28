@@ -14,6 +14,7 @@ fi
 export LC_ALL='ja_JP.UTF-8'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
+export GOPATH="$HOME/.go"
 
 source $HOME/dotfiles/antigen/antigen.zsh
 
