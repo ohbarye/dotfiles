@@ -40,7 +40,7 @@ function ciopen() {
 alias r='rails'
 
 # bundler
-alias bi='bundle install'
+alias bi='bundle install -j4'
 alias be='bundle exec'
 alias ber='bundle exec rspec'
 
