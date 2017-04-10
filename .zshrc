@@ -15,6 +15,7 @@ export LC_ALL='ja_JP.UTF-8'
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 export GOPATH="$HOME/.go"
+export PATH=$GOPATH/bin:$PATH 
 
 source $HOME/dotfiles/antigen/antigen.zsh
 
@@ -86,3 +87,4 @@ function peco-find-file() {
 zle -N peco-find-file
 bindkey '^q' peco-find-file
 
+export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
