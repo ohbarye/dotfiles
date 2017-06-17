@@ -1,121 +1,118 @@
-tap 'caskroom/cask'
-tap 'homebrew/boneyard'
-tap 'homebrew/brewdler'
-tap 'homebrew/core'
-tap 'homebrew/services'
-tap 'homebrew/versions'
-tap 'sanemat/font'
-cask 'java'
-brew 'autoconf'
-brew 'bash-completion'
-brew 'libpng'
-brew 'freetype'
-brew 'fontconfig'
-brew 'gettext'
-brew 'libffi'
-brew 'pcre'
-brew 'glib'
-brew 'pixman'
-brew 'cairo'
-brew 'git'
-brew 'jpeg'
-brew 'libtiff'
-brew 'libtool'
-brew 'pkg-config'
-brew 'gobject-introspection'
-brew 'icu4c'
-brew 'harfbuzz'
-brew 'pango'
-brew 'fontforge'
-brew 'gdbm'
-brew 'ghq'
-brew 'gmp'
-brew 'gradle'
-brew 'graphicsmagick'
-brew 'groovy'
-brew 'heroku'
-brew 'hub'
-brew 'xz'
-brew 'imagemagick'
-brew 'oniguruma'
-brew 'jq'
-brew 'lha'
-brew 'openssl'
-brew 'libevent'
-brew 'lua'
-brew 'mas'
-brew 'maven'
-brew 'memcached', restart_service: true
-brew 'mongodb', restart_service: true
-brew 'neo4j'
-brew 'nkf'
-brew 'node'
-brew 'node@4'
-brew 'pandoc'
-brew 'peco'
-brew 'phantomjs'
-brew 'readline'
-brew 'sqlite', args: ['with-functions']
-brew 'python'
-brew 'postgresql', restart_service: true
-brew 'pyenv'
-brew 'pyenv-virtualenv'
-brew 'qt'
-brew 'ruby-build'
-brew 'rbenv'
-brew 'rbenv-binstubs'
-brew 'rbenv-bundler'
-brew 'rbenv-gemset'
-brew 'reattach-to-user-namespace'
-brew 'redis', restart_service: true
-brew 'the_silver_searcher'
-brew 'tig'
-brew 'tmux'
-brew 'tree'
-brew 'typesafe-activator'
-brew 'vim', args: ['with-lua']
-brew 'yarn'
-brew 'homebrew/boneyard/rbenv-readline'
-brew 'homebrew/boneyard/rsense'
-brew 'sanemat/font/ricty', args: ['powerline', 'vim-powerline']
-cask 'alfred'
-cask 'atom'
-cask 'bathyscaphe'
-cask 'burn'
-cask 'docker-toolbox'
-cask 'dropbox'
-cask 'evernote'
-cask 'firefox'
-cask 'genymotion'
-cask 'google-chrome'
-cask 'google-drive'
-cask 'google-japanese-ime'
-cask 'gyazo'
-cask 'imageoptim'
-cask 'iterm2'
-cask 'karabiner'
-cask 'karabiner-elements'
-cask 'kindle'
-cask 'kobito'
-cask 'libreoffice'
-cask 'licecap'
-cask 'rubymine'
-cask 'skitch'
-cask 'skype'
-cask 'slack'
-cask 'tunnelbear'
-cask 'vagrant'
-cask 'virtualbox'
-cask 'vlc'
-cask 'xtrafinder'
-mas 'Quiver', id: 866773894
-mas 'Numbers', id: 409203825
-mas 'BetterSnapTool', id: 417375580
-mas 'GarageBand', id: 682658836
-mas 'iMovie', id: 408981434
-mas 'Xcode', id: 497799835
-mas 'Pages', id: 409201541
-mas 'Keynote', id: 409183694
-mas 'LINE', id: 539883307
-mas 'SpeakLine', id: 441968334
-mas 'iPhoto', id: 408981381
+tap "caskroom/cask"
+tap "homebrew/boneyard"
+tap "homebrew/brewdler"
+tap "homebrew/core"
+tap "homebrew/services"
+tap "homebrew/versions"
+tap "sanemat/font"
+cask "java"
+brew "autoconf"
+brew "awscli"
+brew "bash-completion"
+brew "libpng"
+brew "freetype"
+brew "fontconfig"
+brew "gettext"
+brew "libffi"
+brew "glib"
+brew "pixman"
+brew "cairo"
+brew "exercism"
+brew "git"
+brew "jpeg"
+brew "libtiff"
+brew "libtool"
+brew "python"
+brew "gobject-introspection"
+brew "harfbuzz"
+brew "pango"
+brew "fontforge"
+brew "ghq"
+brew "gmp"
+brew "gradle"
+brew "graphicsmagick"
+brew "groovy"
+brew "heroku"
+brew "hub"
+brew "imagemagick"
+brew "oniguruma"
+brew "jq"
+brew "leiningen"
+brew "lha"
+brew "libevent"
+brew "lua"
+brew "mas"
+brew "maven"
+brew "memcached", restart_service: true
+brew "mitmproxy"
+brew "mongodb", restart_service: true
+brew "neo4j"
+brew "nkf"
+brew "node@4"
+brew "pandoc"
+brew "peco"
+brew "phantomjs"
+brew "postgresql", restart_service: true
+brew "pyenv"
+brew "pyenv-virtualenv"
+brew "qt"
+brew "ruby-build"
+brew "rbenv"
+brew "rbenv-binstubs"
+brew "rbenv-bundler"
+brew "rbenv-gemset"
+brew "reattach-to-user-namespace"
+brew "redis", restart_service: true
+brew "the_silver_searcher"
+brew "tig"
+brew "tmux"
+brew "tree"
+brew "typesafe-activator"
+brew "vim", args: ["with-lua"]
+brew "watchman"
+brew "yarn"
+brew "sanemat/font/ricty", args: ["vim-powerline", "with-powerline"]
+cask "alfred"
+cask "atom"
+cask "bathyscaphe"
+cask "burn"
+cask "clipy"
+cask "cmd-eikana"
+cask "docker-toolbox"
+cask "dropbox"
+cask "evernote"
+cask "firefox"
+cask "genymotion"
+cask "google-chrome"
+cask "google-drive"
+cask "google-japanese-ime"
+cask "gyazo"
+cask "imageoptim"
+cask "iterm2"
+cask "karabiner"
+cask "kindle"
+cask "kobito"
+cask "libreoffice"
+cask "licecap"
+cask "racket"
+cask "rubymine"
+cask "skitch"
+cask "skype"
+cask "slack"
+cask "soundflower"
+cask "tunnelbear"
+cask "vagrant"
+cask "virtualbox"
+cask "vlc"
+cask "xtrafinder"
+mas "BetterSnapTool", id: 417375580
+mas "GarageBand", id: 682658836
+mas "iMovie", id: 408981434
+mas "iPhoto", id: 408981381
+mas "Keynote", id: 409183694
+mas "LINE", id: 539883307
+mas "Numbers", id: 409203825
+mas "Pages", id: 409201541
+mas "Quiver", id: 866773894
+mas "SpeakLine", id: 441968334
+mas "Xcode", id: 497799835
