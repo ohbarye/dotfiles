@@ -50,6 +50,9 @@ alias g='git'
 alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
+# GitHub
+alias b='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
+
 # RubyMine
 alias mine='mine $(ghq root)/$(ghq list | peco)'
 
@@ -88,3 +91,4 @@ zle -N peco-find-file
 bindkey '^q' peco-find-file
 
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+
