@@ -53,6 +53,11 @@ alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 # RubyMine
 alias mine='mine $(ghq root)/$(ghq list | peco)'
 
+# docker
+alias dc='docker-compose'
+alias dcr='docker-compose run --rm $(basename $(pwd))'
+alias de='docker exec -it qall-$(basename $(pwd))'
+
 # key binding
 bindkey '^a' beginning-of-line
 bindkey '^e' end-of-line
