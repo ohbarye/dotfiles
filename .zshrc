@@ -94,3 +94,7 @@ zle -N peco-find-file
 bindkey '^q' peco-find-file
 
 export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
+
+if [ $commands[kubectl] ]; then
+  source <(kubectl completion zsh)
+fi
