@@ -98,3 +98,18 @@ export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
+
+alias ks='kubectl'
+
+kss() {
+  ks config get-contexts | sed "/^\ /d"
+  ks auth can-i get ns >/dev/null 2>&1 && echo "(Authorized)" || echo "(Unauthorized)"
+}
+
+kc() {
+  test "$1" = "-" && kubectx - || kubectx "$(kubectx | peco)"
+}
+
+kn() {
+  test "$1" = "-" && kubens - || kubens "$(kubens | peco)"
+}
