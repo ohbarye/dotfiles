@@ -99,6 +99,7 @@ if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
 
+# Kubernetes settings
 alias ks='kubectl'
 
 kss() {
@@ -113,3 +114,9 @@ kc() {
 kn() {
   test "$1" = "-" && kubens - || kubens "$(kubens | peco)"
 }
+
+
+autoload -U colors; colors
+source /usr/local/etc/zsh-kubectl-prompt/kubectl.zsh
+RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+
