@@ -113,3 +113,5 @@ kc() {
 kn() {
   test "$1" = "-" && kubens - || kubens "$(kubens | peco)"
 }
+export PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
