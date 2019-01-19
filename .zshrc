@@ -47,7 +47,14 @@ alias ber='bundle exec rspec'
 
 # git
 alias g='git'
-alias gr='cd $(ghq root)/$(ghq list | peco)'
+
+function cd-ghq-list() {
+    local DIR=$(ghq list | peco)
+    if [ -n "$DIR" ]; then
+        cd "$(ghq root)/$DIR"
+    fi
+}
+alias gr=cd-ghq-list
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
 # RubyMine
