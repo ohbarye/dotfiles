@@ -72,11 +72,6 @@ let g:rsenseUseOmniFunc = 1
 let g:acp_enableAtStartup = 0
 let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
-" .や::を入力したときにオムニ補完が有効になるようにする
-if !exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
-let g:neocomplete#force_omni_input_patterns.ruby = '[^. *\t]\.\w*\|\h\w*::'
 
 " 環境変数RSENSE_HOMEに'/usr/local/bin/rsense'を指定しても動く
 let g:neocomplete#sources#rsense#home_directory = '/usr/local/bin/rsense'
