@@ -72,6 +72,4 @@ if [[ ! -d "$TMPDIR" ]]; then
 fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
-export PATH="$HOME/.anyenv/bin:$PATH"
-eval "$(anyenv init -)"
-export PATH="$HOME/.exenv/bin:$PATH"
+
