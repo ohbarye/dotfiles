@@ -32,13 +32,6 @@ zstyle ':prezto:load' pmodule \
   'spectrum' \
   'utility' \
   'completion' \
-  'git' \
-  'homebrew' \
-  'osx' \
-  'rails' \
-  'ruby' \
-  'node' \
-  'tmux' \
   'syntax-highlighting' \
   'autosuggestions' \
   'history-substring-search' \
