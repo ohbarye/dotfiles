@@ -26,6 +26,7 @@ set cursorcolumn
 set expandtab
 set mouse=a " enable tap scroll
 set wildmode=longest:full,full
+set clipboard=unnamed,autoselect
 
 syntax on " enable syntax highlight
 
