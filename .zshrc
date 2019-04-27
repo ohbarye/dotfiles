@@ -12,10 +12,27 @@ fi
 
 # Customize to your needs...
 export LC_ALL='ja_JP.UTF-8'
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" # This loads nvm
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH 
+
+# Original nvm setting
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#
+# Updated nvm setting for speed up
+# https://qiita.com/uasi/items/80865646607b966aedc8
+# 仮の nvm コマンド
+nvm() {
+    # まず仮の nvm コマンドを unset
+    unset -f nvm
+
+    # nvm.sh をロード
+    # ここで本物の nvm コマンドが定義される
+    source "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
+
+    # 仮の nvm コマンドに渡された引数を本物に受け渡す
+    nvm "$@"
+}
 
 source $HOME/dotfiles/antigen/antigen.zsh
 
@@ -125,4 +142,10 @@ kn() {
 autoload -U colors; colors
 source /usr/local/etc/zsh-kubectl-prompt/kubectl.zsh
 RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
+
+# For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
+# If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
+if (which zprof > /dev/null 2>&1) ;then
+  zprof
+fi
 
