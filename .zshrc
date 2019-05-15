@@ -40,7 +40,7 @@ antigen bundle sorin-ionescu/prezto
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
-  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*git@github.com[:/]\(.*\)/\1/' | sed 's/^\(.*\).git/\1/' )
+  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\).git/\1/' |  sed 's/^\(.*\).git/\1/' )
 }
 
 # ciopen / propen command
