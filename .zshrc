@@ -73,6 +73,13 @@ function ciopen() {
   open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
 
+function git-push-set-upsteam() {
+  setrepo
+  git push --set-upstream origin ${GIT_CURRENT_BRANCH} && propen
+}
+
+alias gps=git-push-set-upsteam
+
 # rails
 alias r='rails'
 
@@ -108,7 +115,7 @@ bindkey "^[u" undo
 bindkey "^[r" redo
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
-alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
+alias -g B='`git br | peco | sed -e "s/^\*[ ]*//g"`'
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
 function peco-select-history() {
