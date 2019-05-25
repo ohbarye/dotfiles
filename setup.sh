@@ -2,7 +2,7 @@
 
 set -u
 
-DOT_FILES=( .bash_profile .bashrc .zshrc .gitconfig .vimrc .vim .bundle .gitignore_global .tmux .tmux.conf .zlogin .zlogout .zpreztorc .zprofile .zshenv .zshrc .tigrc .ideavimrc )
+DOT_FILES=( .bash_profile .bashrc .zshrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .tigrc .ideavimrc )
 
 for file in ${DOT_FILES[@]}
 do
@@ -11,11 +11,7 @@ do
   fi
 done
 
-source $HOME/dotfiles/antigen/antigen.zsh
-
-#antigen bundle sorin-ionescu/prezto
-
-ln -s ~/.antigen/repos/.zprezto ~/.zprezto
+source $HOME/dotfiles/.zshrc
 
 ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
