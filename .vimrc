@@ -67,4 +67,6 @@ if &term =~ "xterm"
     cnoremap <special> <Esc>[201~ <nop>
 endif
 
-colorscheme jellybeans
+syntax enable
+set background=dark
+colorscheme solarized
