@@ -28,6 +28,11 @@ set mouse=a " enable tap scroll
 set wildmode=longest:full,full
 set clipboard=unnamed,autoselect
 
+" Use English
+if has("multi_lang")
+  language C
+endif
+
 syntax on " enable syntax highlight
 
 au BufNewFile,Bufread *.ru        set filetype=ruby
@@ -67,4 +72,6 @@ if &term =~ "xterm"
     cnoremap <special> <Esc>[201~ <nop>
 endif
 
-colorscheme jellybeans
+syntax enable
+set background=dark
+colorscheme solarized

@@ -34,9 +34,28 @@ nvm() {
     nvm "$@"
 }
 
-source $HOME/dotfiles/antigen/antigen.zsh
 
-antigen bundle sorin-ionescu/prezto
+source $HOME/dotfiles/antigen.zsh
+
+# oh-my-zsh sets HISTFILE as .zsh_history without this line
+# https://github.com/robbyrussell/oh-my-zsh/blob/1f078898887bf96e793772a80e0dae1e96eeadc8/lib/history.zsh#L29
+HISTFILE="$HOME/.zhistory"
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+antigen bundle git
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-completions
+antigen bundle zsh-users/zsh-history-substring-search
+
+# Load the theme.
+antigen theme ys
+
+# Tell Antigen that you're done.
+antigen apply
+
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
@@ -53,6 +72,13 @@ function ciopen() {
   setrepo
   open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
+
+function git-push-set-upsteam() {
+  setrepo
+  git push --set-upstream origin ${GIT_CURRENT_BRANCH} && propen
+}
+
+alias gps=git-push-set-upsteam
 
 # rails
 alias r='rails'
@@ -89,7 +115,7 @@ bindkey "^[u" undo
 bindkey "^[r" redo
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
-alias -g B='`git branch | peco | sed -e "s/^\*[ ]*//g"`'
+alias -g B='`git br | peco | sed -e "s/^\*[ ]*//g"`'
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
 function peco-select-history() {
@@ -116,8 +142,6 @@ function peco-find-file() {
 }
 zle -N peco-find-file
 bindkey '^q' peco-find-file
-
-export PATH="/usr/local/opt/postgresql@9.5/bin:$PATH"
 
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)

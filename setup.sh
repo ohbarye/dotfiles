@@ -1,15 +1,20 @@
 #!/bin/zsh
 
-DOT_FILES=( .bash_profile .bashrc .zshrc .gitconfig .vimrc .vim .bundle .gitignore_global .tmux .tmux.conf .zlogin .zlogout .zpreztorc .zprofile .zshenv .zshrc .tigrc .ideavimrc )
+set -u
+
+DOT_FILES=( .bash_profile .bashrc .zshrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .tigrc .ideavimrc )
 
 for file in ${DOT_FILES[@]}
 do
-  ln -s $HOME/dotfiles/$file $HOME/$file
+  if [ ! -e $HOME/$file ]; then
+    ln -s $HOME/dotfiles/$file $HOME/$file
+  fi
 done
 
-source $HOME/dotfiles/antigen/antigen.zsh
+source $HOME/dotfiles/.zshrc
 
-#antigen bundle sorin-ionescu/prezto
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-ln -s ~/.antigen/repos/.zprezto ~/.zprezto
+git submodule init
+git submodule update
 
