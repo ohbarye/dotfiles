@@ -92,16 +92,16 @@ alias ber='bundle exec rspec'
 alias g='git'
 
 function cd-ghq-list() {
-    local DIR=$(ghq list | peco)
+    local DIR=$(ghq list | fzf)
     if [ -n "$DIR" ]; then
         cd "$(ghq root)/$DIR"
     fi
 }
 alias gr=cd-ghq-list
-alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
+alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine
-alias mine='mine $(ghq root)/$(ghq list | peco)'
+alias mine='mine $(ghq root)/$(ghq list | fzf)'
 
 # docker
 alias dc='docker-compose'
@@ -115,33 +115,33 @@ bindkey "^[u" undo
 bindkey "^[r" redo
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
-alias -g B='`git br | peco | sed -e "s/^\*[ ]*//g"`'
+alias -g B='`git br | fzf | sed -e "s/^\*[ ]*//g"`'
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
-function peco-select-history() {
-    BUFFER=$(fc -l -r -n 1 | peco --query "$LBUFFER")
+function fzf-select-history() {
+    BUFFER=$(fc -l -r -n 1 | fzf --query "$LBUFFER")
     CURSOR=$#BUFFER
     zle redisplay
 }
 
 # http://k0kubun.hatenablog.com/entry/2014/07/06/033336
-zle -N peco-select-history
-bindkey '^r' peco-select-history
+zle -N fzf-select-history
+bindkey '^r' fzf-select-history
 
-function peco-find-file() {
+function fzf-find-file() {
     if git rev-parse 2> /dev/null; then
         source_files=$(git ls-files)
     else
         source_files=$(find . -type f)
     fi
-    selected_files=$(echo $source_files | peco --prompt "[find file]")
+    selected_files=$(echo $source_files | fzf --prompt "[find file]")
 
     BUFFER="${BUFFER}$(echo $selected_files | tr '\n' ' ')"
     CURSOR=$#BUFFER
     zle redisplay
 }
-zle -N peco-find-file
-bindkey '^q' peco-find-file
+zle -N fzf-find-file
+bindkey '^q' fzf-find-file
 
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
@@ -156,11 +156,11 @@ kss() {
 }
 
 kc() {
-  test "$1" = "-" && kubectx - || kubectx "$(kubectx | peco)"
+  test "$1" = "-" && kubectx - || kubectx "$(kubectx | fzf)"
 }
 
 kn() {
-  test "$1" = "-" && kubens - || kubens "$(kubens | peco)"
+  test "$1" = "-" && kubens - || kubens "$(kubens | fzf)"
 }
 
 autoload -U colors; colors
