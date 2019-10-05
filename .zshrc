@@ -49,6 +49,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle zsh-users/zsh-completions
 antigen bundle zsh-users/zsh-history-substring-search
+antigen bundle agkozak/zsh-z
 
 # Load the theme.
 antigen theme ys
