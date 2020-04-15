@@ -27,6 +27,7 @@ set expandtab
 set mouse=a " enable tap scroll
 set wildmode=longest:full,full
 set clipboard=unnamed,autoselect
+set hlsearch
 
 " Use English
 if has("multi_lang")
