@@ -21,5 +21,11 @@
   da = !git d | xargs git add --
   dr = !git d | xargs git reset --
   dc = diff --cached
-[url "git@github.com:"]
-  insteadOf = https://github.com/
+[url "https://github.com/"]
+	insteadOf = git@github.com:
+	insteadOf = git://github.com/
+
+[credential]
+	helper = osxkeychain
+[pull]
+	ff = only
