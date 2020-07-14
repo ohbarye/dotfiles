@@ -44,7 +44,7 @@ NeoBundle 'Shougo/vimproc', {
           \    },
           \ }
 " ファイルを検索して開くためのplugin
-NeoBundle 'kien/ctrlp.vim'
+NeoBundle 'ctrlpvim/ctrlp.vim'
 
 " vim内でshellを動作させるplugin
 NeoBundle 'Shougo/vimshell'
@@ -189,6 +189,10 @@ NeoBundle 'thinca/vim-visualstar'
 
 NeoBundle 'thinca/vim-quickrun'
 let g:quickrun_config = {'*': {'hook/time/enable': '1'},}
+
+NeoBundle 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+NeoBundle 'AndrewRadev/splitjoin.vim'
+NeoBundle 'SirVer/ultisnips'
 
 "NeoBundleLazy 'alpaca-tc/neorspec.vim', {
 "      \ 'depends' : ['alpaca-tc/vim-rails', 'tpope/vim-dispatch'],
