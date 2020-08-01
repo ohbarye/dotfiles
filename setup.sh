@@ -2,7 +2,7 @@
 
 set -u
 
-DOT_FILES=( .bash_profile .bashrc .zshrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .tigrc .ideavimrc )
+DOT_FILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .tigrc .ideavimrc )
 
 for file in ${DOT_FILES[@]}
 do
