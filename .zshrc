@@ -102,7 +102,13 @@ alias gr=cd-ghq-list
 alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine
-alias mine='mine $(ghq root)/$(ghq list | fzf)'
+alias rbl='rubymine $(ghq root)/$(ghq list | fzf)'
+
+# Goland
+alias gol='goland $(ghq root)/$(ghq list | fzf)'
+
+# VSCode
+alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
 alias dc='docker-compose'
