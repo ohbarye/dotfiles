@@ -13,7 +13,7 @@ fi
 # Customize to your needs...
 export LC_ALL='ja_JP.UTF-8'
 export GOPATH="$HOME/.go"
-export PATH=$GOPATH/bin:$PATH 
+export PATH=$GOPATH/bin:$PATH
 
 # Original nvm setting
 # export NVM_DIR="$HOME/.nvm"
@@ -60,7 +60,7 @@ antigen apply
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
-  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\).git/\1/' |  sed 's/^\(.*\).git/\1/' )
+  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\)/\1/' )
 }
 
 # ciopen / propen command
