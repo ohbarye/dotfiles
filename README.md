@@ -1,22 +1,21 @@
 # dotfiles
 
-Setup procedure for myself.
+Set up procedure for myself.
 
 ## Installation
 
-1. install **Homebrew**
-
-   ```sh
-   $ ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-   ```
-
-1. git clone **dotfiles** and install git submodules
-
-   (Maybe) First execution of `git` command, git is automatically installed.
+1. Set up **dotfiles**
 
    ```sh
    $ cd ~
-   $ git clone git@github.com:ohbarye/dotfiles.git
-   $ git submodule init
-   $ git submodule update
+   # First execution of `git` command, git is automatically installed.
+   $ git clone https://github.com/ohbarye/dotfiles.git
+   $ sh ~/dotfiles/setup.sh
+   ```
+
+1. Install **Apps** with Brewfile
+
+   ```sh
+   $ cd ~/dotfiles
+   $ brew bundle
    ```
