@@ -108,7 +108,7 @@ alias cdl='code $(ghq root)/$(ghq list | fzf)'
 # docker
 alias dc='docker-compose'
 alias dcr='docker-compose run --rm $(docker-compose ps --services | grep _api) entrypoint.sh'
-alias de='docker exec -it qall-$(basename $(pwd))'
+alias de='docker-compose exec $(docker-compose ps --services | grep _api) entrypoint.sh'
 function da() {
     docker attach $(docker-compose ps | grep _api | awk '{print $1}')
 }
@@ -151,6 +151,9 @@ bindkey '^q' fzf-find-file
 if [ $commands[kubectl] ]; then
   source <(kubectl completion zsh)
 fi
+
+# AWS
+alias am='aws-mfa'
 
 # Kubernetes settings
 alias ks='kubectl'
