@@ -55,7 +55,7 @@ antigen apply
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
-  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\)/\1/' )
+  GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\).git/\1/' | sed 's/^.*github.com[:/]\(.*\)/\1/' )
 }
 
 # ciopen / propen command
@@ -107,8 +107,11 @@ alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
 alias dc='docker-compose'
-alias dcr='docker-compose run --rm $(basename $(pwd))'
+alias dcr='docker-compose run --rm $(docker-compose ps --services | grep _api) entrypoint.sh'
 alias de='docker exec -it qall-$(basename $(pwd))'
+function da() {
+    docker attach $(docker-compose ps | grep _api | awk '{print $1}')
+}
 
 # key binding
 bindkey '^a' beginning-of-line
