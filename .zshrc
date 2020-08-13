@@ -153,7 +153,7 @@ if [ $commands[kubectl] ]; then
 fi
 
 # AWS
-alias am='aws-mfa'
+alias am='aws-mfa --duration 86400'
 
 # Kubernetes settings
 alias ks='kubectl'
