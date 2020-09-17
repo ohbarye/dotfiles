@@ -97,7 +97,7 @@ function cd-ghq-list() {
     fi
 }
 alias gr=cd-ghq-list
-alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
+alias ghb='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine
 alias rbl='rubymine $(ghq root)/$(ghq list | fzf)'
