@@ -11,7 +11,9 @@ export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
 export GOENV_ROOT=$HOME/.goenv
 export PATH=$GOENV_ROOT/bin:$PATH
-eval "$(goenv init -)"
+if type "goenv" > /dev/null; then
+    eval "$(goenv init -)"
+fi
 
 # Original nvm setting
 # export NVM_DIR="$HOME/.nvm"
@@ -97,7 +99,7 @@ function cd-ghq-list() {
     fi
 }
 alias gr=cd-ghq-list
-alias gh='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
+alias ghb='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine
 alias rbl='rubymine $(ghq root)/$(ghq list | fzf)'
