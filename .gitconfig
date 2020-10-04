@@ -11,7 +11,7 @@
 [alias]
   st = status -sb
   cm = commit -v
-  amend = commit --amend
+  ca = commit --amend
   co = "!f() { args=$@; if [ -z \"$args\" ]; then branch=$(git branch --all | grep -v HEAD | fzf --preview 'echo {} | cut -c 3- | xargs git log --color=always'); git checkout $(echo $branch | sed 's#remotes/[^/]*/##'); else git checkout $args; fi }; f"
   br = branch
   sw = switch
@@ -21,6 +21,8 @@
   da = !git d | xargs git add --
   dr = !git d | xargs git reset --
   dc = diff --cached
+  cf = commit -v --fixup=HEAD
+  ri = !sh -c 'git rebase --autosquash -i HEAD~$0'
 [url "https://github.com/"]
 	insteadOf = git@github.com:
 	insteadOf = git://github.com/
