@@ -1,9 +1,12 @@
 " Let dein manage dein
 call dein#add(expand('~/.vim/dein/'))
+
+call dein#add('Shougo/deoplete.nvim')
 if !has('nvim')
   call dein#add('roxma/nvim-yarp')
   call dein#add('roxma/vim-hug-neovim-rpc')
 endif
+let g:deoplete#enable_at_startup = 1
 
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
@@ -51,19 +54,10 @@ call dein#add('Shougo/vimshell')
 " vim上でgit操作するplugin
 call dein#add('tpope/vim-fugitive')
 call dein#add('gregsexton/gitv.git')
-if has("lua")
-  " 入力補完plugin
-  call dein#add('Shougo/neocomplete', { 'autoload' : {
-       \ 'depends' : 'Shougo/vimproc',
-       \   'insert' : 1,
-       \ }})
-endif
 
 let g:rsenseUseOmniFunc = 1
 
 let g:acp_enableAtStartup = 0
-let g:neocomplete#enable_at_startup = 1
-let g:neocomplete#enable_smart_case = 1
 
 " 言語用のsnippet plugin
 call dein#add('Shougo/neosnippet.vim')
