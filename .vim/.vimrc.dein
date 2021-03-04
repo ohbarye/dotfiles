@@ -1,16 +1,17 @@
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Let NeoBundle manage NeoBundle
-
-let g:neobundle#types#git#default_protocol = 'git'
+" Let dein manage dein
+call dein#add(expand('~/.vim/dein/'))
+if !has('nvim')
+  call dein#add('roxma/nvim-yarp')
+  call dein#add('roxma/vim-hug-neovim-rpc')
+endif
 
 nnoremap <silent><C-e> :NERDTreeToggle<CR>
 
 " 連続で行うような操作をサブモジュールとして登録できるPlugin
-NeoBundle 'kana/vim-submode'
+call dein#add('kana/vim-submode')
 
 " 様々なデータを共通のインタフェースを用いて操作できるPlugin
-NeoBundle 'Shougo/unite.vim'
+call dein#add('Shougo/unite.vim')
 " unite {{{
 let g:unite_enable_start_insert=1
 nmap <silent> <C-u><C-b> :<C-u>Unite buffer<CR>
@@ -27,37 +28,35 @@ au FileType unite nmap <silent> <buffer> <ESC><ESC> q
 au FileType unite imap <silent> <buffer> <ESC><ESC> <ESC>q
 " }}}
 
-NeoBundle 'Shougo/neomru.vim', {
-  \ 'depends' : 'Shougo/unite.vim'
-  \ }
+call dein#add('Shougo/neomru.vim', {'depends' : 'Shougo/unite.vim'})
 
 " colorscheme集
-NeoBundle 'flazz/vim-colorschemes'
+call dein#add('flazz/vim-colorschemes')
 
 " 非同期処理を実施するために必要なvim用のplugin(環境ごとに自動build)
-NeoBundle 'Shougo/vimproc', {
+call dein#add('Shougo/vimproc', {
           \ 'build' : {
           \     'windows' : 'make -f make_mingw32.mak',
           \     'cygwin' : 'make -f make_cygwin.mak',
           \     'mac' : 'make -f make_mac.mak',
           \     'unix' : 'make -f make_unix.mak',
           \    },
-          \ }
+          \ })
 " ファイルを検索して開くためのplugin
-NeoBundle 'ctrlpvim/ctrlp.vim'
+call dein#add('ctrlpvim/ctrlp.vim')
 
 " vim内でshellを動作させるplugin
-NeoBundle 'Shougo/vimshell'
+call dein#add('Shougo/vimshell')
 
 " vim上でgit操作するplugin
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'gregsexton/gitv.git'
+call dein#add('tpope/vim-fugitive')
+call dein#add('gregsexton/gitv.git')
 if has("lua")
   " 入力補完plugin
-  NeoBundleLazy 'Shougo/neocomplete', { 'autoload' : {
+  call dein#add('Shougo/neocomplete', { 'autoload' : {
        \ 'depends' : 'Shougo/vimproc',
        \   'insert' : 1,
-       \ }}
+       \ }})
 endif
 
 let g:rsenseUseOmniFunc = 1
@@ -67,24 +66,24 @@ let g:neocomplete#enable_at_startup = 1
 let g:neocomplete#enable_smart_case = 1
 
 " 言語用のsnippet plugin
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'honza/vim-snippets'
+call dein#add('Shougo/neosnippet.vim')
+call dein#add('Shougo/neosnippet-snippets')
+call dein#add('honza/vim-snippets')
 " Enable snipMate compatibility feature.
 let g:neosnippet#enable_snipmate_compatibility = 1"
 "  " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim/bundle/vim-snippets/snippets'
 
 " uniteでtagsを読み込みます
-NeoBundleLazy 'tsukkee/unite-tag', {
+call dein#add('tsukkee/unite-tag', {
       \ 'depends' : ['Shougo/unite.vim'],
       \ 'autoload' : {
       \   'unite_sources' : ['tag', 'tag/file', 'tag/include']
-      \ }}
+      \ }})
 
 " ファイルの構文エラーなどを表示するPlugin
 " この場合はjs,rubyをsave時に動作させてます。
-NeoBundle 'scrooloose/syntastic'
+call dein#add('scrooloose/syntastic')
 let g:syntastic_check_on_open=0 "ファイルを開いたときはチェックしない
 let g:syntastic_check_on_save=1 "保存時にはチェック
 let g:syntastic_check_on_wq = 0 " wqではチェックしない
@@ -102,25 +101,25 @@ let g:syntastic_mode_map = {
       \ }
 
 " html,css用
-NeoBundle 'hail2u/vim-css3-syntax'
-" NeoBundle 'taichouchou2/html5.vim'
-NeoBundle 'othree/html5.vim'
+call dein#add('hail2u/vim-css3-syntax')
+" call dein#add('taichouchou2/html5.vim')
+call dein#add('othree/html5.vim')
 
 " zencoding-vimの後継
-NeoBundle 'mattn/emmet-vim'
+call dein#add('mattn/emmet-vim')
 " "html展開した時のlangをjaに
 let g:user_emmet_settings = {
 \ 'lang' : 'ja'
 \}
 
 " wordを決まったwordに変換するPlugin
-NeoBundle 'AndrewRadev/switch.vim'
+call dein#add('AndrewRadev/switch.vim')
 
 " vimからagを利用できるようにするPlugin
-NeoBundle 'rking/ag.vim'
+call dein#add('rking/ag.vim')
 
 " ディレクトリ構造をtree表示するPlugin
-NeoBundle 'scrooloose/nerdtree'
+call dein#add('scrooloose/nerdtree')
 " autocmd VimEnter * execute 'NERDTree'
 " F2でtree表示/非表示にする
 nnoremap <f2> :NERDTreeToggle<CR>
@@ -129,48 +128,48 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 " 不可視ファイルをデファルトで表示
 let NERDTreeShowHidden = 1
 " タグリストを表示するPlugin
-NeoBundleLazy "majutsushi/tagbar", {
-      \ "autoload": { "commands": ["TagbarToggle"] }}
+call dein#add("majutsushi/tagbar", {
+      \ "autoload": { "commands": ["TagbarToggle"] }})
 let g:tlist_js_settings = 'javascript;f:function;v:variable'
-if ! empty(neobundle#get("tagbar"))
+if ! empty(dein#get("tagbar"))
   nmap <F8> :TagbarToggle<CR>
 endif
 
 " 日付をインクリメントしたら、数値をまとめてインクリメントしたりするPlugin
-NeoBundle 'tpope/vim-speeddating'
+call dein#add('tpope/vim-speeddating')
 
 " vimからDBを扱うPlugin
-NeoBundle 'vim-scripts/dbext.vim'
+call dein#add('vim-scripts/dbext.vim')
 
 " JSDocを生成(<C-l>)
-NeoBundleLazy 'heavenshell/vim-jsdoc' , {'autoload': {'filetypes': ['javascript']}}
+call dein#add('heavenshell/vim-jsdoc' , {'autoload': {'filetypes': ['javascript']}})
 
 " Ruby 用
 
 " refを参照できるようにするPlugin
-NeoBundleLazy 'yuku-t/vim-ref-ri', {
+call dein#add('yuku-t/vim-ref-ri', {
       \ 'depends': ['Shougo/unite.vim', 'thinca/vim-ref'],
-      \ 'autoload': { 'filetypes': ['ruby', 'eruby', 'haml'] } }
+      \ 'autoload': { 'filetypes': ['ruby', 'eruby', 'haml'] } })
 
 " endを自動補完するplugin
-NeoBundleLazy 'alpaca-tc/vim-endwise.git', {
+call dein#add('alpaca-tc/vim-endwise.git', {
       \ 'autoload' : {
       \   'insert' : 1,
-      \ }}
+      \ }})
 
 " ファイルの構文エラーなどを表示するPlugin
 " この場合はRubyをsave時にrubocopを動作させてます。
-"NeoBundle 'scrooloose/syntastic'
+"call dein#add('scrooloose/syntastic')
 "let g:syntastic_mode_map = { 'mode': 'passive',
 "            \ 'active_filetypes': ['ruby'] }
 "let g:syntastic_ruby_checkers = ['rubocop']
 
 " railsのファイル移動をコマンド移動するplugin
-NeoBundle 'tpope/vim-rails', { 'autoload' : {
-      \ 'filetypes' : ['haml', 'ruby', 'eruby'] }}
+call dein#add('tpope/vim-rails', { 'autoload' : {
+      \ 'filetypes' : ['haml', 'ruby', 'eruby'] }})
 
 " railsのファイル種類ごとに一覧を表示する
-NeoBundleLazy 'basyura/unite-rails', {
+call dein#add('basyura/unite-rails', {
       \ 'depends' : 'Shougo/unite.vim',
       \ 'autoload' : {
       \   'unite_sources' : [
@@ -181,31 +180,15 @@ NeoBundleLazy 'basyura/unite-rails', {
       \     'rails/mailer', 'rails/model', 'rails/rake', 'rails/route', 'rails/schema', 'rails/spec',
       \     'rails/stylesheet', 'rails/view'
       \   ]
-      \ }}
+      \ }})
 
-NeoBundle 'michaeljsmith/vim-indent-object'
+call dein#add('michaeljsmith/vim-indent-object')
 
-NeoBundle 'thinca/vim-visualstar'
+call dein#add('thinca/vim-visualstar')
 
-NeoBundle 'thinca/vim-quickrun'
+call dein#add('thinca/vim-quickrun')
 let g:quickrun_config = {'*': {'hook/time/enable': '1'},}
 
-NeoBundle 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-NeoBundle 'AndrewRadev/splitjoin.vim'
-NeoBundle 'SirVer/ultisnips'
-
-"NeoBundleLazy 'alpaca-tc/neorspec.vim', {
-"      \ 'depends' : ['alpaca-tc/vim-rails', 'tpope/vim-dispatch'],
-"      \ 'autoload' : {
-"      \   'commands' : ['RSpec', 'RSpecAll', 'RSpecCurrent', 'RSpecNearest', 'RSpecRetry']
-"      \ }}
-"
-"NeoBundleLazy 'alpaca-tc/alpaca_tags', {
-"      \ 'depends': 'Shougo/vimproc',
-"      \ 'autoload' : {
-"      \   'commands': ['TagsUpdate', 'TagsSet', 'TagsBundle']
-"      \ }}
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
+call dein#add('fatih/vim-go', { 'do': ':GoInstallBinaries' })
+call dein#add('AndrewRadev/splitjoin.vim')
+call dein#add('SirVer/ultisnips')

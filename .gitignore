@@ -1,6 +1,7 @@
 .DS_Store
 *.swp
 .vim/bundle
+.vim/dein
 .bundle/cache
 .tmux/plugins
 .tmux/resurrect

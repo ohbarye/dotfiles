@@ -1,16 +1,35 @@
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
-" Neobundle settings begin
-if has('vim_starting')
-  set runtimepath+=~/.vim/neobundle.vim/
-
-  call neobundle#begin(expand('~/.vim/bundle'))
-  source ~/.vim/.vimrc.bundle
-  call neobundle#end()
-
+" dein settings begin
+if &compatible
+  set nocompatible " Be iMproved
 endif
-" Neobundle settings end
+
+" プラグインが実際にインストールされるディレクトリ
+let s:dein_dir = expand('~/.vim/dein')
+" dein.vim 本体
+let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
+
+" dein.vim がなければ github から落としてくる
+if &runtimepath !~# '/dein.vim'
+  if !isdirectory(s:dein_repo_dir)
+    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
+  endif
+  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
+endif
+
+if dein#load_state(s:dein_dir)
+  call dein#begin(s:dein_dir)
+  source ~/.vim/.vimrc.dein
+  call dein#end()
+  call dein#save_state()
+endif
+
+if dein#check_install()
+  call dein#install()
+endif
+" dein settings end
 
 " Required:
 filetype plugin indent on
