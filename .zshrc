@@ -118,8 +118,8 @@ function da() {
     docker attach $(docker-compose ps | grep _api | awk '{print $1}')
 }
 alias bc='docker-compose -f /Users/m-ohba/ghq/github.com/smartbank-inc/Bocal/docker-compose.yml'
-alias bcr='bc run --rm $(bc ps --services | grep _api)'
-alias be='bc exec $(bc ps --services | grep _api) entrypoint.sh'
+alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/b43-//g")'
+alias be='bc exec $(pwd | xargs basename | sed -e "s/b43-//g") entrypoint.sh'
 function ba() {
     docker attach $(bc ps | grep _api | awk '{print $1}')
 }
