@@ -31,7 +31,6 @@ if dein#check_install()
 endif
 " dein settings end
 
-" Required:
 filetype plugin indent on
 
 source ~/.vim/.vimrc.indent
@@ -86,25 +85,24 @@ set noswapfile
 
 " set paste
 if &term =~ "xterm"
-    let &t_ti .= "\e[?2004h"
-    let &t_te .= "\e[?2004l"
-    let &pastetoggle = "\e[201~"
+  let &t_ti .= "\e[?2004h"
+  let &t_te .= "\e[?2004l"
+  let &pastetoggle = "\e[201~"
 
-    function XTermPasteBegin(ret)
-        set paste
-        return a:ret
-    endfunction
+  function XTermPasteBegin(ret)
+      set paste
+      return a:ret
+  endfunction
 
-    noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
-    inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-    cnoremap <special> <Esc>[200~ <nop>
-    cnoremap <special> <Esc>[201~ <nop>
+  noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
+  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
+  cnoremap <special> <Esc>[200~ <nop>
+  cnoremap <special> <Esc>[201~ <nop>
 endif
 
 syntax enable
 set background=dark
 colorscheme solarized
-
 
 " Learned from vim-go-tutorial - BEGIN
 map <C-n> :cnext<CR>

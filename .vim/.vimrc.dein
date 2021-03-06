@@ -121,7 +121,7 @@ call dein#add('scrooloose/nerdtree')
 " autocmd VimEnter * execute 'NERDTree'
 " F2でtree表示/非表示にする
 nnoremap <f2> :NERDTreeToggle<CR>
-""tree表示だけの場合は一緒に閉じる
+" tree表示だけの場合は一緒に閉じる
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 " 不可視ファイルをデファルトで表示
 let NERDTreeShowHidden = 1
@@ -138,13 +138,6 @@ call dein#add('tpope/vim-speeddating')
 
 " JSDocを生成(<C-l>)
 call dein#add('heavenshell/vim-jsdoc' , {'autoload': {'filetypes': ['javascript']}})
-
-" Ruby 用
-
-" refを参照できるようにするPlugin
-call dein#add('yuku-t/vim-ref-ri', {
-      \ 'depends': ['Shougo/unite.vim', 'thinca/vim-ref'],
-      \ 'autoload': { 'filetypes': ['ruby', 'eruby', 'haml'] } })
 
 " endを自動補完するplugin
 call dein#add('alpaca-tc/vim-endwise.git', {
