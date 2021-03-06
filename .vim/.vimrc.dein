@@ -1,6 +1,10 @@
 " Let dein manage dein
 call dein#add(expand('~/.vim/dein/'))
 
+" To run deoplete
+" https://github.com/Shougo/deoplete.nvim/issues/481#issuecomment-302422575
+let g:python3_host_prog = '/usr/local/bin/python3'
+
 call dein#add('Shougo/deoplete.nvim')
 if !has('nvim')
   call dein#add('roxma/nvim-yarp')
