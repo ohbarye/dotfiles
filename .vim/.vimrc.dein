@@ -136,9 +136,6 @@ endif
 " 日付をインクリメントしたら、数値をまとめてインクリメントしたりするPlugin
 call dein#add('tpope/vim-speeddating')
 
-" vimからDBを扱うPlugin
-call dein#add('vim-scripts/dbext.vim')
-
 " JSDocを生成(<C-l>)
 call dein#add('heavenshell/vim-jsdoc' , {'autoload': {'filetypes': ['javascript']}})
 
@@ -166,20 +163,6 @@ call dein#add('alpaca-tc/vim-endwise.git', {
 call dein#add('tpope/vim-rails', { 'autoload' : {
       \ 'filetypes' : ['haml', 'ruby', 'eruby'] }})
 
-" railsのファイル種類ごとに一覧を表示する
-call dein#add('basyura/unite-rails', {
-      \ 'depends' : 'Shougo/unite.vim',
-      \ 'autoload' : {
-      \   'unite_sources' : [
-      \     'rails/bundle', 'rails/bundled_gem', 'rails/config',
-      \     'rails/controller', 'rails/db', 'rails/destroy', 'rails/features',
-      \     'rails/gem', 'rails/gemfile', 'rails/generate', 'rails/git', 'rails/helper',
-      \     'rails/heroku', 'rails/initializer', 'rails/javascript', 'rails/lib', 'rails/log',
-      \     'rails/mailer', 'rails/model', 'rails/rake', 'rails/route', 'rails/schema', 'rails/spec',
-      \     'rails/stylesheet', 'rails/view'
-      \   ]
-      \ }})
-
 call dein#add('michaeljsmith/vim-indent-object')
 
 call dein#add('thinca/vim-visualstar')
@@ -190,3 +173,8 @@ let g:quickrun_config = {'*': {'hook/time/enable': '1'},}
 call dein#add('fatih/vim-go', { 'do': ':GoInstallBinaries' })
 call dein#add('AndrewRadev/splitjoin.vim')
 call dein#add('SirVer/ultisnips')
+
+" Remove plugins automaticallly
+" https://github.com/Shougo/dein.vim/issues/357
+" Need to `call dein#recache_runtimepath()` manually
+call map(dein#check_clean(), "delete(v:val, 'rf')")

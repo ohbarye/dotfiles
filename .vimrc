@@ -11,7 +11,7 @@ let s:dein_dir = expand('~/.vim/dein')
 " dein.vim 本体
 let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
 
-" dein.vim がなければ github から落としてくる
+" dein.vim がなければ GitHub から落としてくる
 if &runtimepath !~# '/dein.vim'
   if !isdirectory(s:dein_repo_dir)
     execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
