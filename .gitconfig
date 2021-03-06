@@ -8,6 +8,7 @@
 [core]
 	editor = /usr/local/bin/vim
 	excludesfile = ~/.gitignore_global
+	commentChar = ";"
 [alias]
   st = status -sb
   cm = commit -v
