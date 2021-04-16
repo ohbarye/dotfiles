@@ -111,13 +111,13 @@ alias gol='goland $(ghq root)/$(ghq list | fzf)'
 alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
-alias dc='docker-compose'
-alias dcr='docker-compose run --rm $(docker-compose ps --services | grep _api)'
-alias de='docker-compose exec $(docker-compose ps --services | grep _api) entrypoint.sh'
+alias dc='docker compose'
+alias dcr='docker compose run --rm $(docker compose ps --services | grep _api)'
+alias de='docker compose exec $(docker compose ps --services | grep _api) entrypoint.sh'
 function da() {
-    docker attach $(docker-compose ps | grep _api | awk '{print $1}')
+    docker attach $(docker compose ps | grep _api | awk '{print $1}')
 }
-alias bc='docker-compose -f /Users/m-ohba/ghq/github.com/smartbank-inc/Bocal/docker-compose.yml'
+alias bc='docker compose -f /Users/m-ohba/ghq/github.com/smartbank-inc/Bocal/docker-compose.yml'
 alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/b43-//g")'
 alias be='bc exec $(pwd | xargs basename | sed -e "s/b43-//g") entrypoint.sh'
 function ba() {
