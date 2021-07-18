@@ -208,3 +208,11 @@ fi
 
 # opam configuration
 test -r ${HOME}/.opam/opam-init/init.zsh && . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
+
+# deno configuration
+export DENO_INSTALL="$HOME/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+fpath=(~/.zsh $fpath)
+autoload -Uz compinit
+compinit -u
+
