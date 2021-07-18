@@ -165,36 +165,39 @@ function fzf-find-file() {
 zle -N fzf-find-file
 bindkey '^q' fzf-find-file
 
-if [ $commands[kubectl] ]; then
-  source <(kubectl completion zsh)
-fi
-
 # AWS
 alias am='aws-mfa --duration 86400'
 
-# Kubernetes settings
-alias ks='kubectl'
-
-kss() {
-  ks config get-contexts | sed "/^\ /d"
-  ks auth can-i get ns >/dev/null 2>&1 && echo "(Authorized)" || echo "(Unauthorized)"
-}
-
-kc() {
-  test "$1" = "-" && kubectx - || kubectx "$(kubectx | fzf)"
-}
-
-kn() {
-  test "$1" = "-" && kubens - || kubens "$(kubens | fzf)"
-}
-
-autoload -U colors; colors
-
-# Temporary off since I don't care it so frequently.
+# Kubernetes settings start
+# Temporary off since I don't use kubernetes recently.
+# alias ks='kubectl'
+#
+# kss() {
+#   ks config get-contexts | sed "/^\ /d"
+#   ks auth can-i get ns >/dev/null 2>&1 && echo "(Authorized)" || echo "(Unauthorized)"
+# }
+#
+# kc() {
+#   test "$1" = "-" && kubectx - || kubectx "$(kubectx | fzf)"
+# }
+#
+# kn() {
+#   test "$1" = "-" && kubens - || kubens "$(kubens | fzf)"
+# }
+#
+# if [ $commands[kubectl] ]; then
+#   source <(kubectl completion zsh)
+# fi
+#
 # if [ -f "/usr/local/etc/zsh-kubectl-prompt/kubectl.zsh" ]; then
 #   source /usr/local/etc/zsh-kubectl-prompt/kubectl.zsh
 #   RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
 # fi
+
+# Kubernetes settings end
+
+
+autoload -U colors; colors
 
 # For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
 # If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
