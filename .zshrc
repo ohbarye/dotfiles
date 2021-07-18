@@ -196,14 +196,7 @@ alias am='aws-mfa --duration 86400'
 
 # Kubernetes settings end
 
-
 autoload -U colors; colors
-
-# For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
-# If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
-if (which zprof > /dev/null 2>&1) ;then
-  zprof
-fi
 
 [[ -d ~/.rbenv  ]] && \
   export PATH=${HOME}/.rbenv/bin:${PATH} && \
@@ -218,4 +211,10 @@ export PATH="$DENO_INSTALL/bin:$PATH"
 fpath=(~/.zsh $fpath)
 autoload -Uz compinit
 compinit -u
+
+# For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
+# If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
+if (which zprof > /dev/null 2>&1) ;then
+  zprof
+fi
 
