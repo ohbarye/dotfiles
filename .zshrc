@@ -35,6 +35,7 @@ nvm() {
 }
 
 
+# antigen, oh-my-zsh settings start
 source $HOME/dotfiles/antigen.zsh
 
 # oh-my-zsh sets HISTFILE as .zsh_history without this line
@@ -56,7 +57,7 @@ antigen theme ys
 
 # Tell Antigen that you're done.
 antigen apply
-
+# antigen, oh-my-zsh settings start
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
