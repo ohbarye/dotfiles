@@ -226,3 +226,6 @@ if (which zprof > /dev/null 2>&1) ;then
   zprof
 fi
 
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
+
