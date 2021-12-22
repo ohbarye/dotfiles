@@ -70,12 +70,12 @@ function ciopen() {
   open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
 
-function git-push-set-upsteam() {
+function git-push-set-upstream() {
   setrepo
   git push --set-upstream origin ${GIT_CURRENT_BRANCH} && propen
 }
 
-alias gps=git-push-set-upsteam
+alias gps=git-push-set-upstream
 
 function notify-github-actions-ci-finish() {
   gh run watch -i10 && osascript -e 'display notification "run is done!" with title "Terminal"'
