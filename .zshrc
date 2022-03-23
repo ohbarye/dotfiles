@@ -113,11 +113,11 @@ alias gol='goland $(ghq root)/$(ghq list | fzf)'
 alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
-alias dc='docker-compose'
-alias dcr='docker-compose run --rm $(docker-compose ps --services | grep _api)'
-alias de='docker-compose exec $(docker-compose ps --services | grep _api) entrypoint.sh'
+alias dc='docker compose'
+alias dcr='docker compose run --rm $(docker compose config --services | grep _api)'
+alias de='docker compose exec $(docker compose ps --services | grep _api) entrypoint.sh'
 function da() {
-    docker attach $(docker-compose ps | grep _api | awk '{print $1}')
+    docker attach $(docker compose ps | grep _api | awk '{print $1}')
 }
 
 # Run docker-compose command with specific file path.
@@ -125,7 +125,7 @@ function da() {
 # ref https://qiita.com/kroyagis/items/66ca139a4c41b710a53c
 export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
 if [[ -f "$CUSTOM_DOCKER_COMPOSE_PATH" ]]; then
-  alias bc='docker-compose -f $CUSTOM_DOCKER_COMPOSE_PATH'
+  alias bc='docker compose -f $CUSTOM_DOCKER_COMPOSE_PATH'
   alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g")'
   alias be='bc exec $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g") entrypoint.sh'
   function ba() {
