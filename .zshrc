@@ -168,8 +168,8 @@ function fzf-find-file() {
 zle -N fzf-find-file
 bindkey '^q' fzf-find-file
 
-# AWS
-alias am='aws-mfa --duration 86400'
+# AWS MFA with 1password
+alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | aws-mfa --duration 86400 --force'
 
 # Kubernetes settings start
 # Temporary off since I don't use kubernetes recently.
