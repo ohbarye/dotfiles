@@ -56,7 +56,6 @@ cask "slack"
 cask "spotify"
 cask "visual-studio-code"
 cask "wkhtmltopdf"
-mas "1Password 7", id: 1333542190
 mas "BetterSnapTool", id: 417375580
 mas "GarageBand", id: 682658836
 mas "HazeOver", id: 430798174
