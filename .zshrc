@@ -1,11 +1,4 @@
-#
-# Executes commands at the start of an interactive session.
-#
-# Authors:
-#   Sorin Ionescu <sorin.ionescu@gmail.com>
-#
-
-# Customize to your needs...
+set -ux
 export LC_ALL='ja_JP.UTF-8'
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
