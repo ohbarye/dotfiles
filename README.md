@@ -17,5 +17,5 @@ Set up procedure for myself.
 
 ## Environment
 
-- macOS
+- macOS Monterey on Apple M1 Pro (2022-04-17)
 
