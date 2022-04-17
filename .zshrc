@@ -1,4 +1,3 @@
-set -ux
 export LC_ALL='ja_JP.UTF-8'
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
