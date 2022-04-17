@@ -4,18 +4,18 @@ Set up procedure for myself.
 
 ## Installation
 
-1. Set up **dotfiles**
+1. Run the command below on `Terminal` app
 
    ```sh
    $ cd ~
-   # First execution of `git` command, git is automatically installed.
+   # First execution of `git` command,
+   # - It may start to install Xcode. After it finishes, run the command again.
+   # - git will be automatically installed.
    $ git clone https://github.com/ohbarye/dotfiles.git
    $ sh ~/dotfiles/setup.sh
    ```
 
-1. Install **Apps** with Brewfile
+## Environment
 
-   ```sh
-   $ cd ~/dotfiles
-   $ brew bundle
-   ```
+- macOS
+

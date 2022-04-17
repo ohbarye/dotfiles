@@ -13,8 +13,14 @@ done
 
 source $HOME/dotfiles/.zshrc
 
-ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
 git submodule init
 git submodule update
+
+
+if [ ! -x "`which brew`" ]; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  brew update
+fi
+
+brew bundle
 
