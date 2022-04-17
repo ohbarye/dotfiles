@@ -12,7 +12,7 @@ Set up procedure for myself.
    # - It may start to install Xcode. After it finishes, run the command again.
    # - git will be automatically installed.
    $ git clone https://github.com/ohbarye/dotfiles.git
-   $ sh ~/dotfiles/setup.sh
+   $ ~/dotfiles/setup.sh
    ```
 
 ## Environment
