@@ -11,6 +11,10 @@ do
   fi
 done
 
+if [ ! -e $HOME/$file ]; then
+  curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
+fi
+
 source $HOME/dotfiles/.zshrc
 
 git submodule init
