@@ -7,7 +7,7 @@
 	default = simple
 [core]
   pager = delta
-	editor = /usr/local/bin/vim
+	editor = vim
 	excludesfile = ~/.gitignore_global
 	commentChar = ";"
 [interactive]
