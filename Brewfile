@@ -65,6 +65,5 @@ mas "LINE", id: 539883307
 mas "Monosnap", id: 540348655
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
-mas "PopClip", id: 445189367
 mas "Quiver", id: 866773894
 mas "Yoink", id: 457622435
