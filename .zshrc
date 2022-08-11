@@ -105,12 +105,19 @@ alias gol='goland $(ghq root)/$(ghq list | fzf)'
 alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
+alias d='docker'
 alias dc='docker compose'
 alias dcr='docker compose run --rm $(docker compose config --services | grep _api)'
 alias de='docker compose exec $(docker compose ps --services | grep _api) entrypoint.sh'
 function da() {
     docker attach $(docker compose ps | grep _api | awk '{print $1}')
 }
+
+# frequent commands
+alias a='aws'
+alias m='make'
+alias y='yarn'
+alias :q='exit'
 
 # Run docker-compose command with specific file path.
 # The path may be a kind of secret information, so it's retrieved via macOS keychain
