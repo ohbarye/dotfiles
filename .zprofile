@@ -73,5 +73,8 @@ fi
 
 TMPPREFIX="${TMPDIR%/}/zsh"
 
-eval "$(/opt/homebrew/bin/brew shellenv)"
+# For M1 mac
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
 
