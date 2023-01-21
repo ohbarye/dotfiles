@@ -5,7 +5,7 @@ PATH=$PATH:~/play-2.2.6
 if which pyenv > /dev/null; then eval "$(pyenv init -)"; fi
 
 # rbenv
-if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi 
+if which rbenv > /dev/null; then eval "$(rbenv init -)"; fi
 
 # bash completion
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
@@ -41,7 +41,3 @@ alias g='git'
 alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion

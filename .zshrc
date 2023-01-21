@@ -2,26 +2,6 @@ export LC_ALL='ja_JP.UTF-8'
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
 
-# Original nvm setting
-# export NVM_DIR="$HOME/.nvm"
-# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-#
-# Updated nvm setting for speed up
-# https://qiita.com/uasi/items/80865646607b966aedc8
-# 仮の nvm コマンド
-nvm() {
-    # まず仮の nvm コマンドを unset
-    unset -f nvm
-
-    # nvm.sh をロード
-    # ここで本物の nvm コマンドが定義される
-    source "${NVM_DIR:-$HOME/.nvm}/nvm.sh"
-
-    # 仮の nvm コマンドに渡された引数を本物に受け渡す
-    nvm "$@"
-}
-
-
 # antigen, oh-my-zsh settings start
 source $HOME/dotfiles/antigen.zsh
 
