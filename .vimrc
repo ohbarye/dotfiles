@@ -64,6 +64,7 @@ au BufNewFile,BufRead Guardfile   set filetype=ruby
 au BufNewFile,BufRead .pryrc      set filetype=ruby
 
 inoremap <silent> jj <ESC>
+map <leader>r :QuickRun<CR>
 
 " Don't write backup file if vim is being called by "crontab -e"
 au BufWrite /private/tmp/crontab.* set nowritebackup nobackup
