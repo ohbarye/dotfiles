@@ -99,17 +99,20 @@ alias m='make'
 alias y='yarn'
 alias :q='exit'
 
-# Run docker-compose command with specific file path.
-# The path may be a kind of secret information, so it's retrieved via macOS keychain
-# ref https://qiita.com/kroyagis/items/66ca139a4c41b710a53c
-export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
-if [[ -f "$CUSTOM_DOCKER_COMPOSE_PATH" ]]; then
-  alias bc='docker compose -f $CUSTOM_DOCKER_COMPOSE_PATH'
-  alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g")'
-  alias be='bc exec $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g") entrypoint.sh'
-  function ba() {
-      docker attach $(bc ps | grep _api | awk '{print $1}')
-  }
+# For non-personal use
+if [[ $(id -un) != 'ohbarye' ]]; then
+  # Run docker-compose command with specific file path.
+  # The path may be a kind of secret information, so it's retrieved via macOS keychain
+  # ref https://qiita.com/kroyagis/items/66ca139a4c41b710a53c
+  export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
+  if [[ -f "$CUSTOM_DOCKER_COMPOSE_PATH" ]]; then
+    alias bc='docker compose -f $CUSTOM_DOCKER_COMPOSE_PATH'
+    alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g")'
+    alias be='bc exec $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g") entrypoint.sh'
+    function ba() {
+        docker attach $(bc ps | grep _api | awk '{print $1}')
+    }
+  fi
 fi
 
 # key binding
