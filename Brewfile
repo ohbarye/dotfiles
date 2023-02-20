@@ -54,6 +54,7 @@ cask "skitch"
 cask "slack"
 cask "spotify"
 cask "visual-studio-code"
+cask "wireshark"
 cask "wkhtmltopdf"
 mas "BetterSnapTool", id: 417375580
 mas "GarageBand", id: 682658836
