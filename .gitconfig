@@ -16,6 +16,8 @@
   navigate = true  # use n and N to move between diff sections
   side-by-side = true
   line-numbers = true
+[oh-my-zsh]
+  hide-dirty = 1
 [merge]
   conflictstyle = diff3
 [diff]
