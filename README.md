@@ -18,4 +18,5 @@ Set up procedure for myself.
 ## Environment
 
 - macOS Monterey on Apple M1 Pro (2022-04-17)
+- macOS Ventura on Apple M2 Pro (2023-08-31)
 
