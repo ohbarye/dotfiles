@@ -27,5 +27,5 @@ fi
 eval "$(/opt/homebrew/bin/brew shellenv)"
 brew update
 
-brew bundle
+brew bundle --file $HOME/dotfiles/Brewfile
 
