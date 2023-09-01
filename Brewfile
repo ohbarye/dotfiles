@@ -2,6 +2,7 @@ tap "homebrew/bundle"
 tap "homebrew/cask-versions"
 tap "homebrew/services"
 tap "reviewdog/tap"
+tap "smudge/smudge"
 brew "alp"
 brew "openssl@3", link: false
 brew "python@3.11"
@@ -37,9 +38,9 @@ brew "tree"
 brew "vim"
 brew "volta"
 brew "zsh"
+brew "smudge/smudge/nightlight"
 cask "1password"
 cask "1password-cli"
-cask "alfred"
 cask "bartender"
 cask "charles"
 cask "clipy"
@@ -59,6 +60,7 @@ cask "ngrok"
 cask "orbstack"
 cask "popclip"
 cask "postman"
+cask "raycast"
 cask "sequel-ace"
 cask "skitch"
 cask "slack"
@@ -66,7 +68,6 @@ cask "spotify"
 cask "visual-studio-code"
 cask "wireshark"
 cask "wkhtmltopdf"
-mas "BetterSnapTool", id: 417375580
 mas "GarageBand", id: 682658836
 mas "iMovie", id: 408981434
 mas "Keynote", id: 409183694
@@ -75,6 +76,7 @@ mas "Microsoft Remote Desktop", id: 1295203466
 mas "Monosnap", id: 540348655
 mas "Numbers", id: 409203825
 mas "Pages", id: 409201541
+mas "Paste", id: 967805235
 mas "Quiver", id: 866773894
 mas "Yoink", id: 457622435
 vscode "dbaeumer.vscode-eslint"
