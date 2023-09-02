@@ -66,6 +66,7 @@ cask "skitch"
 cask "slack"
 cask "spotify"
 cask "visual-studio-code"
+cask "warp"
 cask "wireshark"
 cask "wkhtmltopdf"
 mas "GarageBand", id: 682658836
