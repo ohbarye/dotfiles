@@ -1,0 +1,2 @@
+IRB.conf[:COMPLETOR] = :type
+
