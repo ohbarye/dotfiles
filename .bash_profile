@@ -7,3 +7,4 @@ export EDITOR=vim
 
 test -r ~/.bashrc && . ~/.bashrc
 
+. "$HOME/.cargo/env"
