@@ -11,7 +11,13 @@ do
   fi
 done
 
-if [ ! -e $HOME/$file ]; then
+# miseの設定ファイルのシンボリックリンクを作成
+mkdir -p $HOME/.config/mise
+if [ ! -e $HOME/.config/mise/config.toml ]; then
+  ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
+fi
+
+if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
 fi
 

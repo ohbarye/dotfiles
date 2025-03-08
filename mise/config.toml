@@ -1,0 +1,6 @@
+[tools]
+aws-cli = "latest"
+go = "1.24"
+node = "22"
+ruby = "3.4"
+yarn = "4"
