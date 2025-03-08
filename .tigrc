@@ -1,2 +1,0 @@
-# open commit at github
-bind generic o !@hub browse -- commit/%(commit)
