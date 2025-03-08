@@ -1,6 +1,4 @@
 export LC_ALL='ja_JP.UTF-8'
-export GOPATH="$HOME/.go"
-export PATH=$GOPATH/bin:$PATH
 
 # antigen, oh-my-zsh settings start
 source $HOME/dotfiles/antigen.zsh
@@ -14,9 +12,6 @@ antigen use oh-my-zsh
 
 antigen bundle git
 antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-history-substring-search
 antigen bundle agkozak/zsh-z
 
 # Load the theme.
@@ -31,15 +26,10 @@ function setrepo() {
   GIT_CURRENT_REPO=$( git config --get remote.origin.url | sed 's/^.*github.com[:/]\(.*\).git/\1/' | sed 's/^.*github.com[:/]\(.*\)/\1/' )
 }
 
-# ciopen / propen command
+# propen command
 function propen() {
   setrepo
   open "https://github.com/${GIT_CURRENT_REPO}/pull/${GIT_CURRENT_BRANCH}"
-}
-
-function ciopen() {
-  setrepo
-  open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
 
 function git-push-set-upstream() {
@@ -96,7 +86,6 @@ function da() {
 # frequent commands
 alias a='aws'
 alias m='make'
-alias y='yarn'
 alias :q='exit'
 
 # For non-personal use
@@ -151,63 +140,24 @@ zle -N fzf-find-file
 bindkey '^q' fzf-find-file
 
 # AWS MFA with 1password
-alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | aws-mfa --duration 86400 --force'
-
-# Kubernetes settings start
-# Temporary off since I don't use kubernetes recently.
-# alias ks='kubectl'
-#
-# kss() {
-#   ks config get-contexts | sed "/^\ /d"
-#   ks auth can-i get ns >/dev/null 2>&1 && echo "(Authorized)" || echo "(Unauthorized)"
-# }
-#
-# kc() {
-#   test "$1" = "-" && kubectx - || kubectx "$(kubectx | fzf)"
-# }
-#
-# kn() {
-#   test "$1" = "-" && kubens - || kubens "$(kubens | fzf)"
-# }
-#
-# if [ $commands[kubectl] ]; then
-#   source <(kubectl completion zsh)
-# fi
-#
-# if [ -f "/usr/local/etc/zsh-kubectl-prompt/kubectl.zsh" ]; then
-#   source /usr/local/etc/zsh-kubectl-prompt/kubectl.zsh
-#   RPROMPT='%{$fg[blue]%}($ZSH_KUBECTL_PROMPT)%{$reset_color%}'
-# fi
-
-# Kubernetes settings end
+alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | pipx run aws-mfa --duration 86400 --force'
 
 autoload -U colors; colors
 
+# Ruby
 [[ -d ~/.rbenv  ]] && \
   export PATH=${HOME}/.rbenv/bin:${PATH} && \
   eval "$(rbenv init -)"
 
-# opam configuration
-test -r ${HOME}/.opam/opam-init/init.zsh && . ${HOME}/.opam/opam-init/init.zsh > /dev/null 2> /dev/null || true
-
-# deno configuration
-export DENO_INSTALL="$HOME/.deno"
-export PATH="$DENO_INSTALL/bin:$PATH"
-fpath=(~/.zsh $fpath)
-autoload -Uz compinit
-compinit -u
+# Go
+export GOPATH="$HOME/.go"
+export PATH=$GOPATH/bin:$PATH
 
 # For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
 # If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
 if (which zprof > /dev/null 2>&1) ;then
   zprof
 fi
-
-
-test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
-
-# Haskell
-[ -f "${HOME}/.ghcup/env" ] && source "${HOME}/.ghcup/env" # ghcup-env
 
 export VOLTA_HOME="$HOME/.volta"
 export PATH="$VOLTA_HOME/bin:$PATH"
