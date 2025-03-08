@@ -2,5 +2,7 @@
 aws-cli = "latest"
 go = "1.24"
 node = "22"
+"pipx:aws-mfa" = "latest"
 ruby = "3.4"
+rust = "latest"
 yarn = "4"

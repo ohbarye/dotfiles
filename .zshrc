@@ -140,7 +140,7 @@ zle -N fzf-find-file
 bindkey '^q' fzf-find-file
 
 # AWS MFA with 1password
-alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | pipx run aws-mfa --duration 86400 --force'
+alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | aws-mfa --duration 86400 --force'
 
 autoload -U colors; colors
 
