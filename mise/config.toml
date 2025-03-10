@@ -6,3 +6,7 @@ node = "22"
 ruby = "3.4"
 rust = "latest"
 yarn = "4"
+
+[settings]
+idiomatic_version_file = true
+
