@@ -24,17 +24,13 @@ mkdir -p $HOME/.config
 mkdir -p $HOME/.config/claude
 
 # Symlink individual files and directories
-if [ ! -e $HOME/.config/claude/CLAUDE.md ]; then
-  ln -s $HOME/dotfiles/.claude/CLAUDE.md $HOME/.config/claude/CLAUDE.md
-fi
-
-if [ ! -e $HOME/.config/claude/settings.json ]; then
-  ln -s $HOME/dotfiles/.claude/settings.json $HOME/.config/claude/settings.json
-fi
-
-if [ ! -e $HOME/.config/claude/commands ]; then
-  ln -s $HOME/dotfiles/.claude/commands $HOME/.config/claude/commands
-fi
+ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.config/claude/CLAUDE.md
+ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.config/claude/settings.json
+ln -sfn $HOME/dotfiles/.claude/commands $HOME/.config/claude/commands
+# for compatibility
+ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.claude/settings.json
+ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh

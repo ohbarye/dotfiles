@@ -1,5 +1,6 @@
 {
   "includeCoAuthoredBy": false,
+  "preferredNotifChannel": "terminal_bell",
   "permissions": {
     "allow": [
       "WebFetch",
