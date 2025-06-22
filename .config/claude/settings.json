@@ -10,11 +10,11 @@
       "Bash(git add:*)",
       "Bash(git push:*)",
       "Bash(git commit:*)",
-      "Bash(gh pr:*)"
+      "Bash(gh pr:*)",
+      "Bash(ls:*)",
+      "Bash(diff:*)",
+      "Bash(find:*)"
     ],
-    "deny": [
-      "Bash(rm:*)",
-      "Bash(curl:*)"
-    ]
+    "deny": ["Bash(rm:*)", "Bash(curl:*)"]
   }
 }
