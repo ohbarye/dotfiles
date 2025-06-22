@@ -42,3 +42,5 @@ alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
 . "$HOME/.cargo/env"
+
+. "$HOME/.local/bin/env"

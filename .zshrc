@@ -165,3 +165,5 @@ if (which zprof > /dev/null 2>&1) ;then
 fi
 
 eval "$(mise activate zsh)"
+
+. "$HOME/.local/bin/env"
