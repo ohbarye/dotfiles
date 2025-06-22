@@ -1,9 +1,0 @@
-CURRENT_TRACK=$(osascript <<EOF
-tell application "iTunes"
-  return name of current track & " - " & artist of current track
-end tell
-EOF)
-
-if [ -n "$CURRENT_TRACK" ]; then
-  echo '[🎵  '$CURRENT_TRACK']'
-fi
