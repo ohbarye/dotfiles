@@ -17,6 +17,14 @@
       "Bash(find:*)",
       "Bash(osascript:*)"
     ],
-    "deny": ["Bash(rm:*)", "Bash(curl:*)"]
+    "deny": [
+      "Read(.env*)",
+      "Write(.env*)",
+      "Bash(git reset:*)",
+      "Bash(git rebase:*)",
+      "Bash(sudo:*)",
+      "Bash(rm:*)",
+      "Bash(curl:*)"
+    ]
   }
 }
