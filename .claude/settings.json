@@ -14,7 +14,8 @@
       "Bash(gh pr:*)",
       "Bash(ls:*)",
       "Bash(diff:*)",
-      "Bash(find:*)"
+      "Bash(find:*)",
+      "Bash(osascript:*)"
     ],
     "deny": ["Bash(rm:*)", "Bash(curl:*)"]
   }
