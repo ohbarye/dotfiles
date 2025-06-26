@@ -15,6 +15,7 @@
       "Bash(ls:*)",
       "Bash(diff:*)",
       "Bash(find:*)",
+      "Bash(gemini:*)",
       "Bash(osascript:*)"
     ],
     "deny": [

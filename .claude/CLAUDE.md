@@ -30,3 +30,10 @@
     "require_user_approval": false
   }
   ```
+
+## Investigation
+
+- You may use Web search to investigate the problem or fetch information as you need.
+  ```sh
+  gemini -p "WebSearch: ..."
+  ```
