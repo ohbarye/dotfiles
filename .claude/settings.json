@@ -12,6 +12,8 @@
       "Bash(git push:*)",
       "Bash(git commit:*)",
       "Bash(gh pr:*)",
+      "Bash(gh issue:*)",
+      "Bash(gh api:*)",
       "Bash(ls:*)",
       "Bash(diff:*)",
       "Bash(find:*)",
