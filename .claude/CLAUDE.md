@@ -13,6 +13,11 @@
 - 実装中はテストを変更せず、コードを修正し続ける
 - すべてのテストが通過するまで繰り返す
 
+### Package Management
+
+- パッケージ管理は個々のプロジェクトに合わせる
+- ただしグローバルにインストールするツールは [`mise`](https://mise.jdx.dev/) を使用する
+
 ## Notification and User Communication
 
 ### macOS Notifications
