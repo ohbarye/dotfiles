@@ -1,7 +1,7 @@
 {
   "includeCoAuthoredBy": false,
-  "preferredNotifChannel": "terminal_bell",
   "permissions": {
+    "defaultMode": "acceptEdits",
     "allow": [
       "WebFetch",
       "Bash(ag:*)",
@@ -29,5 +29,7 @@
       "Bash(rm:*)",
       "Bash(curl:*)"
     ]
-  }
+  },
+  "preferredNotifChannel": "terminal_bell",
+  "model": "opus"
 }
