@@ -1,7 +1,6 @@
 {
   "includeCoAuthoredBy": false,
   "permissions": {
-    "defaultMode": "acceptEdits",
     "allow": [
       "WebFetch",
       "Bash(ag:*)",
@@ -28,8 +27,33 @@
       "Bash(sudo:*)",
       "Bash(rm:*)",
       "Bash(curl:*)"
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "model": "opus",
+  "hooks": {
+    "Notification": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Ping.aiff && osascript -e 'display notification \"waiting for your action\" with title \"Claude Code\"'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "afplay /System/Library/Sounds/Hero.aiff && osascript -e 'display notification \"finished\" with title \"Claude Code\"'"
+          }
+        ]
+      }
     ]
   },
-  "preferredNotifChannel": "terminal_bell",
-  "model": "opus"
+  "preferredNotifChannel": "terminal_bell"
 }
