@@ -167,3 +167,4 @@ fi
 eval "$(mise activate zsh)"
 
 . "$HOME/.local/bin/env"
+

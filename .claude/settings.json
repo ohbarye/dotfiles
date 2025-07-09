@@ -30,7 +30,6 @@
     ],
     "defaultMode": "acceptEdits"
   },
-  "model": "opus",
   "hooks": {
     "Notification": [
       {
