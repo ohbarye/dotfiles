@@ -21,6 +21,17 @@ esac
 echo "Detected OS: $OS_TYPE"
 echo "Homebrew prefix: $BREW_PREFIX"
 
+# Linux環境での必要パッケージのインストール
+if [[ "$OS_TYPE" == "linux" ]] && command -v apt-get >/dev/null 2>&1; then
+    echo "Installing Linux desktop integration packages..."
+
+    # パッケージリストの更新
+    sudo apt-get update || echo "Warning: Failed to update package list"
+
+    # 必要パッケージのインストール
+    sudo apt-get install -y xdg-utils libnotify-bin || echo "Warning: Failed to install some packages"
+fi
+
 DOT_FILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
 
 for file in ${DOT_FILES[@]}
