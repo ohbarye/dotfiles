@@ -54,6 +54,7 @@ ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
 fi
+source $HOME/dotfiles/antigen.zsh
 
 source $HOME/dotfiles/.zshrc
 
