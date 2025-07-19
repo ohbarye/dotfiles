@@ -93,7 +93,12 @@ if [[ $(id -un) != 'ohbarye' ]]; then
   # Run docker-compose command with specific file path.
   # The path may be a kind of secret information, so it's retrieved via macOS keychain
   # ref https://qiita.com/kroyagis/items/66ca139a4c41b710a53c
-  export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
+  if [[ "$OSTYPE" == "darwin"* ]]; then
+    export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
+  else
+    # Linux: Skip keychain access
+    export CUSTOM_DOCKER_COMPOSE_PATH=""
+  fi
   if [[ -f "$CUSTOM_DOCKER_COMPOSE_PATH" ]]; then
     alias bc='docker compose -f $CUSTOM_DOCKER_COMPOSE_PATH'
     alias bcr='bc run --rm $(pwd | xargs basename | sed -e "s/[a-z][0-9]\{2\}-//g")'
