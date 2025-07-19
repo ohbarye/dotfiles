@@ -19,7 +19,21 @@ antigen theme ys
 
 # Tell Antigen that you're done.
 antigen apply
-# antigen, oh-my-zsh settings start
+# antigen, oh-my-zsh settings end
+
+# open コマンドの対応
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    alias open='xdg-open'
+fi
+
+# 通知コマンドの関数化
+notify() {
+    if [[ "$OSTYPE" == "darwin"* ]]; then
+        osascript -e "display notification \"$1\" with title \"$2\""
+    elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+        notify-send "$2" "$1"
+    fi
+}
 
 function setrepo() {
   GIT_CURRENT_BRANCH=$( git symbolic-ref --short HEAD 2> /dev/null )
