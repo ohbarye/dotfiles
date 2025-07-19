@@ -68,5 +68,20 @@ fi
 eval "$($BREW_PREFIX/bin/brew shellenv)"
 brew update
 
-brew bundle --file $HOME/dotfiles/Brewfile
+# OS別Brewfileを選択
+case "$OS_TYPE" in
+    linux)
+        BREWFILE="$HOME/dotfiles/Brewfile.linux"
+        ;;
+    macos)
+        BREWFILE="$HOME/dotfiles/Brewfile.macos"
+        ;;
+    *)
+        echo "Unsupported OS for Brewfile: $OS_TYPE"
+        exit 1
+        ;;
+esac
+
+echo "Using Brewfile: $BREWFILE"
+brew bundle --file "$BREWFILE"
 
