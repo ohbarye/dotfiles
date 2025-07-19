@@ -2,6 +2,25 @@
 
 set -u
 
+# OSを検出
+case "$(uname -s)" in
+    Linux)
+        OS_TYPE="linux"
+        BREW_PREFIX="/home/linuxbrew/.linuxbrew"
+        ;;
+    Darwin)
+        OS_TYPE="macos"
+        BREW_PREFIX="/opt/homebrew"
+        ;;
+    *)
+        echo "Unsupported OS: $(uname -s)"
+        exit 1
+        ;;
+esac
+
+echo "Detected OS: $OS_TYPE"
+echo "Homebrew prefix: $BREW_PREFIX"
+
 DOT_FILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
 
 for file in ${DOT_FILES[@]}
