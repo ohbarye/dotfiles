@@ -32,11 +32,15 @@ if [[ "$OS_TYPE" == "linux" ]] && command -v apt-get >/dev/null 2>&1; then
     sudo apt-get install -y xdg-utils libnotify-bin || echo "Warning: Failed to install some packages"
 fi
 
-DOT_FILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
+DOTFILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
 
-for file in ${DOT_FILES[@]}
+for file in ${DOTFILES[@]}
 do
   if [ ! -e $HOME/$file ]; then
+    ln -s $HOME/dotfiles/$file $HOME/$file
+  elif [ ! -L $HOME/$file ]; then
+    # ファイルが存在し、シンボリックリンクでない場合はバックアップを作成
+    mv $HOME/$file $HOME/$file.bak
     ln -s $HOME/dotfiles/$file $HOME/$file
   fi
 done
@@ -44,6 +48,10 @@ done
 # miseの設定ファイルのシンボリックリンクを作成
 mkdir -p $HOME/.config/mise
 if [ ! -e $HOME/.config/mise/config.toml ]; then
+  ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
+elif [ ! -L $HOME/.config/mise/config.toml ]; then
+  # ファイルが存在し、シンボリックリンクでない場合はバックアップを作成
+  mv $HOME/.config/mise/config.toml $HOME/.config/mise/config.toml.bak
   ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
 fi
 
@@ -65,7 +73,6 @@ ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
 fi
-source $HOME/dotfiles/antigen.zsh
 
 source $HOME/dotfiles/.zshrc
 
