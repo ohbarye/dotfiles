@@ -64,7 +64,7 @@ git submodule update
 if [ ! -x "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 fi
-eval "$(/opt/homebrew/bin/brew shellenv)"
+eval "$($BREW_PREFIX/bin/brew shellenv)"
 brew update
 
 brew bundle --file $HOME/dotfiles/Brewfile
