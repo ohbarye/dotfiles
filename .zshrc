@@ -39,10 +39,6 @@ function git-push-set-upstream() {
 
 alias gps=git-push-set-upstream
 
-function notify-github-actions-ci-finish() {
-  gh run watch -i10 && osascript -e 'display notification "run is done!" with title "Terminal"'
-}
-
 alias nci=notify-github-actions-ci-finish
 
 # rails
