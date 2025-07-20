@@ -48,6 +48,7 @@ set clipboard=unnamed,autoselect
 set hlsearch
 set autowrite
 set updatetime=100
+set encoding=utf-8
 
 " Use English
 if has("multi_lang")
