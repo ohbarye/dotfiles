@@ -18,8 +18,6 @@
 - パッケージ管理は個々のプロジェクトに合わせる
 - ただしグローバルにインストールするツールは [`mise`](https://mise.jdx.dev/) を使用する
 
-## Notification and User Communication
-
 ## Investigation
 
 - You may use Web search to investigate the problem or fetch information as you need.
