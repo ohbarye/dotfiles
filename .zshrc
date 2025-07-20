@@ -21,8 +21,12 @@ antigen theme ys
 antigen apply
 # antigen, oh-my-zsh settings end
 
-# open コマンドの対応
+
+# Linux only settings
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+		# Linuxbrew PATH (Linux only)
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+		# open コマンドの対応
     alias open='xdg-open'
 fi
 
