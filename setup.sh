@@ -76,9 +76,6 @@ fi
 
 source $HOME/dotfiles/.zshrc
 
-git submodule init
-git submodule update
-
 
 if [ ! -x "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
