@@ -29,7 +29,7 @@ if [[ "$OS_TYPE" == "linux" ]] && command -v apt-get >/dev/null 2>&1; then
     sudo apt-get update || echo "Warning: Failed to update package list"
 
     # 必要パッケージのインストール
-    sudo apt-get install -y xdg-utils libnotify-bin || echo "Warning: Failed to install some packages"
+    sudo apt-get install -y xdg-utils libnotify-bin zsh-antigen || echo "Warning: Failed to install some packages"
 fi
 
 DOTFILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
@@ -73,9 +73,6 @@ ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
 fi
-
-# Antigenに必要な環境変数を設定
-export ANTIGEN_CACHE="${ANTIGEN_CACHE:-${ADOTDIR:-$HOME/.antigen}/init.zsh}"
 
 source $HOME/dotfiles/.zshrc
 
