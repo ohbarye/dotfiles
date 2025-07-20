@@ -74,6 +74,9 @@ if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
 fi
 
+# Antigenに必要な環境変数を設定
+export ANTIGEN_CACHE="${ANTIGEN_CACHE:-${ADOTDIR:-$HOME/.antigen}/init.zsh}"
+
 source $HOME/dotfiles/.zshrc
 
 git submodule init
