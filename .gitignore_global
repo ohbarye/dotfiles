@@ -3,3 +3,4 @@ vendor/bundle/
 .idea/
 node_modules/
 bower_components/
+.claude/tmp/
