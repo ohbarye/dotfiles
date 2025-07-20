@@ -13,4 +13,7 @@ yarn = "4"
 
 [settings]
 idiomatic_version_file = true
+trusted_config_paths = [
+  "~/dotfiles"
+]
 
