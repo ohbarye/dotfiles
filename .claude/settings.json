@@ -37,7 +37,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Ping.aiff && osascript -e 'display notification \"waiting for your action\" with title \"Claude Code\"'"
+            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Ping.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"waiting for your action\" with title \"Claude Code\"' || true"
           }
         ]
       }
@@ -48,11 +48,10 @@
         "hooks": [
           {
             "type": "command",
-            "command": "afplay /System/Library/Sounds/Hero.aiff && osascript -e 'display notification \"finished\" with title \"Claude Code\"'"
+            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
           }
         ]
       }
     ]
-  },
-  "preferredNotifChannel": "terminal_bell"
+  }
 }
