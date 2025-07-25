@@ -1,5 +1,3 @@
-export LC_ALL='ja_JP.UTF-8'
-
 # antigen, oh-my-zsh settings start
 source $HOME/dotfiles/antigen.zsh
 
