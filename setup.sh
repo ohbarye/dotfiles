@@ -45,6 +45,16 @@ do
   fi
 done
 
+# OS別のgit設定ファイルのシンボリックリンクを作成
+case "$OS_TYPE" in
+    linux)
+        ln -sf $HOME/dotfiles/.gitconfig.linux $HOME/.gitconfig.os
+        ;;
+    macos)
+        ln -sf $HOME/dotfiles/.gitconfig.macos $HOME/.gitconfig.os
+        ;;
+esac
+
 # miseの設定ファイルのシンボリックリンクを作成
 mkdir -p $HOME/.config/mise
 if [ ! -e $HOME/.config/mise/config.toml ]; then

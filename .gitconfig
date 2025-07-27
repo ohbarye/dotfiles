@@ -41,8 +41,8 @@
 	insteadOf = git@github.com:
 	insteadOf = git://github.com/
 
-[credential]
-	helper = osxkeychain
+[includeIf "gitdir:/"]
+	path = ~/.gitconfig.os
 [pull]
 	ff = only
 [init]
