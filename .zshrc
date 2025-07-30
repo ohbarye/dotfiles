@@ -1,9 +1,8 @@
 # antigen, oh-my-zsh settings start
 source $HOME/dotfiles/antigen.zsh
 
-# oh-my-zsh sets HISTFILE as .zsh_history without this line
-# https://github.com/robbyrussell/oh-my-zsh/blob/1f078898887bf96e793772a80e0dae1e96eeadc8/lib/history.zsh#L29
-HISTFILE="$HOME/.zhistory"
+# oh-my-zsh sets HISTFILE as .zsh_history by default. This line just make it explicit.
+HISTFILE="$HOME/.zsh_history"
 
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
