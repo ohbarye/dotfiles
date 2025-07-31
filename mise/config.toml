@@ -6,7 +6,7 @@ node = "22"
 "npm:@devcontainers/cli" = "latest"
 "npm:@google/gemini-cli" = "latest"
 "pipx:aws-mfa" = "latest"
-ruby = "3.4.4"
+ruby = "3.4.5"
 rust = "latest"
 yarn = "4"
 
