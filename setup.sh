@@ -29,7 +29,7 @@ if [[ "$OS_TYPE" == "linux" ]] && command -v apt-get >/dev/null 2>&1; then
     sudo apt-get update || echo "Warning: Failed to update package list"
 
     # 必要パッケージのインストール
-    sudo apt-get install -y xdg-utils libnotify-bin zsh-antigen || echo "Warning: Failed to install some packages"
+    sudo apt-get install -y xdg-utils libnotify-bin zsh-antigen fzf || echo "Warning: Failed to install some packages"
 fi
 
 DOTFILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
