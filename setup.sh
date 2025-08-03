@@ -65,20 +65,11 @@ elif [ ! -L $HOME/.config/mise/config.toml ]; then
   ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
 fi
 
-# Config files
-mkdir -p $HOME/.config
-
-# Create claude config directory
-mkdir -p $HOME/.config/claude
-
 # Symlink individual files and directories
-ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.config/claude/CLAUDE.md
-ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.config/claude/settings.json
-ln -sfn $HOME/dotfiles/.claude/commands $HOME/.config/claude/commands
-# for compatibility
 ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.claude/settings.json
 ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
+ln -sfn $HOME/dotfiles/.claude/agents $HOME/.claude/agents
 
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
