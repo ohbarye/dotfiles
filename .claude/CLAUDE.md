@@ -20,7 +20,4 @@
 
 ## Investigation
 
-- You may use Web search to investigate the problem or fetch information as you need.
-  ```sh
-  gemini -p "WebSearch: ..."
-  ```
+設計や開発の最中に技術的に詰まったところやわからないところ、解決できないエラーなどがあれば o3 mcp に英語で相談してください。
