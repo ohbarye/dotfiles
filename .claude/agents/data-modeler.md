@@ -228,4 +228,3 @@ With Long-term Event:
 ```
 
 This pattern should be applied judiciously - only when the performance benefit justifies the added complexity of maintaining an updatable summary table alongside immutable events.
-rovide
