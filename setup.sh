@@ -70,6 +70,7 @@ ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.claude/settings.json
 ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
 ln -sfn $HOME/dotfiles/.claude/agents $HOME/.claude/agents
+ln -sfn $HOME/dotfiles/.codex/config.toml $HOME/.codex/config.toml
 
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh

@@ -1,0 +1,46 @@
+# ref: https://github.com/openai/codex/blob/main/docs/config.md#config-reference
+
+model = "gpt-5-codex"
+model_verbosity = "medium" # 詳細な応答の冗長さ（情報量の多さ）
+sandbox_mode = "read-only"  # 最も安全（必要時のみ緩める）
+
+# コマンド実行を承認するかどうかをプロンプトで確認すべきタイミング
+# - untrusted: 「信頼済み」でないコマンド（危険操作など）は実行前に都度承認を求め
+# - on-request: モデル（Codex）が判断して承認を要求する場合
+# - on-failure: コマンドが失敗した場合のみ承認にエスカレート
+# - never: いかなる場合も承認を求めず、すべての操作を自動で実行
+approval_policy = "untrusted"
+
+file_opener = "cursor" # or vscode
+notify = ["bash","-lc","afplay /System/Library/Sounds/Ping.aiff"]
+
+# trueにすると、npmのインストールや外部APIへのリクエストが可能 (デフォルトは false)
+network_access = false
+
+model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
+
+[tools]
+web_search = true # Web 検索を許可 (デフォルトは false)
+
+[tui]
+#　デスクトップ通知に関する設定
+# - "agent-turn-complete": エージェントの１ターン処理が完了した際に通知
+# - "approval-requested": ユーザーの操作や承認が必要な時に通知
+notifications = ["agent-turn-complete","approval-requested"]
+
+[shell_environment_policy]
+inherit = "core"
+include_only = ["PATH","HOME","USER"]
+exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
+
+[mcp_servers.serena]
+command = "uvx"
+args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex", "--enable-web-dashboard=false", "--project", "$(pwd)"]
+
+[mcp_servers.chrome-devtools]
+command = "npx"
+args = ["chrome-devtools-mcp"]
+
+[mcp_servers.playwright]
+command = "npx"
+args = ["-y", "@playwright/mcp"]
