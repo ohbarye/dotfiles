@@ -19,8 +19,8 @@ network_access = false
 
 model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
 
-[tools]
-web_search = true # Web 検索を許可 (デフォルトは false)
+[features]
+web_search_request = true # Web 検索を許可 (デフォルトは false)
 
 [tui]
 #　デスクトップ通知に関する設定
