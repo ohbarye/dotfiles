@@ -1,4 +1,4 @@
-# CLAUDE.md
+# AI Agent Guide
 
 ## Development Philosophy
 
@@ -18,6 +18,13 @@
 - パッケージ管理は個々のプロジェクトに合わせる
 - ただしグローバルにインストールするツールは [`mise`](https://mise.jdx.dev/) を使用する
 
+### GitHub
+
+- `gh` コマンドを使用して GitHub の操作を行う
+
 ## Investigation
 
-設計や開発の最中に技術的に詰まったところやわからないところ、解決できないエラーなどがあれば @agent-web-search-specialist に英語で相談してください。
+設計や開発の最中に技術的に詰まったところやわからないところ、解決できないエラーなどがあれば以下の順に試行してください。
+
+1. subagent を用いて調査を行う
+2. Web Search tool を用いて調査を行う
