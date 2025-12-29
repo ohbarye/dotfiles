@@ -37,13 +37,15 @@
   dc = diff --cached
   cf = commit -v --fixup=HEAD
   ri = !sh -c 'git rebase --autosquash -i HEAD~$0'
-[url "https://github.com/"]
-	insteadOf = git@github.com:
-	insteadOf = git://github.com/
-
 [includeIf "gitdir:/"]
 	path = ~/.gitconfig.os
 [pull]
 	ff = only
 [init]
 	defaultBranch = main
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
