@@ -29,13 +29,9 @@ web_search_request = true # Web 検索を許可 (デフォルトは false)
 notifications = ["agent-turn-complete","approval-requested"]
 
 [shell_environment_policy]
-inherit = "core"
+inherit = "all"
 include_only = ["PATH","HOME","USER"]
 exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
-
-[mcp_servers.serena]
-command = "uvx"
-args = ["--from", "git+https://github.com/oraios/serena", "serena", "start-mcp-server", "--context", "codex", "--enable-web-dashboard=false", "--project", "$(pwd)"]
 
 [mcp_servers.chrome-devtools]
 command = "npx"
