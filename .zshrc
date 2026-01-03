@@ -180,3 +180,12 @@ if (which zprof > /dev/null 2>&1) ;then
 fi
 
 eval "$(mise activate zsh)"
+
+# bun completions
+[ -s "/Users/m-ohba/.bun/_bun" ] && source "/Users/m-ohba/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+alias claude-mem='/Users/m-ohba/.bun/bin/bun "/Users/m-ohba/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
