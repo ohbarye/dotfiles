@@ -52,7 +52,7 @@ function git-push-set-upstream() {
   git push --set-upstream origin ${GIT_CURRENT_BRANCH} && propen
 }
 
-alias gps=git-push-set-upstream
+alias gps='git-push-set-upstream'
 
 # rails
 alias r='rails'
@@ -72,7 +72,7 @@ function cd-ghq-list() {
         cd "$(ghq root)/$DIR"
     fi
 }
-alias gr=cd-ghq-list
+alias gr='cd-ghq-list'
 alias ghb='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine

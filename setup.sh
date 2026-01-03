@@ -69,6 +69,7 @@ fi
 ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.claude/settings.json
 ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
+ln -sfn $HOME/dotfiles/.claude/skills $HOME/.claude/skills
 ln -sfn $HOME/dotfiles/.claude/agents $HOME/.claude/agents
 ln -sfn $HOME/dotfiles/.codex/config.toml $HOME/.codex/config.toml
 ln -sfn $HOME/dotfiles/.codex/AGENTS.md $HOME/.codex/AGENTS.md
