@@ -11,6 +11,7 @@ ruby = "latest"
 rust = "latest"
 uv = "latest"
 yarn = "4"
+bun = "latest"
 
 [settings]
 trusted_config_paths = [
