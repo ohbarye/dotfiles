@@ -54,15 +54,14 @@ function git-push-set-upstream() {
 
 alias gps=git-push-set-upstream
 
-alias nci=notify-github-actions-ci-finish
-
 # rails
 alias r='rails'
 
 # bundler
-alias bi='bundle install -j4'
+alias bi='bundle install'
 alias be='bundle exec'
 alias ber='bundle exec rspec'
+alias bepr='bundle exec parallel_rspec'
 
 # git
 alias g='git'
