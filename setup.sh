@@ -66,13 +66,13 @@ elif [ ! -L $HOME/.config/mise/config.toml ]; then
 fi
 
 # Symlink individual files and directories
-ln -sf $HOME/dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
-ln -sf $HOME/dotfiles/.claude/settings.json $HOME/.claude/settings.json
-ln -sfn $HOME/dotfiles/.claude/commands $HOME/.claude/commands
-ln -sfn $HOME/dotfiles/.claude/skills $HOME/.claude/skills
-ln -sfn $HOME/dotfiles/.claude/agents $HOME/.claude/agents
-ln -sfn $HOME/dotfiles/.codex/config.toml $HOME/.codex/config.toml
-ln -sfn $HOME/dotfiles/.codex/AGENTS.md $HOME/.codex/AGENTS.md
+ln -sf ../dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
+ln -sf ../dotfiles/.claude/settings.json $HOME/.claude/settings.json
+ln -sfn ../dotfiles/.claude/commands $HOME/.claude/commands
+ln -sfn ../dotfiles/.claude/skills $HOME/.claude/skills
+ln -sfn ../dotfiles/.claude/agents $HOME/.claude/agents
+ln -sfn ../dotfiles/.codex/config.toml $HOME/.codex/config.toml
+ln -sfn ../dotfiles/.codex/AGENTS.md $HOME/.codex/AGENTS.md
 
 if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
   curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
