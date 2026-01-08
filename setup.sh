@@ -65,7 +65,8 @@ elif [ ! -L $HOME/.config/mise/config.toml ]; then
   ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
 fi
 
-# Symlink individual files and directories
+# Symlink individual files and directories for AI agents
+# これらをDev Containerのコンテナにマウントし、VS Codeのdotfiles連携を使うと参照できないパスへのsymlinkになってしまうため相対パスにすうr
 ln -sf ../dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
 ln -sf ../dotfiles/.claude/settings.json $HOME/.claude/settings.json
 ln -sfn ../dotfiles/.claude/commands $HOME/.claude/commands

@@ -57,7 +57,8 @@
   "enabledPlugins": {
     "ralph-wiggum@claude-plugins-official": true,
     "reviw-plugin@reviw-plugins": true,
-    "dig@kuu-marketplace": true,
-    "claude-mem@thedotmack": true
+    "claude-mem@thedotmack": true,
+    "ralph-loop@claude-plugins-official": true,
+    "dig@kuu-marketplace": true
   }
 }
