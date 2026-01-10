@@ -30,6 +30,7 @@
     ],
     "defaultMode": "acceptEdits"
   },
+  "model": "opus",
   "hooks": {
     "Notification": [
       {
@@ -55,10 +56,9 @@
     ]
   },
   "enabledPlugins": {
-    "ralph-wiggum@claude-plugins-official": true,
-    "reviw-plugin@reviw-plugins": true,
     "claude-mem@thedotmack": true,
     "ralph-loop@claude-plugins-official": true,
-    "dig@kuu-marketplace": true
+    "dig@kuu-marketplace": true,
+    "code-simplifier@claude-plugins-official": true
   }
 }
