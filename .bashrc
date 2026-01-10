@@ -43,6 +43,4 @@ alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
 . "$HOME/.cargo/env"
 
-. "$HOME/.local/bin/env"
-
 alias claude-mem='bun "/Users/m-ohba/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
