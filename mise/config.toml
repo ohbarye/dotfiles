@@ -2,7 +2,6 @@
 aws-cli = "latest"
 go = "1.24"
 node = "22"
-"npm:@anthropic-ai/claude-code" = "latest"
 "npm:@openai/codex" = "latest"
 "npm:@devcontainers/cli" = "latest"
 "npm:@google/gemini-cli" = "latest"
