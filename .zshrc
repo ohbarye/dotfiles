@@ -182,10 +182,12 @@ fi
 eval "$(mise activate zsh)"
 
 # bun completions
-[ -s "/Users/m-ohba/.bun/_bun" ] && source "/Users/m-ohba/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
-alias claude-mem='/Users/m-ohba/.bun/bin/bun "/Users/m-ohba/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+alias claude-mem='$HOME/.bun/bin/bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+
+export PATH="$HOME/.local/bin:$PATH"
