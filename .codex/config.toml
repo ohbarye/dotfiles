@@ -1,8 +1,40 @@
-# ref: https://github.com/openai/codex/blob/main/docs/config.md#config-reference
+# ref: https://developers.openai.com/codex/config-sample
 
-model = "gpt-5-codex"
-model_verbosity = "medium" # 詳細な応答の冗長さ（情報量の多さ）
-sandbox_mode = "read-only"  # 最も安全（必要時のみ緩める）
+################################################################################
+# Core Model Selection
+################################################################################
+model = "gpt-5.2-codex"
+review_model = "gpt-5.2-codex"
+model_verbosity = "high" # 詳細な応答の冗長さ（情報量の多さ）
+
+# from https://steipete.me/posts/2025/shipping-at-inference-speed#the-model-shift
+# Leave room for native compaction near the 272–273k context window.
+# Formula: 273000 - (tool_output_token_limit + 15000)
+# With tool_output_token_limit=25000 ⇒ 273000 - (25000 + 15000) = 233000
+model_auto_compact_token_limit = 233000
+tool_output_token_limit = 25000
+
+################################################################################
+# Reasoning & Verbosity (Responses API capable models)
+################################################################################
+
+model_reasoning_effort = "high" # モデルがどれだけ「考える」かの深さ
+
+################################################################################
+# Instruction Overrides
+################################################################################
+
+developer_instructions = "Think in English, but generate responses in Japanese."
+
+################################################################################
+# Notifications
+################################################################################
+
+notify = ["bash","-lc","afplay /System/Library/Sounds/Ping.aiff"]
+
+################################################################################
+# Approval & Sandbox
+################################################################################
 
 # コマンド実行を承認するかどうかをプロンプトで確認すべきタイミング
 # - untrusted: 「信頼済み」でないコマンド（危険操作など）は実行前に都度承認を求め
@@ -11,16 +43,41 @@ sandbox_mode = "read-only"  # 最も安全（必要時のみ緩める）
 # - never: いかなる場合も承認を求めず、すべての操作を自動で実行
 approval_policy = "untrusted"
 
+# Filesystem/network sandbox policy for tool calls:
+# - read-only (default)
+# - workspace-write
+# - danger-full-access (no sandbox; extremely risky)
+sandbox_mode = "workspace-write"
+
+################################################################################
+# History & File Opener
+################################################################################
+
 file_opener = "cursor" # or vscode
-notify = ["bash","-lc","afplay /System/Library/Sounds/Ping.aiff"]
 
-# trueにすると、npmのインストールや外部APIへのリクエストが可能 (デフォルトは false)
-network_access = false
-
-model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
+################################################################################
+# Centralized Feature Flags (preferred)
+################################################################################
 
 [features]
 web_search_request = true # Web 検索を許可 (デフォルトは false)
+unified_exec = true
+apply_patch_freeform = true
+skills = true
+shell_snapshot = true
+
+################################################################################
+# Shell Environment Policy for spawned processes (table)
+################################################################################
+
+[shell_environment_policy]
+inherit = "all"
+include_only = ["PATH","HOME","USER"]
+exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
+
+################################################################################
+# UI, Notifications, and Misc (tables)
+################################################################################
 
 [tui]
 #　デスクトップ通知に関する設定
@@ -28,10 +85,9 @@ web_search_request = true # Web 検索を許可 (デフォルトは false)
 # - "approval-requested": ユーザーの操作や承認が必要な時に通知
 notifications = ["agent-turn-complete","approval-requested"]
 
-[shell_environment_policy]
-inherit = "all"
-include_only = ["PATH","HOME","USER"]
-exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
+################################################################################
+# Define MCP servers under this table. Leave empty to disable.
+################################################################################
 
 [mcp_servers.chrome-devtools]
 command = "npx"
