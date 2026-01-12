@@ -1,7 +1,7 @@
 [tools]
 aws-cli = "latest"
-go = "1.24"
-node = "22"
+go = "1.25"
+node = "24"
 "npm:@openai/codex" = "latest"
 "npm:@devcontainers/cli" = "latest"
 "npm:@google/gemini-cli" = "latest"
@@ -12,6 +12,7 @@ rust = "latest"
 uv = "latest"
 yarn = "4"
 bun = "latest"
+pinact = "latest"
 
 [settings]
 trusted_config_paths = [
