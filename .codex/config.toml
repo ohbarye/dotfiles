@@ -41,7 +41,7 @@ notify = ["bash","-lc","afplay /System/Library/Sounds/Ping.aiff"]
 # - on-request: モデル（Codex）が判断して承認を要求する場合
 # - on-failure: コマンドが失敗した場合のみ承認にエスカレート
 # - never: いかなる場合も承認を求めず、すべての操作を自動で実行
-approval_policy = "untrusted"
+approval_policy = "on-request"
 
 # Filesystem/network sandbox policy for tool calls:
 # - read-only (default)
