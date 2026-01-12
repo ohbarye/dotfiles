@@ -59,6 +59,17 @@ After implementing a feature, always create E2E tests and capture evidence to ve
 
 - If you encounter issues during browser operations or testing, ask the human for assistance
 
+### Browser Automation
+
+Use `agent-browser` for web automation. Run `agent-browser --help` for all commands.
+
+Core workflow:
+
+1. `agent-browser open <url>` - Navigate to page
+2. `agent-browser snapshot -i` - Get interactive elements with refs (@e1, @e2)
+3. `agent-browser click @e1` / `fill @e2 "text"` - Interact using refs
+4. Re-snapshot after page changes
+
 ## Investigation
 
 If you encounter technical blockers, unknowns, or unresolvable errors during design or development, try the following in order:
