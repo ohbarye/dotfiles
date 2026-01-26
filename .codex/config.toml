@@ -30,7 +30,7 @@ developer_instructions = "Think in English, but generate responses in Japanese."
 # Notifications
 ################################################################################
 
-notify = ["bash","-lc","afplay /System/Library/Sounds/Ping.aiff"]
+notify = ["bash","-lc","[[ \"$OSTYPE\" == darwin* ]] && afplay /System/Library/Sounds/Ping.aiff"]
 
 ################################################################################
 # Approval & Sandbox
