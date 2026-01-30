@@ -89,10 +89,10 @@ notifications = ["agent-turn-complete","approval-requested"]
 # Define MCP servers under this table. Leave empty to disable.
 ################################################################################
 
-[mcp_servers.chrome-devtools]
-command = "npx"
-args = ["chrome-devtools-mcp"]
-
-[mcp_servers.playwright]
-command = "npx"
-args = ["-y", "@playwright/mcp"]
+# [mcp_servers.chrome-devtools]
+# command = "npx"
+# args = ["chrome-devtools-mcp"]
+#
+# [mcp_servers.playwright]
+# command = "npx"
+# args = ["-y", "@playwright/mcp"]
