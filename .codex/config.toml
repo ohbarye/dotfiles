@@ -54,6 +54,7 @@ sandbox_mode = "workspace-write"
 ################################################################################
 
 file_opener = "cursor" # or vscode
+personality = "pragmatic"
 
 ################################################################################
 # Centralized Feature Flags (preferred)
