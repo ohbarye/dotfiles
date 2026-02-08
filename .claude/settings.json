@@ -1,4 +1,8 @@
 {
+  "env": {
+    "ENABLE_LSP_TOOL": "1",
+    "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
   "includeCoAuthoredBy": false,
   "permissions": {
     "allow": [
@@ -60,6 +64,8 @@
     "claude-mem@thedotmack": true,
     "ralph-loop@claude-plugins-official": true,
     "dig@kuu-marketplace": true,
-    "code-simplifier@claude-plugins-official": true
+    "code-simplifier@claude-plugins-official": true,
+    "ruby-skills@ruby-skills": true,
+    "ruby-lsp@ruby-skills": true
   }
 }
