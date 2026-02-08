@@ -61,7 +61,6 @@ personality = "pragmatic"
 ################################################################################
 
 [features]
-web_search_request = true # Web 検索を許可 (デフォルトは false)
 unified_exec = true
 apply_patch_freeform = true
 skills = true
@@ -85,6 +84,16 @@ exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
 # - "agent-turn-complete": エージェントの１ターン処理が完了した際に通知
 # - "approval-requested": ユーザーの操作や承認が必要な時に通知
 notifications = ["agent-turn-complete","approval-requested"]
+
+################################################################################
+# Web Search
+################################################################################
+
+# Web search mode: disabled | cached | live. Default: "cached"
+# cached serves results from a web search cache (an OpenAI-maintained index).
+# cached returns pre-indexed results; live fetches the most recent data.
+# If you use --yolo or another full access sandbox setting, web search defaults to live.
+web_search = "live"
 
 ################################################################################
 # Define MCP servers under this table. Leave empty to disable.
