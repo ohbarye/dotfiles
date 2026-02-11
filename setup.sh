@@ -79,6 +79,7 @@ ln -sfn ../dotfiles/.claude/skills "$HOME/.claude/skills"
 ln -sfn ../dotfiles/.claude/agents "$HOME/.claude/agents"
 ln -sfn ../dotfiles/.codex/config.toml "$HOME/.codex/config.toml"
 ln -sfn ../dotfiles/.codex/AGENTS.md "$HOME/.codex/AGENTS.md"
+ln -sfn ../.claude/skills "$HOME/.codex/skills"
 
 if [ ! -x "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
