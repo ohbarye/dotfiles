@@ -1,0 +1,25 @@
+shell = "zsh"
+
+# oh-my-zsh library (must be loaded first for plugins/themes to work)
+[plugins.oh-my-zsh]
+github = "ohmyzsh/ohmyzsh"
+use = ["lib/*.zsh"]
+
+# oh-my-zsh plugins
+[plugins.oh-my-zsh-plugins-git]
+github = "ohmyzsh/ohmyzsh"
+dir = "plugins/git"
+use = ["*.plugin.zsh"]
+
+# oh-my-zsh theme
+[plugins.oh-my-zsh-theme-ys]
+github = "ohmyzsh/ohmyzsh"
+dir = "themes"
+use = ["ys.zsh-theme"]
+
+# Third-party plugins
+[plugins.zsh-syntax-highlighting]
+github = "zsh-users/zsh-syntax-highlighting"
+
+[plugins.zsh-z]
+github = "agkozak/zsh-z"

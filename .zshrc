@@ -1,22 +1,7 @@
-# antigen, oh-my-zsh settings start
-source $HOME/dotfiles/antigen.zsh
+# sheldon (plugin manager)
+eval "$(sheldon source)"
 
-# oh-my-zsh sets HISTFILE as .zsh_history by default. This line just make it explicit.
 HISTFILE="$HOME/.zsh_history"
-
-# Load the oh-my-zsh's library.
-antigen use oh-my-zsh
-
-antigen bundle git
-antigen bundle zsh-users/zsh-syntax-highlighting
-antigen bundle agkozak/zsh-z
-
-# Load the theme.
-antigen theme ys
-
-# Tell Antigen that you're done.
-antigen apply
-# antigen, oh-my-zsh settings end
 
 
 # Linux only settings
