@@ -2,6 +2,8 @@
 *.swp
 .vim/bundle
 .vim/dein
+.vim/plugged
+.vim/autoload
 .bundle/cache
 .tmux/plugins
 .tmux/resurrect

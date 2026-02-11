@@ -1,0 +1,60 @@
+" === Fuzzy Finder (replaces unite.vim, ctrlp, ag.vim) ===
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
+nmap <silent> <C-u><C-f> :Files<CR>
+nmap <silent> <C-u><C-b> :Buffers<CR>
+nmap <silent> <C-u><C-r> :Rg<CR>
+nmap <silent> <C-u><C-m> :History<CR>
+
+" === Lint/Fix (replaces syntastic) ===
+Plug 'dense-analysis/ale'
+let g:ale_linters = {
+      \ 'javascript': ['eslint'],
+      \ 'ruby': ['rubocop'],
+      \ }
+let g:ale_fix_on_save = 0
+let g:ale_sign_error = 'E'
+let g:ale_sign_warning = 'W'
+let g:ale_open_list = 1
+let g:ale_list_window_size = 6
+
+" === Git ===
+Plug 'tpope/vim-fugitive'
+
+" === File Tree ===
+Plug 'scrooloose/nerdtree'
+nnoremap <silent><C-e> :NERDTreeToggle<CR>
+nnoremap <f2> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+let NERDTreeShowHidden = 1
+
+" === Snippets ===
+Plug 'honza/vim-snippets'
+
+" === Tags ===
+Plug 'majutsushi/tagbar'
+let g:tlist_js_settings = 'javascript;f:function;v:variable'
+nmap <F8> :TagbarToggle<CR>
+
+" === Languages ===
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
+Plug 'tpope/vim-rails'
+Plug 'hail2u/vim-css3-syntax'
+Plug 'othree/html5.vim'
+Plug 'mattn/emmet-vim'
+let g:user_emmet_settings = {
+      \ 'lang' : 'ja'
+      \ }
+Plug 'heavenshell/vim-jsdoc'
+Plug 'alpaca-tc/vim-endwise'
+
+" === Editing ===
+Plug 'kana/vim-submode'
+Plug 'AndrewRadev/switch.vim'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'thinca/vim-visualstar'
+Plug 'thinca/vim-quickrun'
+let g:quickrun_config = {'*': {'hook/time/enable': '1'}}
+silent! map <unique> <Leader>r <Plug>(quickrun)
+Plug 'tpope/vim-speeddating'

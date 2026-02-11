@@ -1,35 +1,16 @@
 " Note: Skip initialization for vim-tiny or vim-small.
 if 0 | endif
 
-" dein settings begin
-if &compatible
-  set nocompatible " Be iMproved
+" vim-plug auto-install
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+  silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-" プラグインが実際にインストールされるディレクトリ
-let s:dein_dir = expand('~/.vim/dein')
-" dein.vim 本体
-let s:dein_repo_dir = s:dein_dir . '/repos/github.com/Shougo/dein.vim'
-
-" dein.vim がなければ GitHub から落としてくる
-if &runtimepath !~# '/dein.vim'
-  if !isdirectory(s:dein_repo_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_repo_dir
-  endif
-  execute 'set runtimepath^=' . fnamemodify(s:dein_repo_dir, ':p')
-endif
-
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
-  source ~/.vim/.vimrc.dein
-  call dein#end()
-  call dein#save_state()
-endif
-
-if dein#check_install()
-  call dein#install()
-endif
-" dein settings end
+call plug#begin('~/.vim/plugged')
+source ~/.vim/.vimrc.plugins
+call plug#end()
 
 filetype plugin indent on
 
@@ -54,8 +35,6 @@ set encoding=utf-8
 if has("multi_lang")
   language C
 endif
-
-syntax on " enable syntax highlight
 
 au BufNewFile,Bufread *.ru        set filetype=ruby
 au BufNewFile,Bufread Gemfile     set filetype=ruby
@@ -84,23 +63,6 @@ augroup HighlightTrailingSpaces
 augroup END
 
 set noswapfile
-
-" set paste
-if &term =~ "xterm"
-  let &t_ti .= "\e[?2004h"
-  let &t_te .= "\e[?2004l"
-  let &pastetoggle = "\e[201~"
-
-  function XTermPasteBegin(ret)
-      set paste
-      return a:ret
-  endfunction
-
-  noremap <special> <expr> <Esc>[200~ XTermPasteBegin("0i")
-  inoremap <special> <expr> <Esc>[200~ XTermPasteBegin("")
-  cnoremap <special> <Esc>[200~ <nop>
-  cnoremap <special> <Esc>[201~ <nop>
-endif
 
 syntax enable
 set background=dark
