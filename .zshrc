@@ -1,17 +1,15 @@
+# Linux only settings
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    # Linuxbrew PATH (Linux only) — must be before sheldon
+    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+    alias open='xdg-open'
+fi
+
 # sheldon (plugin manager)
 autoload -Uz compinit && compinit
 eval "$(sheldon source)"
 
 HISTFILE="$HOME/.zsh_history"
-
-
-# Linux only settings
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-		# Linuxbrew PATH (Linux only)
-    export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-		# open コマンドの対応
-    alias open='xdg-open'
-fi
 
 # 通知コマンドの関数化
 notify() {
