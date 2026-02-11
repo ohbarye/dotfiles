@@ -25,7 +25,9 @@ set cursorcolumn
 set expandtab
 set mouse=a " enable tap scroll
 set wildmode=longest:full,full
-set clipboard=unnamed,autoselect
+if has('clipboard')
+  set clipboard=unnamed,autoselect
+endif
 set hlsearch
 set autowrite
 set updatetime=100
