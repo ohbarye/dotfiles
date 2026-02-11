@@ -37,14 +37,8 @@ let g:tlist_js_settings = 'javascript;f:function;v:variable'
 nmap <F8> :TagbarToggle<CR>
 
 " === Languages ===
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-Plug 'tpope/vim-rails'
 Plug 'hail2u/vim-css3-syntax'
 Plug 'othree/html5.vim'
-Plug 'mattn/emmet-vim'
-let g:user_emmet_settings = {
-      \ 'lang' : 'ja'
-      \ }
 Plug 'heavenshell/vim-jsdoc'
 Plug 'alpaca-tc/vim-endwise'
 
