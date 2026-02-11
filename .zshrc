@@ -1,4 +1,5 @@
 # sheldon (plugin manager)
+autoload -Uz compinit && compinit
 eval "$(sheldon source)"
 
 HISTFILE="$HOME/.zsh_history"
