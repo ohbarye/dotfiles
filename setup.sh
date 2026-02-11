@@ -29,58 +29,56 @@ if [[ "$OS_TYPE" == "linux" ]] && command -v apt-get >/dev/null 2>&1; then
     sudo apt-get update || echo "Warning: Failed to update package list"
 
     # 必要パッケージのインストール
-    sudo apt-get install -y xdg-utils libnotify-bin zsh-antigen fzf || echo "Warning: Failed to install some packages"
+    sudo apt-get install -y xdg-utils libnotify-bin fzf || echo "Warning: Failed to install some packages"
 fi
 
 DOTFILES=( .bash_profile .bashrc .gitconfig .vimrc .vim .bundle .gitignore_global .zlogin .zlogout .zprofile .zshenv .zshrc .ideavimrc .irbrc )
 
 for file in ${DOTFILES[@]}
 do
-  if [ ! -e $HOME/$file ]; then
-    ln -s $HOME/dotfiles/$file $HOME/$file
-  elif [ ! -L $HOME/$file ]; then
+  if [ ! -e "$HOME/$file" ]; then
+    ln -s "$HOME/dotfiles/$file" "$HOME/$file"
+  elif [ ! -L "$HOME/$file" ]; then
     # ファイルが存在し、シンボリックリンクでない場合はバックアップを作成
-    mv $HOME/$file $HOME/$file.bak
-    ln -s $HOME/dotfiles/$file $HOME/$file
+    mv "$HOME/$file" "$HOME/$file.bak"
+    ln -s "$HOME/dotfiles/$file" "$HOME/$file"
   fi
 done
 
 # OS別のgit設定ファイルのシンボリックリンクを作成
 case "$OS_TYPE" in
     linux)
-        ln -sf $HOME/dotfiles/.gitconfig.linux $HOME/.gitconfig.os
+        ln -sf "$HOME/dotfiles/.gitconfig.linux" "$HOME/.gitconfig.os"
         ;;
     macos)
-        ln -sf $HOME/dotfiles/.gitconfig.macos $HOME/.gitconfig.os
+        ln -sf "$HOME/dotfiles/.gitconfig.macos" "$HOME/.gitconfig.os"
         ;;
 esac
 
 # miseの設定ファイルのシンボリックリンクを作成
-mkdir -p $HOME/.config/mise
-if [ ! -e $HOME/.config/mise/config.toml ]; then
-  ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
-elif [ ! -L $HOME/.config/mise/config.toml ]; then
+mkdir -p "$HOME/.config/mise"
+if [ ! -e "$HOME/.config/mise/config.toml" ]; then
+  ln -s "$HOME/dotfiles/mise/config.toml" "$HOME/.config/mise/config.toml"
+elif [ ! -L "$HOME/.config/mise/config.toml" ]; then
   # ファイルが存在し、シンボリックリンクでない場合はバックアップを作成
-  mv $HOME/.config/mise/config.toml $HOME/.config/mise/config.toml.bak
-  ln -s $HOME/dotfiles/mise/config.toml $HOME/.config/mise/config.toml
+  mv "$HOME/.config/mise/config.toml" "$HOME/.config/mise/config.toml.bak"
+  ln -s "$HOME/dotfiles/mise/config.toml" "$HOME/.config/mise/config.toml"
 fi
+
+# sheldonの設定ファイルのシンボリックリンクを作成
+mkdir -p "$HOME/.config/sheldon"
+ln -sf "$HOME/dotfiles/sheldon/plugins.toml" "$HOME/.config/sheldon/plugins.toml"
 
 # Symlink individual files and directories for AI agents
-# これらをDev Containerのコンテナにマウントし、VS Codeのdotfiles連携を使うと参照できないパスへのsymlinkになってしまうため相対パスにすうr
-ln -sf ../dotfiles/.claude/CLAUDE.md $HOME/.claude/CLAUDE.md
-ln -sf ../dotfiles/.claude/settings.json $HOME/.claude/settings.json
-ln -sfn ../dotfiles/.claude/commands $HOME/.claude/commands
-ln -sfn ../dotfiles/.claude/skills $HOME/.claude/skills
-ln -sfn ../dotfiles/.claude/agents $HOME/.claude/agents
-ln -sfn ../dotfiles/.codex/config.toml $HOME/.codex/config.toml
-ln -sfn ../dotfiles/.codex/AGENTS.md $HOME/.codex/AGENTS.md
-
-if [ ! -e $HOME/dotfiles/antigen.zsh ]; then
-  curl -L git.io/antigen > $HOME/dotfiles/antigen.zsh
-fi
-
-source $HOME/dotfiles/.zshrc
-
+# これらをDev Containerのコンテナにマウントし、VS Codeのdotfiles連携を使うと参照できないパスへのsymlinkになってしまうため相対パスにする
+mkdir -p "$HOME/.claude" "$HOME/.codex"
+ln -sf ../dotfiles/.claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
+ln -sf ../dotfiles/.claude/settings.json "$HOME/.claude/settings.json"
+ln -sfn ../dotfiles/.claude/commands "$HOME/.claude/commands"
+ln -sfn ../dotfiles/.claude/skills "$HOME/.claude/skills"
+ln -sfn ../dotfiles/.claude/agents "$HOME/.claude/agents"
+ln -sfn ../dotfiles/.codex/config.toml "$HOME/.codex/config.toml"
+ln -sfn ../dotfiles/.codex/AGENTS.md "$HOME/.codex/AGENTS.md"
 
 if [ ! -x "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
