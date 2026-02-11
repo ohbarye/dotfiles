@@ -1,7 +1,96 @@
 {
+  "enabledPlugins": {
+    "claude-mem@thedotmack": true,
+    "ralph-loop@claude-plugins-official": true,
+    "dig@kuu-marketplace": true,
+    "code-simplifier@claude-plugins-official": true,
+    "ruby-skills@ruby-skills": true,
+    "ruby-lsp@ruby-skills": true
+  },
   "env": {
     "ENABLE_LSP_TOOL": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code session-start"
+          }
+        ]
+      }
+    ],
+    "SessionEnd": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code session-end"
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code user-prompt-submit"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v afplay \u003e/dev/null 2\u003e\u00261 \u0026\u0026 afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript \u003e/dev/null 2\u003e\u00261 \u0026\u0026 osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
+          },
+          {
+            "type": "command",
+            "command": "entire hooks claude-code stop"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code pre-task"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Task",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code post-task"
+          }
+        ]
+      },
+      {
+        "matcher": "TodoWrite",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "entire hooks claude-code post-todo"
+          }
+        ]
+      }
+    ]
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -24,6 +113,7 @@
       "Bash(codex:*)",
       "Bash(osascript:*)"
     ],
+    "defaultMode": "acceptEdits",
     "deny": [
       "Read(.env*)",
       "Write(.env*)",
@@ -31,40 +121,8 @@
       "Bash(git rebase:*)",
       "Bash(sudo:*)",
       "Bash(rm:*)",
-      "Bash(curl:*)"
-    ],
-    "defaultMode": "acceptEdits"
-  },
-  "hooks": {
-    "Notification": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Ping.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"waiting for your action\" with title \"Claude Code\"' || true"
-          }
-        ]
-      }
-    ],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
-          }
-        ]
-      }
+      "Bash(curl:*)",
+      "Read(./.entire/metadata/**)"
     ]
-  },
-  "enabledPlugins": {
-    "claude-mem@thedotmack": true,
-    "ralph-loop@claude-plugins-official": true,
-    "dig@kuu-marketplace": true,
-    "code-simplifier@claude-plugins-official": true,
-    "ruby-skills@ruby-skills": true,
-    "ruby-lsp@ruby-skills": true
   }
 }
