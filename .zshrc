@@ -159,11 +159,6 @@ alias am='op item get gq4qntsm24dhtk6xrbgxr4r274 --otp | aws-mfa --duration 8640
 
 autoload -U colors; colors
 
-# Ruby
-[[ -d ~/.rbenv  ]] && \
-  export PATH=${HOME}/.rbenv/bin:${PATH} && \
-  eval "$(rbenv init -)"
-
 # Go
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
