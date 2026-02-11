@@ -1,0 +1,27 @@
+{
+  "cli_version": "0.4.2",
+  "checkpoint_id": "91c774cf729d",
+  "strategy": "manual-commit",
+  "branch": "main",
+  "checkpoints_count": 2,
+  "files_touched": [
+    ".vimrc",
+    ".zshrc"
+  ],
+  "sessions": [
+    {
+      "metadata": "/91/c774cf729d/0/metadata.json",
+      "transcript": "/91/c774cf729d/0/full.jsonl",
+      "context": "/91/c774cf729d/0/context.md",
+      "content_hash": "/91/c774cf729d/0/content_hash.txt",
+      "prompt": "/91/c774cf729d/0/prompt.txt"
+    }
+  ],
+  "token_usage": {
+    "input_tokens": 17,
+    "cache_creation_tokens": 2722,
+    "cache_read_tokens": 818039,
+    "output_tokens": 895,
+    "api_call_count": 9
+  }
+}
