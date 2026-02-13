@@ -1,5 +1,6 @@
 brew "git-delta"
 brew "jq"
+brew "sheldon"
 brew "the_silver_searcher"
 brew "tree"
 brew "vim"

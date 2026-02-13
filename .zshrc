@@ -7,7 +7,9 @@ fi
 
 # sheldon (plugin manager)
 autoload -Uz compinit && compinit
-eval "$(sheldon source)"
+if command -v sheldon &>/dev/null; then
+  eval "$(sheldon source)"
+fi
 
 HISTFILE="$HOME/.zsh_history"
 
