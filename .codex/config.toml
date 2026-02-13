@@ -50,6 +50,19 @@ approval_policy = "on-request"
 sandbox_mode = "workspace-write"
 
 ################################################################################
+# Project Documentation Controls
+################################################################################
+
+# Max bytes from AGENTS.md to embed into first-turn instructions. Default: 32768
+project_doc_max_bytes = 32768
+
+# Ordered fallbacks when AGENTS.md is missing at a directory level. Default: []
+project_doc_fallback_filenames = ["CLAUDE.md"]
+
+# Project root marker filenames used when searching parent directories. Default: [".git"]
+# project_root_markers = [".git"]
+
+################################################################################
 # History & File Opener
 ################################################################################
 
