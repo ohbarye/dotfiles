@@ -1,11 +1,11 @@
 ---
-name: scrapbox-memo
-description: Claudeとの会話内容や記事の要約をScrapbox形式のメモに変換する。箇条書き・だである調・internal linkを用いた知識ネットワーク向けフォーマット。「Scrapboxにメモして」「この内容をScrapbox形式で」「学んだことをまとめて」などのリクエストで使用。
+name: cosense-memo
+description: Claudeとの会話内容や記事の要約をCosense形式のメモに変換する。箇条書き・だである調・internal linkを用いた知識ネットワーク向けフォーマット。「Cosenseにメモして」「この内容をCosense形式で」「学んだことをまとめて」などのリクエストで使用。Cosenseは旧称ScrapboxのためユーザーがScrapboxと言ったときもこのスキルを使ってください。
 ---
 
-# Scrapbox Memo
+# Cosense Memo
 
-会話で得た知識や記事の要約を Scrapbox 形式に変換する。
+会話で得た知識や記事の要約を Cosense 形式に変換する。
 
 ## 出力ルール
 
@@ -46,7 +46,7 @@ https://example.com/article-url
  詳細を箇条書きで記述
 ```
 
-## Scrapbox 記法
+## Cosense 記法
 
 ```
 [Internal Link]           → 他ページへのリンク
@@ -130,3 +130,4 @@ useEffect
 - 見出し以外の太字の利用はごくわずかにとどめ、代わりにリンクを用いる
 - 関連概念は積極的にリンク化し、知識グラフを形成
 - 冗長な説明は避け、事実のみを簡潔に記述
+- 対象の記事等が公開された年月を `2026-02` のようにして含める

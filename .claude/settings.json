@@ -1,33 +1,7 @@
 {
-  "enabledPlugins": {
-    "claude-mem@thedotmack": true,
-    "ralph-loop@claude-plugins-official": true,
-    "dig@kuu-marketplace": true,
-    "code-simplifier@claude-plugins-official": true,
-    "ruby-skills@ruby-skills": true,
-    "ruby-lsp@ruby-skills": true
-  },
   "env": {
     "ENABLE_LSP_TOOL": "1",
     "CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS": "1"
-  },
-  "hooks": {
-    "SessionStart": [],
-    "SessionEnd": [],
-    "UserPromptSubmit": [],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v afplay \u003e/dev/null 2\u003e\u00261 \u0026\u0026 afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript \u003e/dev/null 2\u003e\u00261 \u0026\u0026 osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
-          }
-        ]
-      }
-    ],
-    "PreToolUse": [],
-    "PostToolUse": []
   },
   "includeCoAuthoredBy": false,
   "permissions": {
@@ -48,9 +22,10 @@
       "Bash(find:*)",
       "Bash(gemini:*)",
       "Bash(codex:*)",
-      "Bash(osascript:*)"
+      "Bash(osascript:*)",
+			"Bash(summarize:*)",
+			"WebSearch"
     ],
-    "defaultMode": "acceptEdits",
     "deny": [
       "Read(.env*)",
       "Write(.env*)",
@@ -60,6 +35,34 @@
       "Bash(rm:*)",
       "Bash(curl:*)",
       "Read(./.entire/metadata/**)"
-    ]
-  }
+    ],
+    "defaultMode": "acceptEdits"
+  },
+  "hooks": {
+    "SessionStart": [],
+    "SessionEnd": [],
+    "UserPromptSubmit": [],
+    "Stop": [
+      {
+        "matcher": "",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [],
+    "PostToolUse": []
+  },
+  "enabledPlugins": {
+    "claude-mem@thedotmack": true,
+    "ralph-loop@claude-plugins-official": true,
+    "dig@kuu-marketplace": true,
+    "code-simplifier@claude-plugins-official": true,
+    "ruby-skills@ruby-skills": true,
+    "ruby-lsp@ruby-skills": true
+  },
+  "skipDangerousModePermissionPrompt": true
 }
