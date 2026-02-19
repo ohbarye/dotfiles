@@ -18,7 +18,7 @@ tool_output_token_limit = 25000
 # Reasoning & Verbosity (Responses API capable models)
 ################################################################################
 
-model_reasoning_effort = "high" # モデルがどれだけ「考える」かの深さ
+model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
 
 ################################################################################
 # Instruction Overrides
@@ -107,6 +107,10 @@ notifications = ["agent-turn-complete","approval-requested"]
 # cached returns pre-indexed results; live fetches the most recent data.
 # If you use --yolo or another full access sandbox setting, web search defaults to live.
 web_search = "live"
+
+[mcp_servers.notion]
+bearer_token_env_var = "NOTION_TOKEN"
+url = "https://mcp.notion.com/mcp"
 
 ################################################################################
 # Define MCP servers under this table. Leave empty to disable.

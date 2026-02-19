@@ -23,8 +23,8 @@
       "Bash(gemini:*)",
       "Bash(codex:*)",
       "Bash(osascript:*)",
-			"Bash(summarize:*)",
-			"WebSearch"
+      "Bash(summarize:*)",
+      "WebSearch"
     ],
     "deny": [
       "Read(.env*)",
