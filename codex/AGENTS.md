@@ -35,6 +35,25 @@ Review methods:
 - Use agent skills to perform the review.
 - If none of the above are available, perform the review yourself.
 
+# ExecPlans
+
+When writing complex features or significant refactors, use an ExecPlan (as described in .agent/PLANS.md) from design to implementation.
+
+- Multi-step implementation across multiple files
+- Ambiguous requirements or technical risk that needs staged validation
+- Changes that may take more than one focused work session
+- Infrastructure, migration, or rollout work that benefits from explicit checkpoints
+
+ExecPlan expectations:
+
+- Write the goal, scope, constraints, and assumptions first
+- Break the work into ordered steps with concrete checkpoints
+- Mark progress as you complete steps and revise the plan when reality changes
+- Record key decisions, tradeoffs, and blockers encountered during execution
+- Link or mention tests/verification steps and their outcomes
+
+Keep plans concise and executable. Prefer one active plan per task, and archive or overwrite stale plans instead of letting `PLANS.md` drift.
+
 ## Web Application Development
 
 ### Manual Testing & Evidence
