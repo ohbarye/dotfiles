@@ -7,3 +7,5 @@
 .bundle/cache
 .tmux/plugins
 .tmux/resurrect
+.playwright-mcp/
+tmp/
