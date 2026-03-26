@@ -71,17 +71,17 @@ ln -sf "$HOME/dotfiles/sheldon/plugins.toml" "$HOME/.config/sheldon/plugins.toml
 
 # Symlink individual files and directories for AI agents
 # これらをDev Containerのコンテナにマウントし、VS Codeのdotfiles連携を使うと参照できないパスへのsymlinkになってしまうため相対パスにする
-mkdir -p "$HOME/.agent" "$HOME/.claude" "$HOME/.codex"
-ln -sfn ../dotfiles/agent/skills "$HOME/.agent/skills"
+mkdir -p "$HOME/.agents" "$HOME/.claude" "$HOME/.codex"
+ln -sfn ../dotfiles/agents/skills "$HOME/.agents/skills"
 ln -sf ../dotfiles/claude/CLAUDE.md "$HOME/.claude/CLAUDE.md"
 ln -sf ../dotfiles/claude/settings.json "$HOME/.claude/settings.json"
 ln -sfn ../dotfiles/claude/commands "$HOME/.claude/commands"
-ln -sfn ../.agent/skills "$HOME/.claude/skills"
+ln -sfn ../.agents/skills "$HOME/.claude/skills"
 ln -sfn ../dotfiles/claude/agents "$HOME/.claude/agents"
 ln -sfn ../dotfiles/codex/config.toml "$HOME/.codex/config.toml"
 ln -sfn ../dotfiles/codex/AGENTS.md "$HOME/.codex/AGENTS.md"
 ln -sfn ../dotfiles/codex/PLANS.md "$HOME/.codex/PLANS.md"
-ln -sfn ../.agent/skills "$HOME/.codex/skills"
+ln -sfn ../.agents/skills "$HOME/.codex/skills"
 
 if [ ! -x "`which brew`" ]; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
