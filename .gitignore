@@ -9,3 +9,4 @@
 .tmux/resurrect
 .playwright-mcp/
 tmp/
+agents/skills/.system/
