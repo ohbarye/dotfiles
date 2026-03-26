@@ -3,7 +3,7 @@
 ################################################################################
 # Core Model Selection
 ################################################################################
-model = "gpt-5.3-codex"
+model = "gpt-5.4"
 review_model = "gpt-5.2-codex"
 model_verbosity = "high" # 詳細な応答の冗長さ（情報量の多さ）
 
@@ -78,6 +78,7 @@ unified_exec = true
 apply_patch_freeform = true
 skills = true
 shell_snapshot = true
+multi_agent = true
 
 ################################################################################
 # Shell Environment Policy for spawned processes (table)
