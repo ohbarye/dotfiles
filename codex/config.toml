@@ -113,6 +113,9 @@ web_search = "live"
 bearer_token_env_var = "NOTION_TOKEN"
 url = "https://mcp.notion.com/mcp"
 
+[plugins."github@openai-curated"]
+enabled = true
+
 ################################################################################
 # Define MCP servers under this table. Leave empty to disable.
 ################################################################################

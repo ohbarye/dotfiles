@@ -62,7 +62,16 @@
     "ruby-skills@ruby-skills": true,
     "ruby-lsp@ruby-skills": true,
     "hr-skills@smartbank-agent-skills": true,
-    "presentation-skills@smartbank-agent-skills": true
+    "presentation-skills@smartbank-agent-skills": true,
+    "codex@openai-codex": true
+  },
+  "extraKnownMarketplaces": {
+    "openai-codex": {
+      "source": {
+        "source": "github",
+        "repo": "openai/codex-plugin-cc"
+      }
+    }
   },
   "skipDangerousModePermissionPrompt": true
 }
