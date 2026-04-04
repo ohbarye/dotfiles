@@ -29,4 +29,4 @@ alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
 . "$HOME/.cargo/env"
 
-alias claude-mem='bun "$HOME/.claude/plugins/marketplaces/thedotmack/plugin/scripts/worker-service.cjs"'
+source ~/.safe-chain/scripts/init-posix.sh # Safe-chain bash initialization script
