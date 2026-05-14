@@ -3,8 +3,8 @@
 ################################################################################
 # Core Model Selection
 ################################################################################
-model = "gpt-5.4"
-review_model = "gpt-5.2-codex"
+model = "gpt-5.5"
+review_model = "gpt-5.4"
 model_verbosity = "high" # 詳細な応答の冗長さ（情報量の多さ）
 
 # from https://steipete.me/posts/2025/shipping-at-inference-speed#the-model-shift
@@ -18,7 +18,7 @@ tool_output_token_limit = 25000
 # Reasoning & Verbosity (Responses API capable models)
 ################################################################################
 
-model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
+model_reasoning_effort = "high" # モデルがどれだけ「考える」かの深さ
 
 ################################################################################
 # Instruction Overrides
@@ -30,7 +30,6 @@ developer_instructions = "Think in English, but generate responses in Japanese."
 # Notifications
 ################################################################################
 
-notify = ["bash","-lc","[[ \"$OSTYPE\" == darwin* ]] && afplay /System/Library/Sounds/Ping.aiff"]
 
 ################################################################################
 # Approval & Sandbox
@@ -73,12 +72,16 @@ personality = "pragmatic"
 # Centralized Feature Flags (preferred)
 ################################################################################
 
+
+notify = ["/Users/m-ohba/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"bash\",\"-lc\",\"[[ \\\"$OSTYPE\\\" == darwin* ]] && afplay \\/System\\/Library\\/Sounds\\/Ping.aiff\"]"]
+
 [features]
 unified_exec = true
 apply_patch_freeform = true
 skills = true
 shell_snapshot = true
 multi_agent = true
+goals = true
 
 ################################################################################
 # Shell Environment Policy for spawned processes (table)
@@ -115,6 +118,40 @@ url = "https://mcp.notion.com/mcp"
 
 [plugins."github@openai-curated"]
 enabled = true
+
+[plugins."documents@openai-primary-runtime"]
+enabled = true
+
+[plugins."spreadsheets@openai-primary-runtime"]
+enabled = true
+
+[plugins."presentations@openai-primary-runtime"]
+enabled = true
+
+[plugins."computer-use@openai-bundled"]
+enabled = true
+
+[plugins."browser-use@openai-bundled"]
+enabled = true
+
+[projects."/Users/m-ohba/ghq/github.com/smartbank-inc/factoring-core"]
+trust_level = "trusted"
+
+[projects."/Users/m-ohba/ghq/github.com/smartbank-inc/Bocal/repos/b43-core-api"]
+trust_level = "trusted"
+
+[projects."/Users/m-ohba/Library/Mobile Documents/com~apple~CloudDocs/Documents/dev/rubykaigi-2026"]
+trust_level = "trusted"
+
+[marketplaces.openai-bundled]
+last_updated = "2026-05-11T11:57:15Z"
+source_type = "local"
+source = "/Users/m-ohba/.codex/.tmp/bundled-marketplaces/openai-bundled"
+
+[marketplaces.openai-primary-runtime]
+last_updated = "2026-05-07T08:29:27Z"
+source_type = "local"
+source = "/Users/m-ohba/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 ################################################################################
 # Define MCP servers under this table. Leave empty to disable.
