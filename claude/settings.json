@@ -36,7 +36,7 @@
       "Bash(curl:*)",
       "Read(./.entire/metadata/**)"
     ],
-    "defaultMode": "acceptEdits"
+    "defaultMode": "auto"
   },
   "hooks": {
     "SessionStart": [],
@@ -63,7 +63,8 @@
     "ruby-lsp@ruby-skills": true,
     "hr-skills@smartbank-agent-skills": true,
     "presentation-skills@smartbank-agent-skills": true,
-    "codex@openai-codex": true
+    "codex@openai-codex": true,
+    "superpowers@claude-plugins-official": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -73,5 +74,6 @@
       }
     }
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "skipAutoPermissionPrompt": true
 }
