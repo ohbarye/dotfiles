@@ -144,12 +144,12 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-05-11T11:57:15Z"
+last_updated = "2026-05-14T02:52:35Z"
 source_type = "local"
 source = "/Users/m-ohba/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-05-07T08:29:27Z"
+last_updated = "2026-05-14T03:22:52Z"
 source_type = "local"
 source = "/Users/m-ohba/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
