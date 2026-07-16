@@ -1,0 +1,5 @@
+require "minitest/autorun"
+require_relative "../lib/business_hours"
+require_relative "../lib/holiday_calendar"
+require_relative "../lib/stats"
+require_relative "../lib/bucketing"

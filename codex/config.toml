@@ -3,7 +3,7 @@
 ################################################################################
 # Core Model Selection
 ################################################################################
-model = "gpt-5.5"
+model = "gpt-5.6-sol"
 review_model = "gpt-5.4"
 model_verbosity = "high" # 詳細な応答の冗長さ（情報量の多さ）
 
@@ -18,7 +18,7 @@ tool_output_token_limit = 25000
 # Reasoning & Verbosity (Responses API capable models)
 ################################################################################
 
-model_reasoning_effort = "high" # モデルがどれだけ「考える」かの深さ
+model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
 
 ################################################################################
 # Instruction Overrides
@@ -114,7 +114,7 @@ notifications = ["agent-turn-complete","approval-requested"]
 web_search = "live"
 
 [tui.model_availability_nux]
-"gpt-5.5" = 3
+"gpt-5.5" = 4
 
 [mcp_servers.notion]
 bearer_token_env_var = "NOTION_TOKEN"
@@ -122,22 +122,30 @@ url = "https://mcp.notion.com/mcp"
 
 [mcp_servers.node_repl]
 args = []
-command = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node_repl"
+command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
 startup_timeout_sec = 120
 
 [mcp_servers.node_repl.env]
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/Codex.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/Codex.app/Contents/Resources/cua_node/bin/node"
+NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
+NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
 NODE_REPL_TRUSTED_CODE_PATHS = "/Users/m-ohba/.codex"
 CODEX_HOME = "/Users/m-ohba/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "27dca86fd6b571c49414a4b78e46b57bcf683a46cd1319799c11fbb6cfae3110"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f,cf732b4a285497bfd7e75a2ac14879bce9ae644eb4e1babeb17bb6a840dfc9bd"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
 NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
 NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.609.41114"
-CODEX_CLI_PATH = "/Applications/Codex.app/Contents/Resources/codex"
+BROWSER_USE_CODEX_APP_VERSION = "26.707.72221"
+SKY_CUA_SERVICE_PATH = "/Users/m-ohba/.codex/plugins/cache/openai-bundled/computer-use/1.0.1000387/Codex Computer Use.app"
+CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
+
+[mcp_servers.computer-use]
+command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
+args = ["mcp"]
+cwd = "."
+enabled = false
 
 [plugins."github@openai-curated"]
 enabled = true
@@ -154,10 +162,22 @@ enabled = true
 [plugins."notion@openai-curated"]
 enabled = true
 
-[plugins."browser@openai-bundled"]
+[plugins."computer-use@openai-bundled"]
 enabled = true
 
-[plugins."computer-use@openai-bundled"]
+[plugins."pdf@openai-primary-runtime"]
+enabled = true
+
+[plugins."template-creator@openai-primary-runtime"]
+enabled = true
+
+[plugins."sites@openai-bundled"]
+enabled = true
+
+[plugins."visualize@openai-bundled"]
+enabled = true
+
+[plugins."browser@openai-bundled"]
 enabled = true
 
 [projects."/Users/m-ohba/ghq/github.com/smartbank-inc/factoring-core"]
@@ -176,24 +196,47 @@ trust_level = "trusted"
 trust_level = "trusted"
 
 [marketplaces.openai-bundled]
-last_updated = "2026-06-13T07:20:35Z"
+last_updated = "2026-07-16T03:41:55Z"
 source_type = "local"
 source = "/Users/m-ohba/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-06-01T22:37:46Z"
+last_updated = "2026-07-16T04:22:32Z"
 source_type = "local"
 source = "/Users/m-ohba/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
 [desktop]
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
+followUpQueueMode = "queue"
+dock-icon-preference = "codex-system"
+appearanceTheme = "dark"
+appearanceDarkCodeThemeId = "tokyo-night"
+sansFontSize = 16
+codeFontSize = 14
+useFontSmoothing = true
 
 [desktop.open-in-target-preferences]
 global = "cursor"
 
 [desktop.open-in-target-preferences.perPath]
 "/Users/m-ohba/ghq/github.com/smartbank-inc/factoring-core" = "cursor"
+
+[desktop.appearanceDarkChromeTheme]
+accent = "#3d59a1"
+contrast = 80
+ink = "#a9b1d6"
+opaqueWindows = false
+surface = "#1a1b26"
+
+[desktop.appearanceDarkChromeTheme.fonts]
+code = "JetBrains Mono"
+ui = "Hiragino"
+
+[desktop.appearanceDarkChromeTheme.semanticColors]
+diffAdded = "#449dab"
+diffRemoved = "#914c54"
+skill = "#9d7cd8"
 
 ################################################################################
 # Define MCP servers under this table. Leave empty to disable.

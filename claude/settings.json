@@ -57,8 +57,6 @@
     "PostToolUse": []
   },
   "enabledPlugins": {
-    "ralph-loop@claude-plugins-official": true,
-    "dig@kuu-marketplace": true,
     "ruby-skills@ruby-skills": true,
     "ruby-lsp@ruby-skills": true,
     "hr-skills@smartbank-agent-skills": true,
@@ -75,5 +73,6 @@
     }
   },
   "skipDangerousModePermissionPrompt": true,
+  "skipWorkflowUsageWarning": true,
   "skipAutoPermissionPrompt": true
 }
