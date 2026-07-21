@@ -42,17 +42,7 @@
     "SessionStart": [],
     "SessionEnd": [],
     "UserPromptSubmit": [],
-    "Stop": [
-      {
-        "matcher": "",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "command -v afplay >/dev/null 2>&1 && afplay /System/Library/Sounds/Hero.aiff || true; command -v osascript >/dev/null 2>&1 && osascript -e 'display notification \"finished\" with title \"Claude Code\"' || true"
-          }
-        ]
-      }
-    ],
+    "Stop": [],
     "PreToolUse": [],
     "PostToolUse": []
   },
@@ -74,5 +64,6 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "skipAutoPermissionPrompt": true
+  "skipAutoPermissionPrompt": true,
+  "agentPushNotifEnabled": true
 }
