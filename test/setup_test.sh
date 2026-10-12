@@ -31,6 +31,12 @@ assert ".bashrc guards safe-chain"    grep -qE '\[\[? -f .*safe-chain.*\]\]? *(&
 refute ".zshrc has no dead flutter PATH" grep -q 'development/flutter' "$REPO/.zshrc"
 assert "setup.sh runs mise install"   grep -q 'mise install' "$REPO/setup.sh"
 
+assert ".gitignore_global ignores claude settings.local.json" grep -qxF '**/.claude/settings.local.json' "$REPO/.gitignore_global"
+refute "mise config has no ignored trusted_config_paths" grep -q 'trusted_config_paths' "$REPO/mise/config.toml"
+assert "README documents the test script" grep -q 'test/setup_test.sh' "$REPO/README.md"
+assert "README documents manual steps"    grep -q '手動' "$REPO/README.md"
+refute "README has no stale macOS versions" grep -q 'Monterey' "$REPO/README.md"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
