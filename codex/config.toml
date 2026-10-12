@@ -3,9 +3,9 @@
 ################################################################################
 # Core Model Selection
 ################################################################################
-model = "gpt-5.6-terra"
+model = "gpt-6-astra"
 review_model = "gpt-5.5"
-model_verbosity = "low" # 詳細な応答の冗長さ（情報量の多さ）
+model_verbosity = "medium" # 詳細な応答の冗長さ（情報量の多さ）
 
 # from https://steipete.me/posts/2025/shipping-at-inference-speed#the-model-shift
 # Leave room for native compaction near the 272–273k context window.
@@ -18,7 +18,7 @@ tool_output_token_limit = 25000
 # Reasoning & Verbosity (Responses API capable models)
 ################################################################################
 
-model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
+model_reasoning_effort = "low" # モデルがどれだけ「考える」かの深さ
 
 ################################################################################
 # Instruction Overrides
@@ -94,9 +94,7 @@ include_only = ["PATH","HOME","USER"]
 exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
 
 [shell_environment_policy.set]
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "583bf903a6cfb9b00a01e1583381ce921c71d7585085c6fa6b805baa0f60230b,6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/m-ohba/.codex"
+NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "87e84e5b4db45250b323ac54ab2f33585d867d0d13abc198e73a4e28420b657b"
 
 ################################################################################
 # UI, Notifications, and Misc (tables)
@@ -136,16 +134,17 @@ startup_timeout_sec = 120
 NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
 NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/m-ohba/.codex"
+NODE_REPL_TRUSTED_CODE_PATHS = "/Users/m-ohba/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
 CODEX_HOME = "/Users/m-ohba/.codex"
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "583bf903a6cfb9b00a01e1583381ce921c71d7585085c6fa6b805baa0f60230b,6d25aa7656feac858f3a3bdaea5bcbab0dbfd426c9de8e6931ce90c399ee8e4f"
 BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = "Control the in-app browser in conjunction with the Browser Plugin."
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = "Control the Chrome browser in conjunction with the Chrome Plugin. Prefer this method of controlling Chrome over alternatives (such as Computer Use) unless the user explicitly mentions an alternative."
-NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = "Control desktop apps on macOS through Computer Use."
+BROWSER_USE_TINYSKY_ENABLED = "1"
+NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
+NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
 BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.715.52143"
-SKY_CUA_SERVICE_PATH = "/Users/m-ohba/.codex/plugins/cache/openai-bundled/computer-use/1.0.1000451/Codex Computer Use.app"
+BROWSER_USE_CODEX_APP_VERSION = "26.915.31029"
+NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/m-ohba/.codex/plugins/cache/openai-bundled/browser/26.915.31029/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
+SKY_CUA_SERVICE_PATH = "/Users/m-ohba/.codex/computer-use/Codex Computer Use.app"
 CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [mcp_servers.notion]
@@ -154,6 +153,10 @@ bearer_token_env_var = "NOTION_TOKEN"
 
 [mcp_servers.openaiDeveloperDocs]
 url = "https://developers.openai.com/mcp"
+
+[mcp_servers.aws-mcp]
+command = "uvx"
+args = ["mcp-proxy-for-aws@latest", "https://aws-mcp.us-east-1.api.aws/mcp", "--metadata", "INSTALL_SOURCE=aws-cli"]
 
 [plugins."github@openai-curated"]
 enabled = true
@@ -179,22 +182,23 @@ enabled = true
 [plugins."template-creator@openai-primary-runtime"]
 enabled = true
 
-[plugins."sites@openai-bundled"]
-enabled = true
-
 [plugins."visualize@openai-bundled"]
 enabled = true
 
 [plugins."browser@openai-bundled"]
 enabled = true
 
+[plugins."codex-app-tools@openai-bundled"]
+enabled = true
+
+[plugins."unified-computer-use@openai-bundled"]
+enabled = true
+
 [marketplaces.openai-bundled]
-last_updated = "2026-07-21T02:39:00Z"
 source_type = "local"
 source = "/Users/m-ohba/.codex/.tmp/bundled-marketplaces/openai-bundled"
 
 [marketplaces.openai-primary-runtime]
-last_updated = "2026-07-16T08:22:31Z"
 source_type = "local"
 source = "/Users/m-ohba/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
 
@@ -208,6 +212,7 @@ appearanceDarkCodeThemeId = "tokyo-night"
 sansFontSize = 16
 codeFontSize = 14
 useFontSmoothing = true
+open-link-in-target-preference = "external-browser"
 
 [desktop.open-in-target-preferences]
 global = "cursor"

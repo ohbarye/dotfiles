@@ -48,11 +48,11 @@
   },
   "enabledPlugins": {
     "ruby-skills@ruby-skills": true,
-    "ruby-lsp@ruby-skills": true,
     "hr-skills@smartbank-agent-skills": true,
     "presentation-skills@smartbank-agent-skills": true,
     "codex@openai-codex": true,
-    "superpowers@claude-plugins-official": true
+    "superpowers@claude-plugins-official": true,
+    "eli5@claude-community": true
   },
   "extraKnownMarketplaces": {
     "openai-codex": {
@@ -60,10 +60,17 @@
         "source": "github",
         "repo": "openai/codex-plugin-cc"
       }
+    },
+    "claude-community": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-community"
+      }
     }
   },
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
-  "skipAutoPermissionPrompt": true,
-  "agentPushNotifEnabled": true
+  "inputNeededNotifEnabled": true,
+  "agentPushNotifEnabled": true,
+  "skipAutoPermissionPrompt": true
 }
