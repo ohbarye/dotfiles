@@ -76,6 +76,21 @@ assert "CI workflow runs this test"        grep -q 'test/setup_test.sh' "$REPO/.
 refute "tracked files have no private names" \
   git -C "$REPO" grep -qEi 'smartbank-inc/|factoring-core|bocal|core01\.b43|b43-core' -- . ':!test/setup_test.sh'
 
+# --- 不要になったパッケージが Brewfile.macos に残っていないこと ---
+for f in folly fizz wangle fbthrift fb303 mvfst boost cffi cryptography pycparser docutils \
+         awscli awslogs python@3.12 m1-terraform-provider-helper tfsec alp bluetoothconnector \
+         switchaudio-osx nightlight qrencode pandoc perl entire; do
+  refute "Brewfile.macos has no brew $f" grep -qE "^brew \"([^\"]*/)?$f\"" "$REPO/Brewfile.macos"
+done
+for c in sequel-ace postman licecap codexbar entire kindle; do
+  refute "Brewfile.macos has no cask $c" grep -qE "^cask \"([^\"]*/)?$c\"" "$REPO/Brewfile.macos"
+done
+refute "Brewfile.macos has no mas Monosnap" grep -q '^mas "Monosnap"' "$REPO/Brewfile.macos"
+assert "Brewfile.macos keeps mas Kindle"    grep -q '^mas "Kindle"' "$REPO/Brewfile.macos"
+for t in kreuzwerker/taps smudge/smudge entireio/tap; do
+  refute "Brewfile.macos has no unused tap $t" grep -q "^tap \"$t\"" "$REPO/Brewfile.macos"
+done
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
