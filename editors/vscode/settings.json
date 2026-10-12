@@ -112,7 +112,7 @@
   "rdbg.saveBreakpoints": true,
   "sorbet.enabled": true,
   "rubyLsp.rubyVersionManager": {
-		"identifier": "rbenv"
+		"identifier": "mise"
 	},
 	"rubyLsp.yjit": true,
   "rubyLsp.enabledFeatures": {

@@ -152,6 +152,14 @@ else
   echo "Warning: mise not found. Run 'mise install' after installing it."
 fi
 
+# Cursor の拡張機能をインストール(CLI がある macOS のみ。失敗しても続行)
+if [[ "$OS_TYPE" == "macos" ]] && command -v cursor >/dev/null 2>&1; then
+  while IFS= read -r ext; do
+    [ -z "$ext" ] && continue
+    cursor --install-extension "$ext" || echo "Warning: failed to install Cursor extension $ext"
+  done < "$HOME/dotfiles/editors/cursor/extensions.txt"
+fi
+
 # macOS のシステム設定を反映
 if [[ "$OS_TYPE" == "macos" ]]; then
   "$HOME/dotfiles/macos.sh" || echo "Warning: macos.sh failed"

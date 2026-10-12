@@ -1,0 +1,20 @@
+name: test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  setup:
+    # setup.sh は macOS 前提の処理(defaults, Application Support のリンク)を含むため macOS で実行する。
+    # brew / mise / defaults / cursor はテスト側でスタブに差し替えるので、実環境のパッケージには触れない。
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
+      - name: Run setup.sh regression tests
+        run: test/setup_test.sh

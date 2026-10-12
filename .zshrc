@@ -59,7 +59,7 @@ function cd-ghq-list() {
     fi
 }
 alias gr='cd-ghq-list'
-alias ghb='hub browse $(ghq list | fzf | cut -d "/" -f 2,3)'
+alias ghb='gh browse -R $(ghq list | fzf | cut -d "/" -f 2,3)'
 
 # RubyMine
 alias rbl='rubymine $(ghq root)/$(ghq list | fzf)'
@@ -148,8 +148,6 @@ autoload -U colors; colors
 # Go
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
-
-export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 
 # For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
 # If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv

@@ -13,6 +13,13 @@ uv = "latest"
 yarn = "4"
 bun = "latest"
 pinact = "latest"
+actionlint = "latest"
+ecspresso = "latest"
+tflint = "latest"
+jq = "latest"
+"aqua:fujiwara/lambroll" = "latest"
+"aqua:fujiwara/tfstate-lookup" = "latest"
+"pipx:poetry" = "latest"
 
 [settings]
 idiomatic_version_file_enable_tools = [
