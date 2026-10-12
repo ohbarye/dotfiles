@@ -5,3 +5,4 @@ node_modules/
 bower_components/
 .claude/tmp/
 .signal.*
+**/.claude/settings.local.json

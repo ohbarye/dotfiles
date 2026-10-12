@@ -15,9 +15,6 @@ bun = "latest"
 pinact = "latest"
 
 [settings]
-trusted_config_paths = [
-  "~/dotfiles"
-]
 idiomatic_version_file_enable_tools = [
 	"ruby",
 	"node",
