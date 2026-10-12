@@ -50,7 +50,10 @@ exit 0
 EOF
   chmod +x "$TMP/bin/$cmd"
 done
-export PATH="$TMP/bin:$PATH"
+# 実体の brew / mise に到達できないよう PATH を最小構成にし、BREW_BIN でもスタブを明示する
+export PATH="$TMP/bin:/usr/bin:/bin"
+export BREW_BIN="$TMP/bin/brew"
+if command -v brew | grep -qv "^$TMP/bin/"; then echo "ABORT: real brew reachable"; exit 2; fi
 
 # 既存の通常ファイルはバックアップされること
 echo "legacy" > "$HOME/.zshrc"
@@ -66,7 +69,7 @@ assert "sheldon config linked"          test -L "$HOME/.config/sheldon/plugins.t
 assert "claude settings resolve"        test -f "$HOME/.claude/settings.json"
 assert "claude skills resolve"          test -d "$HOME/.claude/skills/review"
 assert "codex config resolves"          test -f "$HOME/.codex/config.toml"
-assert "brew bundle uses Brewfile.macos" grep -q "brew bundle --file $HOME/dotfiles/Brewfile.macos" "$LOG"
+assert "brew bundle uses Brewfile.macos" grep -q "^brew bundle --file $HOME/dotfiles/Brewfile.macos" "$LOG"
 assert "mise install was invoked"       grep -q '^mise install' "$LOG"
 
 # 冪等性

@@ -27,6 +27,6 @@ alias g='git'
 alias gr='cd $(ghq root)/$(ghq list | peco)'
 alias gh='hub browse $(ghq list | peco | cut -d "/" -f 2,3)'
 
-. "$HOME/.cargo/env"
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
 
-source ~/.safe-chain/scripts/init-posix.sh # Safe-chain bash initialization script
+[ -f ~/.safe-chain/scripts/init-posix.sh ] && source ~/.safe-chain/scripts/init-posix.sh # Safe-chain bash initialization script

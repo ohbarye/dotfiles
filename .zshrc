@@ -149,9 +149,6 @@ autoload -U colors; colors
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
 
-# Flutter
-export PATH="$HOME/development/flutter/bin:$PATH"
-
 export PATH="/usr/local/opt/openssl@3/bin:$PATH"
 
 # For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
@@ -170,4 +167,4 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
-source ~/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+[[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script

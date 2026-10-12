@@ -83,11 +83,20 @@ ln -sfn ../dotfiles/codex/AGENTS.md "$HOME/.codex/AGENTS.md"
 ln -sfn ../dotfiles/codex/PLANS.md "$HOME/.codex/PLANS.md"
 ln -sfn ../.agents/skills "$HOME/.codex/skills"
 
-if [ ! -x "`which brew`" ]; then
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+# BREW_BIN は外部から上書き可能(テストでスタブを差し込むため)
+BREW_BIN="${BREW_BIN:-}"
+if [ -z "$BREW_BIN" ]; then
+  if command -v brew >/dev/null 2>&1; then
+    BREW_BIN="$(command -v brew)"
+  elif [ -x "$BREW_PREFIX/bin/brew" ]; then
+    BREW_BIN="$BREW_PREFIX/bin/brew"
+  else
+    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    BREW_BIN="$BREW_PREFIX/bin/brew"
+  fi
 fi
-eval "$($BREW_PREFIX/bin/brew shellenv)"
-brew update
+eval "$("$BREW_BIN" shellenv)"
+"$BREW_BIN" update
 
 # OS別Brewfileを選択
 case "$OS_TYPE" in
@@ -104,5 +113,12 @@ case "$OS_TYPE" in
 esac
 
 echo "Using Brewfile: $BREWFILE"
-brew bundle --file "$BREWFILE"
+"$BREW_BIN" bundle --file "$BREWFILE"
 
+# miseで管理しているツール(node, ruby, go など)をインストール
+if command -v mise >/dev/null 2>&1; then
+  echo "Installing tools with mise..."
+  mise install --yes || echo "Warning: mise install failed"
+else
+  echo "Warning: mise not found. Run 'mise install' after installing it."
+fi
