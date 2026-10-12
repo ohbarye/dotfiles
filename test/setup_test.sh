@@ -37,6 +37,15 @@ assert "README documents the test script" grep -q 'test/setup_test.sh' "$REPO/RE
 assert "README documents manual steps"    grep -q '手動' "$REPO/README.md"
 refute "README has no stale macOS versions" grep -q 'Monterey' "$REPO/README.md"
 
+assert "macos.sh exists and is executable" test -x "$REPO/macos.sh"
+assert "macos.sh sets dock autohide"      grep -q 'com.apple.dock autohide -bool true' "$REPO/macos.sh"
+assert "macos.sh sets key repeat"         grep -q 'NSGlobalDomain KeyRepeat -int 2' "$REPO/macos.sh"
+for f in editors/vscode/settings.json editors/vscode/keybindings.json editors/cursor/settings.json editors/cursor/keybindings.json karabiner/karabiner.json; do
+  assert "$f is tracked in repo" test -f "$REPO/$f"
+  refute "$f has no secrets"     grep -Eiq '(secret|password|passwd|api[_-]?key|bearer|access[_-]?token)' "$REPO/$f"
+  refute "$f has no internal names" grep -Eiq '(smartbank|factoring|b43|bocal)' "$REPO/$f"
+done
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
@@ -48,7 +57,7 @@ mkdir -p "$HOME" "$TMP/bin"
 ln -s "$REPO" "$HOME/dotfiles"
 LOG="$TMP/calls.log"; : > "$LOG"
 
-for cmd in brew mise; do
+for cmd in brew mise defaults killall; do
   cat > "$TMP/bin/$cmd" <<EOF
 #!/bin/sh
 echo "$cmd \$*" >> "$LOG"
@@ -59,7 +68,9 @@ done
 # 実体の brew / mise に到達できないよう PATH を最小構成にし、BREW_BIN でもスタブを明示する
 export PATH="$TMP/bin:/usr/bin:/bin"
 export BREW_BIN="$TMP/bin/brew"
-if command -v brew | grep -qv "^$TMP/bin/"; then echo "ABORT: real brew reachable"; exit 2; fi
+for cmd in brew mise defaults killall; do
+  if [ "$(command -v $cmd)" != "$TMP/bin/$cmd" ]; then echo "ABORT: real $cmd reachable"; exit 2; fi
+done
 
 # 既存の通常ファイルはバックアップされること
 echo "legacy" > "$HOME/.zshrc"
@@ -78,10 +89,23 @@ assert "codex config resolves"          test -f "$HOME/.codex/config.toml"
 assert "brew bundle uses Brewfile.macos" grep -q "^brew bundle --file $HOME/dotfiles/Brewfile.macos" "$LOG"
 assert "mise install was invoked"       grep -q '^mise install' "$LOG"
 
+assert "macos defaults applied (dock autohide)" grep -q '^defaults write com.apple.dock autohide -bool true' "$LOG"
+assert "Code settings linked"           test "$(readlink "$HOME/Library/Application Support/Code/User/settings.json")" = "$HOME/dotfiles/editors/vscode/settings.json"
+assert "Code keybindings linked"        test "$(readlink "$HOME/Library/Application Support/Code/User/keybindings.json")" = "$HOME/dotfiles/editors/vscode/keybindings.json"
+assert "Cursor settings linked"         test "$(readlink "$HOME/Library/Application Support/Cursor/User/settings.json")" = "$HOME/dotfiles/editors/cursor/settings.json"
+assert "Cursor keybindings linked"      test "$(readlink "$HOME/Library/Application Support/Cursor/User/keybindings.json")" = "$HOME/dotfiles/editors/cursor/keybindings.json"
+assert "karabiner.json linked"          test "$(readlink "$HOME/.config/karabiner/karabiner.json")" = "$HOME/dotfiles/karabiner/karabiner.json"
+
 # 冪等性
 zsh "$REPO/setup.sh" > "$TMP/run2.log" 2>&1
 assert "second run exits 0 (idempotent)" test $? -eq 0
 refute "second run creates no extra .bak" test -e "$HOME/.zshrc.bak.bak"
+
+# SETUP_LINKS_ONLY=1 ではリンクだけ張り、brew / mise / defaults は呼ばない
+: > "$LOG"
+SETUP_LINKS_ONLY=1 zsh "$REPO/setup.sh" > "$TMP/run3.log" 2>&1
+assert "links-only run exits 0"         test $? -eq 0
+assert "links-only run calls nothing"   test ! -s "$LOG"
 
 echo
 echo "FAILS=$FAILS"
