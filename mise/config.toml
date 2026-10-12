@@ -1,5 +1,4 @@
 [tools]
-aws-cli = "latest"
 go = "1.25"
 node = "24"
 "npm:@openai/codex" = "latest"
