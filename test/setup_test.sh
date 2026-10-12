@@ -46,6 +46,36 @@ for f in editors/vscode/settings.json editors/vscode/keybindings.json editors/cu
   refute "$f has no internal names" grep -Eiq '(smartbank|factoring|b43|bocal)' "$REPO/$f"
 done
 
+# --- Brewfile: 手動導入されていたものの追加 ---
+for f in mysql@8.0 ffmpeg vips xpdf tesseract-lang; do
+  assert "Brewfile.macos has $f" grep -q "^brew \"$f\"" "$REPO/Brewfile.macos"
+done
+
+# --- mise: 導入済みツールの取りこぼし ---
+for t in actionlint ecspresso tflint jq '"aqua:fujiwara/lambroll"' '"aqua:fujiwara/tfstate-lookup"' '"pipx:poetry"'; do
+  assert "mise config has $t" grep -qE "^$t = " "$REPO/mise/config.toml"
+done
+
+# --- エディタ ---
+refute "vscode rubyLsp does not use rbenv" grep -q '"identifier": "rbenv"' "$REPO/editors/vscode/settings.json"
+assert "cursor extensions list exists"     test -f "$REPO/editors/cursor/extensions.txt"
+assert "cursor extensions has prettier"    grep -qx 'esbenp.prettier-vscode' "$REPO/editors/cursor/extensions.txt"
+refute "cursor extensions has no built-in anysphere.*" grep -q '^anysphere\.' "$REPO/editors/cursor/extensions.txt"
+
+# --- 不要コードの除去 ---
+refute ".zshrc has no hub alias"           grep -q 'hub browse' "$REPO/.zshrc"
+refute ".zshrc has no intel openssl PATH"  grep -q '/usr/local/opt/openssl' "$REPO/.zshrc"
+refute ".bashrc has no peco"               grep -q 'peco' "$REPO/.bashrc"
+refute ".bashrc has no hub"                grep -qE '(^|[^a-z])hub ' "$REPO/.bashrc"
+refute ".bashrc does not shadow gh"        grep -qE "^alias gh=" "$REPO/.bashrc"
+
+# --- CI ---
+assert "CI workflow runs this test"        grep -q 'test/setup_test.sh' "$REPO/.github/workflows/test.yml"
+
+# --- 公開リポジトリに社内名称が入っていないこと(コミット時フックではなくテスト/CIで検出) ---
+refute "tracked files have no private names" \
+  git -C "$REPO" grep -qEi 'smartbank-inc/|factoring-core|bocal|core01\.b43|b43-core' -- . ':!test/setup_test.sh'
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
@@ -57,7 +87,7 @@ mkdir -p "$HOME" "$TMP/bin"
 ln -s "$REPO" "$HOME/dotfiles"
 LOG="$TMP/calls.log"; : > "$LOG"
 
-for cmd in brew mise defaults killall; do
+for cmd in brew mise defaults killall cursor; do
   cat > "$TMP/bin/$cmd" <<EOF
 #!/bin/sh
 echo "$cmd \$*" >> "$LOG"
@@ -68,7 +98,7 @@ done
 # 実体の brew / mise に到達できないよう PATH を最小構成にし、BREW_BIN でもスタブを明示する
 export PATH="$TMP/bin:/usr/bin:/bin"
 export BREW_BIN="$TMP/bin/brew"
-for cmd in brew mise defaults killall; do
+for cmd in brew mise defaults killall cursor; do
   if [ "$(command -v $cmd)" != "$TMP/bin/$cmd" ]; then echo "ABORT: real $cmd reachable"; exit 2; fi
 done
 
@@ -95,6 +125,8 @@ assert "Code keybindings linked"        test "$(readlink "$HOME/Library/Applicat
 assert "Cursor settings linked"         test "$(readlink "$HOME/Library/Application Support/Cursor/User/settings.json")" = "$HOME/dotfiles/editors/cursor/settings.json"
 assert "Cursor keybindings linked"      test "$(readlink "$HOME/Library/Application Support/Cursor/User/keybindings.json")" = "$HOME/dotfiles/editors/cursor/keybindings.json"
 assert "karabiner.json linked"          test "$(readlink "$HOME/.config/karabiner/karabiner.json")" = "$HOME/dotfiles/karabiner/karabiner.json"
+
+assert "cursor extensions installed"    grep -q '^cursor --install-extension esbenp.prettier-vscode' "$LOG"
 
 # 冪等性
 zsh "$REPO/setup.sh" > "$TMP/run2.log" 2>&1
