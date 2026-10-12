@@ -10,3 +10,4 @@
 .playwright-mcp/
 tmp/
 agents/skills/.system/
+agents/skills/m43-core-dev-db/

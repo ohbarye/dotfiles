@@ -188,24 +188,6 @@ enabled = true
 [plugins."browser@openai-bundled"]
 enabled = true
 
-[projects."/Users/m-ohba/ghq/github.com/smartbank-inc/factoring-core"]
-trust_level = "trusted"
-
-[projects."/Users/m-ohba/ghq/github.com/smartbank-inc/Bocal/repos/b43-core-api"]
-trust_level = "trusted"
-
-[projects."/Users/m-ohba/Library/Mobile Documents/com~apple~CloudDocs/Documents/dev/rubykaigi-2026"]
-trust_level = "trusted"
-
-[projects."/Users/m-ohba/ghq/github.com/ohbarye/active_storage_validations"]
-trust_level = "trusted"
-
-[projects."/Users/m-ohba/Desktop"]
-trust_level = "trusted"
-
-[projects."/"]
-trust_level = "trusted"
-
 [marketplaces.openai-bundled]
 last_updated = "2026-07-21T02:39:00Z"
 source_type = "local"
@@ -230,8 +212,6 @@ useFontSmoothing = true
 [desktop.open-in-target-preferences]
 global = "cursor"
 
-[desktop.open-in-target-preferences.perPath]
-"/Users/m-ohba/ghq/github.com/smartbank-inc/factoring-core" = "cursor"
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#3d59a1"
