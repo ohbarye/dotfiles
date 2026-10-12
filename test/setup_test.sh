@@ -102,6 +102,10 @@ refute "claude settings has no .entire rule" grep -q '\.entire' "$REPO/claude/se
 refute "Brewfile.macos has no heroku"            grep -q 'heroku' "$REPO/Brewfile.macos"
 refute "Brewfile.macos has no archived cask-versions tap" grep -q '^tap "homebrew/cask-versions"' "$REPO/Brewfile.macos"
 
+# --- gog skill が使う CLI(openclaw/tap の gogcli)が Brewfile にあること ---
+assert "Brewfile.macos taps openclaw/tap"   grep -q '^tap "openclaw/tap"' "$REPO/Brewfile.macos"
+assert "Brewfile.macos has gogcli"          grep -q '^brew "openclaw/tap/gogcli"' "$REPO/Brewfile.macos"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
