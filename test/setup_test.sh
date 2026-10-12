@@ -78,7 +78,7 @@ refute "tracked files have no private names" \
 
 # --- 不要になったパッケージが Brewfile.macos に残っていないこと ---
 for f in folly fizz wangle fbthrift fb303 mvfst boost cffi cryptography pycparser docutils \
-         awscli awslogs python@3.12 m1-terraform-provider-helper tfsec alp bluetoothconnector \
+         awslogs python@3.12 m1-terraform-provider-helper tfsec alp bluetoothconnector \
          switchaudio-osx nightlight qrencode pandoc perl entire; do
   refute "Brewfile.macos has no brew $f" grep -qE "^brew \"([^\"]*/)?$f\"" "$REPO/Brewfile.macos"
 done
@@ -90,6 +90,17 @@ assert "Brewfile.macos keeps mas Kindle"    grep -q '^mas "Kindle"' "$REPO/Brewf
 for t in kreuzwerker/taps smudge/smudge entireio/tap; do
   refute "Brewfile.macos has no unused tap $t" grep -q "^tap \"$t\"" "$REPO/Brewfile.macos"
 done
+
+assert "Brewfile.macos keeps awscli (mise aws-cli install is broken)" grep -q '^brew "awscli"' "$REPO/Brewfile.macos"
+refute "mise config does not manage aws-cli (brew awscli is used)"  grep -qE '^aws-cli = ' "$REPO/mise/config.toml"
+
+# --- entire(アンインストール済み)の残骸 ---
+refute ".entire is not tracked"            test -n "$(git -C "$REPO" ls-files .entire)"
+refute "claude settings has no .entire rule" grep -q '\.entire' "$REPO/claude/settings.json"
+
+# --- 廃止・未使用の tap / heroku ---
+refute "Brewfile.macos has no heroku"            grep -q 'heroku' "$REPO/Brewfile.macos"
+refute "Brewfile.macos has no archived cask-versions tap" grep -q '^tap "homebrew/cask-versions"' "$REPO/Brewfile.macos"
 
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
