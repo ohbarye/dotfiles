@@ -72,7 +72,8 @@ ruby ~/.claude/skills/pr-lead-time/scripts/pr_lead_time.rb --since 2026-06-01 --
   2/3. This is intentional: each stage's trend should reflect when that stage's
   event actually happened.
 - **Excluded from all stats**: PRs authored by `dependabot[bot]` or
-  `renovate[bot]` (maintenance bots). PRs authored by dev-agent bots (e.g.
+  `renovate[bot]` (maintenance bots; `gh` reports them as `app/dependabot` /
+  `app/renovate`, and both spellings are excluded). PRs authored by dev-agent bots (e.g.
   `devin-ai-integration[bot]`, Claude Code) are **included** — they represent
   real development flow, not automated maintenance.
 - **Excluded from stage 2/3 only**: PRs merged into the base branch but not

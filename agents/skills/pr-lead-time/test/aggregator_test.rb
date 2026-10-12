@@ -51,4 +51,19 @@ class AggregatorTest < Minitest::Test
     assert_equal 1, july[:stage2][:n]
     assert_equal 1, july[:stage3][:n]
   end
+
+  def test_summary_includes_distribution_stats
+    records = [2.0, 4.0, 6.0, 20.0].map do |h|
+      {
+        merged_at: jst(2026, 6, 10), deployed_at: jst(2026, 6, 11),
+        stage1_hours: h, stage2_hours: h, stage3_hours: h
+      }
+    end
+
+    stage2 = Aggregator.build(records, granularity: :monthly).first[:stage2]
+    assert_in_delta 8.0, stage2[:mean], 0.001
+    assert_in_delta 9.5, stage2[:p75], 0.001
+    assert_in_delta 15.8, stage2[:p90], 0.001
+    assert_in_delta 0.75, stage2[:within_6h], 0.001
+  end
 end

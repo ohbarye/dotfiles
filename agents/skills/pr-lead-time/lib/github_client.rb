@@ -7,7 +7,9 @@ require "time"
 # Thin I/O wrapper around the `gh` CLI and `git` for a repo checked out at `repo_dir`.
 # Not unit-tested directly (see SKILL.md); exercised via manual/integration runs.
 class GithubClient
-  DEFAULT_EXCLUDED_AUTHORS = %w[dependabot[bot] renovate[bot]].freeze
+  # `gh pr list --json author` は GitHub App を `app/<slug>` 形式で返すため、
+  # REST API 形式（`<slug>[bot]`）と両方を除外対象にする。
+  DEFAULT_EXCLUDED_AUTHORS = %w[dependabot[bot] renovate[bot] app/dependabot app/renovate].freeze
 
   class Error < StandardError; end
 

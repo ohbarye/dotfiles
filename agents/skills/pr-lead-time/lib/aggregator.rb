@@ -4,11 +4,14 @@ require_relative "bucketing"
 require_relative "stats"
 
 # Groups PR lead-time records into weekly/monthly buckets and computes
-# median/mean/N for each of the three stages:
+# median/mean/p75/p90/N and the share finished within WITHIN_HOURS for each of
+# the three stages:
 #   stage1: PR open -> base branch merge      (bucketed by merged_at)
 #   stage2: base branch merge -> deploy       (bucketed by deployed_at)
 #   stage3: PR open -> deploy ("total")       (bucketed by deployed_at)
 module Aggregator
+  WITHIN_HOURS = 6
+
   def self.build(records, granularity:)
     key_fn = granularity == :weekly ? Bucketing.method(:week_key) : Bucketing.method(:month_key)
 
@@ -37,6 +40,13 @@ module Aggregator
   end
 
   def self.summarize(values)
-    { median: Stats.median(values), mean: Stats.mean(values), n: values.length }
+    {
+      median: Stats.median(values),
+      mean: Stats.mean(values),
+      p75: Stats.percentile(values, 0.75),
+      p90: Stats.percentile(values, 0.9),
+      within_6h: Stats.share_within(values, WITHIN_HOURS),
+      n: values.length
+    }
   end
 end
