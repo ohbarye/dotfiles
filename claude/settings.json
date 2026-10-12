@@ -33,8 +33,7 @@
       "Bash(git rebase:*)",
       "Bash(sudo:*)",
       "Bash(rm:*)",
-      "Bash(curl:*)",
-      "Read(./.entire/metadata/**)"
+      "Bash(curl:*)"
     ],
     "defaultMode": "auto"
   },
