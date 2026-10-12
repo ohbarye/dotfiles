@@ -1,0 +1,151 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": [
+    "source.organizeImports",
+    "source.fixAll.eslint"
+  ],
+  "[solidity]": {
+    "editor.insertSpaces": true,
+    "editor.wordWrapColumn": 120,
+    "editor.tabSize": 2
+  },
+  "gitlens.defaultDateStyle": "absolute",
+  "gitlens.defaultDateFormat": "YYYY-MM-DD hh:mma",
+  "eslint.alwaysShowStatus": true,
+  "eslint.packageManager": "yarn",
+  "eslint.lintTask.enable": true,
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.visualstar": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+	],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.enablePreview": false,
+  "workbench.commandPalette.history": 100,
+  "ruby.useBundler": true, //run non-lint commands with bundle exec
+  "ruby.useLanguageServer": true, // use the internal language server (see below)
+  "ruby.lint": {
+    "rubocop": {
+      "useBundler": true // enable rubocop via bundler
+    },
+    "reek": {
+      "useBundler": true // enable reek via bundler
+    }
+  },
+  "ruby.format": "rubocop",
+  "solidity.linter": "solhint",
+  "solidity.solhintRules": {
+    "avoid-sha3": "warn"
+  },
+  "terminal.integrated.shell.linux": "/usr/bin/zsh",
+  "colorize.languages": ["javascript", "typescript"],
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "tabnine.experimentalAutoImports": true,
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "jest.autoEnable": false,
+  "jest.runAllTestsFirst": false,
+  "go.toolsManagement.autoUpdate": true,
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": true,
+    "plaintext": false,
+    "markdown": false,
+    "scminput": false,
+    "yaml": true
+  },
+  "launch": {
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "type": "rdbg",
+        "name": "Debug current file with rdbg",
+        "request": "launch",
+        "script": "${file}",
+        "args": [],
+        "askParameters": true,
+        "useTerminal": true
+      },
+      {
+        "type": "rdbg",
+        "name": "Debug current test with rdbg",
+        "request": "launch",
+        "command": "rspec",
+        "script": "${file}",
+        "args": [],
+        "askParameters": false,
+        "useTerminal": true
+      }
+    ]
+	},
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnSave": true,
+    "editor.formatOnType": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.trimTrailingWhitespace": true,
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": true,
+    "editor.rulers": [120],
+    "editor.semanticHighlighting.enabled": true
+  },
+  "files.autoSave": "onWindowChange",
+  "rdbg.saveBreakpoints": true,
+  "sorbet.enabled": true,
+  "rubyLsp.rubyVersionManager": {
+		"identifier": "rbenv"
+	},
+	"rubyLsp.yjit": true,
+  "rubyLsp.enabledFeatures": {
+    "codeActions": true,
+    "diagnostics": true,
+    "documentHighlights": true,
+    "documentLink": true,
+    "documentSymbols": true,
+    "foldingRanges": true,
+    "formatting": true,
+    "hover": true,
+    "inlayHint": true,
+    "onTypeFormatting": true,
+    "selectionRanges": true,
+    "semanticHighlighting": true,
+    "completion": true
+  },
+	"editor.accessibilitySupport": "off",
+	"github.copilot.chat.localeOverride": "ja",
+	"prisma.showPrismaDataPlatformNotification": false,
+	"remote.SSH.remotePlatform": {
+		"sandbox.7sg889.csb": "linux"
+	},
+	"workbench.preferredDarkColorTheme": "Spinel",
+	"workbench.colorTheme": "Solarized Dark",
+	"rubyLsp.featureFlags": {
+		"all": true
+	},
+	"github.copilot.nextEditSuggestions.enabled": true,
+	"gitlens.launchpad.indicator.enabled": false,
+	"editor.minimap.enabled": false,
+	"workbench.statusBar.visible": false,
+	"breadcrumbs.enabled": false,
+	"editor.stickyScroll.enabled": false,
+	"workbench.activityBar.location": "top"
+}

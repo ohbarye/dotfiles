@@ -83,6 +83,35 @@ ln -sfn ../dotfiles/codex/AGENTS.md "$HOME/.codex/AGENTS.md"
 ln -sfn ../dotfiles/codex/PLANS.md "$HOME/.codex/PLANS.md"
 ln -sfn ../.agents/skills "$HOME/.codex/skills"
 
+# macOS のみ: エディタ・Karabiner の設定をリンクする
+link_with_backup() {
+  local src="$1" dst="$2"
+  mkdir -p "$(dirname "$dst")"
+  if [ -L "$dst" ]; then
+    ln -sfn "$src" "$dst"
+  elif [ -e "$dst" ]; then
+    mv "$dst" "$dst.bak"
+    ln -s "$src" "$dst"
+  else
+    ln -s "$src" "$dst"
+  fi
+}
+
+if [[ "$OS_TYPE" == "macos" ]]; then
+  APP_SUPPORT="$HOME/Library/Application Support"
+  link_with_backup "$HOME/dotfiles/editors/vscode/settings.json" "$APP_SUPPORT/Code/User/settings.json"
+  link_with_backup "$HOME/dotfiles/editors/vscode/keybindings.json" "$APP_SUPPORT/Code/User/keybindings.json"
+  link_with_backup "$HOME/dotfiles/editors/cursor/settings.json" "$APP_SUPPORT/Cursor/User/settings.json"
+  link_with_backup "$HOME/dotfiles/editors/cursor/keybindings.json" "$APP_SUPPORT/Cursor/User/keybindings.json"
+  link_with_backup "$HOME/dotfiles/karabiner/karabiner.json" "$HOME/.config/karabiner/karabiner.json"
+fi
+
+# リンクだけ張りたい場合: SETUP_LINKS_ONLY=1 ./setup.sh
+if [ "${SETUP_LINKS_ONLY:-0}" = "1" ]; then
+  echo "SETUP_LINKS_ONLY=1: skipping package installation and system defaults"
+  exit 0
+fi
+
 # BREW_BIN は外部から上書き可能(テストでスタブを差し込むため)
 BREW_BIN="${BREW_BIN:-}"
 if [ -z "$BREW_BIN" ]; then
@@ -121,4 +150,9 @@ if command -v mise >/dev/null 2>&1; then
   mise install --yes || echo "Warning: mise install failed"
 else
   echo "Warning: mise not found. Run 'mise install' after installing it."
+fi
+
+# macOS のシステム設定を反映
+if [[ "$OS_TYPE" == "macos" ]]; then
+  "$HOME/dotfiles/macos.sh" || echo "Warning: macos.sh failed"
 fi

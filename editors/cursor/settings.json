@@ -1,0 +1,144 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "editor.tabSize": 2,
+  "editor.detectIndentation": false,
+  "editor.codeActionsOnSave": {
+    "source.organizeImports": "explicit",
+    "source.fixAll.eslint": "explicit"
+  },
+  "extensions.autoUpdate": false,
+  "gitlens.defaultDateStyle": "absolute",
+  "gitlens.defaultDateFormat": "YYYY-MM-DD hh:mma",
+  "eslint.lintTask.enable": true,
+  "vim.useSystemClipboard": true,
+  "vim.hlsearch": true,
+  "vim.visualstar": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editor.enablePreview": true,
+  "workbench.commandPalette.history": 100,
+  "colorize.languages": ["javascript", "typescript"],
+  "workbench.editorAssociations": {
+    "*.ipynb": "jupyter-notebook"
+  },
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "go.toolsManagement.autoUpdate": true,
+  "editor.cursorStyle": "line",
+  "editor.insertSpaces": false,
+  "editor.lineNumbers": "on",
+  "editor.wordSeparators": "/\\()\"':,.;<>~!@#$%^&*|+=[]{}`?-",
+  "editor.wordWrap": "off",
+  "notebook.cellToolbarLocation": {
+    "default": "right",
+    "jupyter-notebook": "left"
+  },
+  "editor.inlineSuggest.enabled": true,
+  "github.copilot.enable": {
+    "*": false,
+    "plaintext": false,
+    "markdown": true,
+    "scminput": false,
+    "yaml": true
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "biomejs.biome"
+  },
+  "[ruby]": {
+    "editor.defaultFormatter": "Shopify.ruby-lsp",
+    "editor.formatOnType": true,
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "files.trimFinalNewlines": true,
+    "editor.rulers": [120],
+    "editor.semanticHighlighting.enabled": true
+  },
+  "editor.formatOnSave": true,
+  "files.trimTrailingWhitespace": true,
+  "files.insertFinalNewline": true,
+  "files.autoSave": "onWindowChange",
+  "rdbg.saveBreakpoints": true,
+  "sorbet.enabled": true,
+  "rubyLsp.rubyVersionManager": {
+    "identifier": "mise"
+  },
+  "rubyLsp.enabledFeatures": {
+    "codeActions": true,
+    "diagnostics": true,
+    "documentHighlights": true,
+    "documentLink": true,
+    "documentSymbols": true,
+    "foldingRanges": true,
+    "formatting": true,
+    "hover": true,
+    "inlayHint": true,
+    "onTypeFormatting": true,
+    "selectionRanges": true,
+    "semanticHighlighting": true,
+    "codeLens": true,
+    "completion": true
+  },
+  "editor.accessibilitySupport": "off",
+  "github.copilot.chat.localeOverride": "ja",
+  "remote.SSH.remotePlatform": {
+    "sandbox.7sg889.csb": "linux"
+  },
+  "cursor.cpp.disabledLanguages": ["plaintext", "scminput"],
+  "debug.console.fontSize": 14,
+  "scm.inputFontSize": 14,
+  "terminal.integrated.fontFamily": "\"JetBrains Mono\", Menlo, Monaco, 'Courier New', monospace",
+  "terminal.integrated.fontSize": 14,
+  "chat.editor.fontSize": 14,
+  "cursor.cpp.enablePartialAccepts": true,
+  "githubPullRequests.pullBranch": "never",
+  "editor.fontFamily": "\"JetBrains Mono\", Menlo, Monaco, 'Courier New', monospace",
+  "editor.fontSize": 14,
+  "editor.lineHeight": 22,
+  "editor.fontWeight": "300",
+  "editor.fontLigatures": false,
+  "workbench.preferredDarkColorTheme": "Spinel",
+  "gitlens.blame.format": "${date|11} ${author|16?}",
+  "gitlens.blame.dateFormat": "YYYY-MM-DD",
+  "terminal.integrated.scrollback": 100000,
+  "window.openFilesInNewWindow": "on",
+  "window.zoomLevel": 0,
+  "window.nativeTabs": false,
+  "window.titleBarStyle": "custom",
+  "rubyLsp.bundleGemfile": "./Gemfile",
+  "git.allowForcePush": true,
+  "remote.autoForwardPortsSource": "hybrid",
+  "dotfiles.repository": "ohbarye/dotfiles",
+  "dotfiles.targetPath": "~/dotfiles",
+  "dotfiles.installCommand": "setup.sh",
+  "biome.suggestInstallingGlobally": false,
+  "hediet.vscode-drawio.resizeImages": null,
+  "workbench.colorTheme": "JetBrains Darcula Theme",
+  "update.releaseTrack": "stable",
+  "claudeCode.selectedModel": "default",
+  "claudeCode.environmentVariables": [
+    {
+      "name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+      "value": "128000"
+    }
+  ],
+  "cursor.composer.queueMessageDefaultBehavior": "send",
+  "claudeCode.preferredLocation": "panel",
+  "claudeCode.useTerminal": true,
+	"jupyter.interactiveWindow.creationMode": "perFile",
+	"window.autoDetectColorScheme": false
+}
