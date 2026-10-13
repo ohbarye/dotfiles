@@ -152,6 +152,13 @@ else
   echo "Warning: mise not found. Run 'mise install' after installing it."
 fi
 
+# skill が前提とする gh 拡張(gh-stack)。gh 未ログインなどで失敗しても続行
+if command -v gh >/dev/null 2>&1; then
+  if ! gh extension list 2>/dev/null | grep -q 'github/gh-stack'; then
+    gh extension install github/gh-stack || echo "Warning: failed to install gh-stack extension (run 'gh auth login' first?)"
+  fi
+fi
+
 # Cursor の拡張機能をインストール(CLI がある macOS のみ。失敗しても続行)
 if [[ "$OS_TYPE" == "macos" ]] && command -v cursor >/dev/null 2>&1; then
   while IFS= read -r ext; do

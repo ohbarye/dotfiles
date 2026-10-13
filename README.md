@@ -31,6 +31,8 @@
 - `gh auth login` で GitHub にログインする
 - `.safe-chain` は MDM で配布される。未配布の環境でもシェルはエラーにならない
 - Claude Code / Codex 各アプリへのログイン
+- 社内向けプラグインのマーケットプレイスを登録する(リポジトリ名は公開しない方針のため `settings.json` には書かない):
+  `claude plugin marketplace add <社内の agent_skills リポジトリ>`
 
 ## 構成
 

@@ -65,6 +65,18 @@
         "source": "github",
         "repo": "anthropics/claude-plugins-community"
       }
+    },
+    "ruby-skills": {
+      "source": {
+        "source": "github",
+        "repo": "st0012/ruby-skills"
+      }
+    },
+    "claude-plugins-official": {
+      "source": {
+        "source": "github",
+        "repo": "anthropics/claude-plugins-official"
+      }
     }
   },
   "skipDangerousModePermissionPrompt": true,
