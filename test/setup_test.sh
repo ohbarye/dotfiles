@@ -106,6 +106,12 @@ refute "Brewfile.macos has no archived cask-versions tap" grep -q '^tap "homebre
 assert "Brewfile.macos taps openclaw/tap"   grep -q '^tap "openclaw/tap"' "$REPO/Brewfile.macos"
 assert "Brewfile.macos has gogcli"          grep -q '^brew "openclaw/tap/gogcli"' "$REPO/Brewfile.macos"
 
+# --- skill が前提とする gh 拡張とマーケットプレイス ---
+assert "setup.sh installs gh-stack extension" grep -q 'extension install github/gh-stack' "$REPO/setup.sh"
+assert "settings declares ruby-skills marketplace" \
+  python3 -c "import json,sys;d=json.load(open('$REPO/claude/settings.json'));sys.exit(0 if 'ruby-skills' in d['extraKnownMarketplaces'] else 1)"
+assert "README documents company marketplace step" grep -q 'marketplace add' "$REPO/README.md"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
@@ -117,7 +123,7 @@ mkdir -p "$HOME" "$TMP/bin"
 ln -s "$REPO" "$HOME/dotfiles"
 LOG="$TMP/calls.log"; : > "$LOG"
 
-for cmd in brew mise defaults killall cursor; do
+for cmd in brew mise defaults killall cursor gh; do
   cat > "$TMP/bin/$cmd" <<EOF
 #!/bin/sh
 echo "$cmd \$*" >> "$LOG"
@@ -128,7 +134,7 @@ done
 # 実体の brew / mise に到達できないよう PATH を最小構成にし、BREW_BIN でもスタブを明示する
 export PATH="$TMP/bin:/usr/bin:/bin"
 export BREW_BIN="$TMP/bin/brew"
-for cmd in brew mise defaults killall cursor; do
+for cmd in brew mise defaults killall cursor gh; do
   if [ "$(command -v $cmd)" != "$TMP/bin/$cmd" ]; then echo "ABORT: real $cmd reachable"; exit 2; fi
 done
 
@@ -157,6 +163,8 @@ assert "Cursor keybindings linked"      test "$(readlink "$HOME/Library/Applicat
 assert "karabiner.json linked"          test "$(readlink "$HOME/.config/karabiner/karabiner.json")" = "$HOME/dotfiles/karabiner/karabiner.json"
 
 assert "cursor extensions installed"    grep -q '^cursor --install-extension esbenp.prettier-vscode' "$LOG"
+
+assert "gh-stack extension installed"    grep -q '^gh extension install github/gh-stack' "$LOG"
 
 # 冪等性
 zsh "$REPO/setup.sh" > "$TMP/run2.log" 2>&1
