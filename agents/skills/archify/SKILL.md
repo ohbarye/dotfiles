@@ -1,13 +1,17 @@
 ---
-name: archify
-description: "Create polished, validated architecture, workflow, sequence, data-flow, and lifecycle/state diagrams as explorable standalone HTML with inline SVG, dark/light themes, optional trace motion, and PNG/JPEG/WebP/SVG/WebM export. Accept plain-language requirements or pasted Mermaid flowchart, sequenceDiagram, and stateDiagram input; inspect repository evidence when the diagram must reflect real code. Use when the user asks to visualize system architecture, infrastructure, cloud/security/network topology, technical workflows, API call sequences, request lifecycles, data pipelines, ETL/ELT, data lineage, state machines, or to convert/beautify Mermaid. Also use for everyday subjects with steps, parts, relationships, or states: a leave or travel plan, an application or approval process, a back-and-forth such as renting, where money or documents go, or where an application or order stands. Not for numeric charts or dashboards."
+description: 'Create polished, validated architecture, workflow, sequence, data-flow, and lifecycle/state diagrams as explorable standalone HTML with inline SVG, dark/light themes, optional trace motion, and PNG/JPEG/WebP/SVG/WebM export. Accept plain-language requirements or pasted Mermaid flowchart, sequenceDiagram, and stateDiagram input; inspect repository evidence when the diagram must reflect real code. Use when the user asks to visualize system architecture, infrastructure, cloud/security/network topology, technical workflows, API call sequences, request lifecycles, data pipelines, ETL/ELT, data lineage, state machines, or to convert/beautify Mermaid. Also use for everyday subjects with steps, parts, relationships, or states: a leave or travel plan, an application or approval process, a back-and-forth such as renting, where money or documents go, or where an application or order stands. Not for numeric charts or dashboards.'
 license: MIT
 metadata:
-  version: "3.0"
-  author: tt-a1i
-  based_on: Cocoon-AI/architecture-diagram-generator (MIT, v1.0)
+    author: tt-a1i
+    based_on: Cocoon-AI/architecture-diagram-generator (MIT, v1.0)
+    github-path: archify
+    github-pinned: 58ab0b98d2d0def8e49dced705c7b566936723ec
+    github-ref: 58ab0b98d2d0def8e49dced705c7b566936723ec
+    github-repo: https://github.com/tt-a1i/archify
+    github-tree-sha: a38bc1bc9e97804aa5d23f09c357ac23e096eb54
+    version: "3.0"
+name: archify
 ---
-
 # Archify
 
 Create an interactive HTML diagram from typed JSON. Static output is the default; enable motion only when requested.
