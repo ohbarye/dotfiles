@@ -1,29 +1,66 @@
-[tools]
-go = "1.25"
-node = "24"
-"npm:@openai/codex" = "latest"
-"npm:@devcontainers/cli" = "latest"
-"npm:@google/gemini-cli" = "latest"
-"npm:agent-browser" = "latest"
-"pipx:aws-mfa" = "latest"
-ruby = "latest"
-rust = "latest"
-uv = "latest"
-yarn = "4"
-bun = "latest"
-pinact = "latest"
-actionlint = "latest"
-ecspresso = "latest"
-tflint = "latest"
-jq = "latest"
-"aqua:fujiwara/lambroll" = "latest"
-"aqua:fujiwara/tfstate-lookup" = "latest"
-"pipx:poetry" = "latest"
+# mise のグローバル設定(~/.config/mise/config.toml へリンクされる)
+# MISE_ENV=macos|linux のとき、同じディレクトリの config.<env>.toml が重なる。
 
 [settings]
-idiomatic_version_file_enable_tools = [
-	"ruby",
-	"node",
-	"go"
-]
+experimental = true
+idiomatic_version_file_enable_tools = ["ruby", "node", "go"]
 
+[tools]
+# 全環境(macOS / Linux / Dev Container)
+jq = "latest"
+delta = "latest"
+sheldon = "latest"
+fzf = "latest"
+
+# macOS のみ(コンテナではプロジェクト側が用意する)
+go = { version = "1.25", os = ["macos"] }
+node = { version = "24", os = ["macos"] }
+"npm:@openai/codex" = { version = "latest", os = ["macos"] }
+"npm:@devcontainers/cli" = { version = "latest", os = ["macos"] }
+"npm:@google/gemini-cli" = { version = "latest", os = ["macos"] }
+"npm:agent-browser" = { version = "latest", os = ["macos"] }
+"pipx:aws-mfa" = { version = "latest", os = ["macos"] }
+ruby = { version = "latest", os = ["macos"] }
+rust = { version = "latest", os = ["macos"] }
+uv = { version = "latest", os = ["macos"] }
+yarn = { version = "4", os = ["macos"] }
+bun = { version = "latest", os = ["macos"] }
+pinact = { version = "latest", os = ["macos"] }
+actionlint = { version = "latest", os = ["macos"] }
+ecspresso = { version = "latest", os = ["macos"] }
+tflint = { version = "latest", os = ["macos"] }
+"aqua:fujiwara/lambroll" = { version = "latest", os = ["macos"] }
+"aqua:fujiwara/tfstate-lookup" = { version = "latest", os = ["macos"] }
+"pipx:poetry" = { version = "latest", os = ["macos"] }
+
+[dotfiles]
+"~/.bash_profile" = { source = "~/dotfiles/.bash_profile", mode = "symlink" }
+"~/.bashrc" = { source = "~/dotfiles/.bashrc", mode = "symlink" }
+"~/.gitconfig" = { source = "~/dotfiles/.gitconfig", mode = "symlink" }
+"~/.gitignore_global" = { source = "~/dotfiles/.gitignore_global", mode = "symlink" }
+"~/.zlogin" = { source = "~/dotfiles/.zlogin", mode = "symlink" }
+"~/.zlogout" = { source = "~/dotfiles/.zlogout", mode = "symlink" }
+"~/.zprofile" = { source = "~/dotfiles/.zprofile", mode = "symlink" }
+"~/.zshenv" = { source = "~/dotfiles/.zshenv", mode = "symlink" }
+"~/.zshrc" = { source = "~/dotfiles/.zshrc", mode = "symlink" }
+"~/.ideavimrc" = { source = "~/dotfiles/.ideavimrc", mode = "symlink" }
+"~/.irbrc" = { source = "~/dotfiles/.irbrc", mode = "symlink" }
+"~/.vimrc" = { source = "~/dotfiles/.vimrc", mode = "symlink" }
+"~/.vim" = { source = "~/dotfiles/.vim", mode = "symlink" }
+"~/.bundle" = { source = "~/dotfiles/.bundle", mode = "symlink" }
+"~/.config/mise/config.toml" = { source = "~/dotfiles/mise/config.toml", mode = "symlink" }
+"~/.config/mise/config.macos.toml" = { source = "~/dotfiles/mise/config.macos.toml", mode = "symlink" }
+"~/.config/mise/config.linux.toml" = { source = "~/dotfiles/mise/config.linux.toml", mode = "symlink" }
+"~/.config/sheldon/plugins.toml" = { source = "~/dotfiles/sheldon/plugins.toml", mode = "symlink" }
+
+# AI エージェント向け: Dev Container へのマウントで壊れないよう、相対パスのリンクにする
+"~/.agents/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }
+"~/.claude/CLAUDE.md" = { source = "~/dotfiles/claude/CLAUDE.md", mode = "symlink", relative = true }
+"~/.claude/settings.json" = { source = "~/dotfiles/claude/settings.json", mode = "symlink", relative = true }
+"~/.claude/commands" = { source = "~/dotfiles/claude/commands", mode = "symlink", relative = true }
+"~/.claude/agents" = { source = "~/dotfiles/claude/agents", mode = "symlink", relative = true }
+"~/.claude/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }
+"~/.codex/config.toml" = { source = "~/dotfiles/codex/config.toml", mode = "symlink", relative = true }
+"~/.codex/AGENTS.md" = { source = "~/dotfiles/codex/AGENTS.md", mode = "symlink", relative = true }
+"~/.codex/PLANS.md" = { source = "~/dotfiles/codex/PLANS.md", mode = "symlink", relative = true }
+"~/.codex/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }

@@ -1,0 +1,5 @@
+# Linux / Dev Container 専用(MISE_ENV=linux)
+
+[dotfiles]
+"~/.gitconfig.os" = { source = "~/dotfiles/.gitconfig.linux", mode = "symlink" }
+

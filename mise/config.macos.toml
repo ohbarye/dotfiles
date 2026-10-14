@@ -1,0 +1,121 @@
+# macOS 専用(MISE_ENV=macos)
+
+[bootstrap.packages]
+"brew:autoconf" = "latest"
+"brew:automake" = "latest"
+"brew:awscli" = "latest"
+"brew:openssl@3" = "latest"
+"brew:zstd" = "latest"
+"brew:btop" = "latest"
+"brew:cairo" = "latest"
+"brew:docker-completion" = "latest"
+"brew:docker-compose" = "latest"
+"brew:docker-credential-helper-ecr" = "latest"
+"brew:duckdb" = "latest"
+"brew:ffmpeg" = "latest"
+"brew:fzf" = "latest"
+"brew:gh" = "latest"
+"brew:ghq" = "latest"
+"brew:giflib" = "latest"
+"brew:git" = "latest"
+"brew:git-delta" = "latest"
+"brew:golang-migrate" = "latest"
+"brew:jpeg" = "latest"
+"brew:jq" = "latest"
+"brew:libfido2" = "latest"
+"brew:pango" = "latest"
+"brew:librsvg" = "latest"
+"brew:libyaml" = "latest"
+"brew:llvm" = "latest"
+"brew:mas" = "latest"
+"brew:mise" = "latest"
+"brew:mysql-client" = "latest"
+"brew:mysql@8.0" = "latest"
+"brew:oha" = "latest"
+"brew:pipx" = "latest"
+"brew:pkgconf" = "latest"
+"brew:pre-commit" = "latest"
+"brew:ripgrep" = "latest"
+"brew:sheldon" = "latest"
+"brew:tailspin" = "latest"
+"brew:tesseract-lang" = "latest"
+"brew:terraform" = "latest"
+"brew:the_silver_searcher" = "latest"
+"brew:tree" = "latest"
+"brew:vim" = "latest"
+"brew:vips" = "latest"
+"brew:xpdf" = "latest"
+"brew:zsh" = "latest"
+"brew:steipete/tap/summarize" = "latest"
+"brew:openclaw/tap/gogcli" = "latest"
+"brew:withgraphite/tap/graphite" = "latest"
+"brew-cask:1password" = "latest"
+"brew-cask:1password-cli" = "latest"
+"brew-cask:arc" = "latest"
+"brew-cask:charles" = "latest"
+"brew-cask:claude" = "latest"
+"brew-cask:claude-code" = "latest"
+"brew-cask:cursor" = "latest"
+"brew-cask:devtunnel" = "latest"
+"brew-cask:discord" = "latest"
+"brew-cask:docker-desktop" = "latest"
+"brew-cask:google-chrome" = "latest"
+"brew-cask:istat-menus" = "latest"
+"brew-cask:jetbrains-toolbox" = "latest"
+"brew-cask:jordanbaird-ice" = "latest"
+"brew-cask:karabiner-elements" = "latest"
+"brew-cask:libreoffice" = "latest"
+"brew-cask:monitorcontrol" = "latest"
+"brew-cask:grishka/grishka/neardrop" = "latest"
+"brew-cask:ngrok" = "latest"
+"brew-cask:orbstack" = "latest"
+"brew-cask:proxyman" = "latest"
+"brew-cask:raycast" = "latest"
+"brew-cask:slack" = "latest"
+"brew-cask:spotify" = "latest"
+"brew-cask:visual-studio-code" = "latest"
+"brew-cask:warp" = "latest"
+"brew-cask:wireshark-app" = "latest"
+"mas:682658836" = "latest"  # GarageBand
+"mas:408981434" = "latest"  # iMovie
+"mas:409183694" = "latest"  # Keynote
+"mas:302584613" = "latest"  # Kindle
+"mas:539883307" = "latest"  # LINE
+"mas:1295203466" = "latest"  # Microsoft Remote Desktop
+"mas:409203825" = "latest"  # Numbers
+"mas:409201541" = "latest"  # Pages
+"mas:497799835" = "latest"  # Xcode
+"mas:457622435" = "latest"  # Yoink
+
+[dotfiles]
+"~/.gitconfig.os" = { source = "~/dotfiles/.gitconfig.macos", mode = "symlink" }
+"~/Library/Application Support/Code/User/settings.json" = { source = "~/dotfiles/editors/vscode/settings.json", mode = "symlink" }
+"~/Library/Application Support/Code/User/keybindings.json" = { source = "~/dotfiles/editors/vscode/keybindings.json", mode = "symlink" }
+"~/Library/Application Support/Cursor/User/settings.json" = { source = "~/dotfiles/editors/cursor/settings.json", mode = "symlink" }
+"~/Library/Application Support/Cursor/User/keybindings.json" = { source = "~/dotfiles/editors/cursor/keybindings.json", mode = "symlink" }
+"~/.config/karabiner/karabiner.json" = { source = "~/dotfiles/karabiner/karabiner.json", mode = "symlink" }
+
+[bootstrap.macos.defaults."com.apple.dock"]
+autohide = true
+tilesize = 64
+orientation = "right"
+
+[bootstrap.macos.defaults."com.apple.finder"]
+FXPreferredViewStyle = "clmv"
+
+[bootstrap.macos.defaults.NSGlobalDomain]
+KeyRepeat = 2
+InitialKeyRepeat = 15
+ApplePressAndHoldEnabled = false
+NSAutomaticSpellingCorrectionEnabled = false
+NSAutomaticCapitalizationEnabled = false
+NSAutomaticPeriodSubstitutionEnabled = false
+NSAutomaticQuoteSubstitutionEnabled = false
+NSAutomaticDashSubstitutionEnabled = false
+
+[bootstrap.macos.defaults."com.apple.AppleMultitouchTrackpad"]
+Clicking = true
+
+[bootstrap.macos.defaults."com.apple.menuextra.clock"]
+ShowSeconds = true
+
