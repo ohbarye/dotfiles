@@ -119,6 +119,19 @@ refute "claude settings has no .entire rule" grep -q '\.entire' "$REPO/claude/se
 assert "settings declares ruby-skills marketplace" \
   python3 -c "import json,sys;d=json.load(open('$REPO/claude/settings.json'));sys.exit(0 if 'ruby-skills' in d['extraKnownMarketplaces'] else 1)"
 
+echo "== static: 第三者 skill のマニフェスト =="
+MF="$REPO/agents/skills.manifest"
+assert "skills manifest exists"           test -f "$MF"
+assert "skills installer is executable"   test -x "$REPO/scripts/install-skills.sh"
+assert "setup.sh installs manifest skills" grep -q 'install-skills.sh' "$REPO/setup.sh"
+for n in archify find-skills gh-stack grill-me grilling; do
+  assert "manifest lists $n"               grep -qE "^$n[[:space:]]" "$MF"
+  assert "$n is gitignored (installed from manifest)" grep -qxF "agents/skills/$n/" "$REPO/.gitignore"
+  refute "$n is not tracked in git"        test -n "$(git -C "$REPO" ls-files "agents/skills/$n")"
+done
+refute "manifest refs are pinned (no main/master/HEAD/latest)" \
+  bash -c "grep -vE '^[[:space:]]*(#|$)' '$MF' | awk '{print \$4}' | grep -qxE 'main|master|HEAD|latest'"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -132,6 +145,39 @@ new_home() { # new_home <name> : 空の HOME を作り、dotfiles への相対�
   rm -rf "$HOME"; mkdir -p "$HOME"
   ln -s "$REPO" "$HOME/dotfiles"
 }
+
+echo "== skills installer (local git repos, no network) =="
+GB="$TMP/gitbase"; mkdir -p "$GB/acme/skills/skills/foo"
+git -C "$GB/acme/skills" init -q
+echo "v1" > "$GB/acme/skills/skills/foo/SKILL.md"; echo "x" > "$GB/acme/skills/skills/foo/extra.txt"
+git -C "$GB/acme/skills" add -A
+git -C "$GB/acme/skills" -c user.email=t@t -c user.name=t commit -qm v1
+git -C "$GB/acme/skills" tag v1.0.0
+V1_SHA="$(git -C "$GB/acme/skills" rev-parse HEAD)"
+echo "v2" > "$GB/acme/skills/skills/foo/SKILL.md"
+git -C "$GB/acme/skills" -c user.email=t@t -c user.name=t commit -qam v2
+git -C "$GB/acme/skills" tag v2.0.0
+SK_DEST="$TMP/skills-dest"; SK_MF="$TMP/skills.manifest"
+run_installer() { SKILLS_MANIFEST="$SK_MF" SKILLS_DEST="$SK_DEST" SKILLS_GIT_BASE="file://$GB" "$REPO/scripts/install-skills.sh"; }
+
+printf 'foo acme/skills skills/foo v1.0.0\nbar acme/skills skills/missing v1.0.0\n' > "$SK_MF"
+run_installer > "$TMP/inst0.log" 2>&1
+assert "installer exits non-zero when one entry fails" test $? -ne 0
+assert "other entries are still installed"   test "$(cat "$SK_DEST/foo/SKILL.md" 2>/dev/null)" = "v1"
+
+printf '# comment\n\nfoo acme/skills skills/foo v1.0.0\n' > "$SK_MF"
+run_installer > "$TMP/inst1.log" 2>&1
+assert "installer exits 0"                   test $? -eq 0
+assert "installs the pinned tag (v1, not latest)" test "$(cat "$SK_DEST/foo/SKILL.md")" = "v1"
+assert "installs sibling files"              test -f "$SK_DEST/foo/extra.txt"
+run_installer > "$TMP/inst2.log" 2>&1
+assert "second run exits 0 (idempotent)"     test $? -eq 0
+printf 'foo acme/skills skills/foo v2.0.0\n' > "$SK_MF"
+run_installer > "$TMP/inst3.log" 2>&1
+assert "bumping the ref updates the skill"   test "$(cat "$SK_DEST/foo/SKILL.md")" = "v2"
+printf 'foo acme/skills skills/foo %s\n' "$V1_SHA" > "$SK_MF"
+run_installer > "$TMP/inst4.log" 2>&1
+assert "a commit SHA ref works"              test "$(cat "$SK_DEST/foo/SKILL.md")" = "v1"
 
 if [ -n "$REAL_MISE" ]; then
   echo "== real mise (sandboxed HOME, dotfiles only) =="
@@ -184,6 +230,8 @@ for cmd in brew mise gh cursor code; do
   if [ "$(command -v $cmd)" != "$TMP/bin/$cmd" ]; then echo "ABORT: real $cmd reachable"; exit 2; fi
 done
 
+printf 'foo acme/skills skills/foo v1.0.0\n' > "$SK_MF"; rm -rf "$SK_DEST"
+export SKILLS_MANIFEST="$SK_MF" SKILLS_DEST="$SK_DEST" SKILLS_GIT_BASE="file://$GB"
 echo "legacy" > "$HOME/.zshrc"
 zsh "$REPO/setup.sh" > "$TMP/stub1.log" 2>&1
 assert "setup.sh exits 0" test $? -eq 0
@@ -194,6 +242,7 @@ assert "gh-stack extension installed"   grep -q '^gh extension install github/gh
 assert "cursor extensions installed"    grep -q '^cursor --install-extension esbenp.prettier-vscode' "$LOG"
 assert "vscode extensions installed"    grep -q '^code --install-extension esbenp.prettier-vscode' "$LOG"
 assert "mise config symlinked for bootstrap" test -L "$HOME/.config/mise/config.macos.toml"
+assert "setup.sh installed manifest skills"  test "$(cat "$SK_DEST/foo/SKILL.md" 2>/dev/null)" = "v1"
 
 zsh "$REPO/setup.sh" > "$TMP/stub2.log" 2>&1
 assert "second run exits 0 (idempotent)" test $? -eq 0
