@@ -50,16 +50,37 @@ ensure_brew() {
   eval "$("$BREW_BIN" shellenv)"
 }
 
+# `relative = true` の dotfile リンク(Dev Container へのマウントで壊れない)は mise 2026.9.14 以降。
+# 古いと相対リンクが静かに絶対パスになるため、最低バージョンを満たすように導入・更新する。
+MIN_MISE_VERSION="2026.9.14"
+
+version_ge() { # version_ge <actual> <required>
+  awk -v a="$1" -v b="$2" 'BEGIN{n=split(a,x,/[.]/);split(b,y,/[.]/);for(i=1;i<=3;i++){if(x[i]+0>y[i]+0)exit 0;if(x[i]+0<y[i]+0)exit 1}exit 0}'
+}
+
 ensure_mise() {
-  command -v mise >/dev/null 2>&1 && return 0
-  echo "Installing mise..."
-  if [ "$OS_TYPE" = "macos" ]; then
-    ensure_brew
-    "$BREW_BIN" install mise
+  if command -v mise >/dev/null 2>&1; then
+    local current
+    current="$(mise --version 2>/dev/null | awk '{print $1}')"
+    version_ge "$current" "$MIN_MISE_VERSION" && return 0
+    echo "mise $current is older than $MIN_MISE_VERSION; upgrading..."
+    if [ "$OS_TYPE" = "macos" ]; then
+      ensure_brew
+      "$BREW_BIN" update
+      "$BREW_BIN" upgrade mise
+    else
+      mise self-update --yes || { curl -fsSL https://mise.run | sh; export PATH="$HOME/.local/bin:$PATH"; }
+    fi
   else
-    # Dev Container など Homebrew の無い Linux: 公式インストーラで ~/.local/bin に入れる
-    curl -fsSL https://mise.run | sh
-    export PATH="$HOME/.local/bin:$PATH"
+    echo "Installing mise..."
+    if [ "$OS_TYPE" = "macos" ]; then
+      ensure_brew
+      "$BREW_BIN" install mise
+    else
+      # Dev Container など Homebrew の無い Linux: 公式インストーラで ~/.local/bin に入れる
+      curl -fsSL https://mise.run | sh
+      export PATH="$HOME/.local/bin:$PATH"
+    fi
   fi
   command -v mise >/dev/null 2>&1
 }

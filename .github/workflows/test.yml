@@ -16,7 +16,11 @@ jobs:
     runs-on: macos-latest
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4.4.0
-      - name: Install mise
-        run: brew install mise
+      - name: Install mise (latest; the runner's Homebrew index can be stale)
+        run: |
+          brew update
+          brew install mise || true
+          brew upgrade mise || true
+          mise --version
       - name: Run setup.sh regression tests
         run: test/setup_test.sh

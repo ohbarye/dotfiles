@@ -1,88 +1,93 @@
 # dotfiles
 
-自分用のセットアップ手順と設定ファイル群。macOS と Linux(Dev Container 含む)に対応する。
-宣言の正本は `mise/config*.toml` で、[`mise bootstrap`](https://mise.jdx.dev/cli/bootstrap.html)(experimental)が適用する。
+Personal setup procedure and configuration files. Supports macOS and Linux (including Dev Containers).
+The source of truth is `mise/config*.toml`, applied by [`mise bootstrap`](https://mise.jdx.dev/cli/bootstrap.html) (experimental).
 
-## セットアップ
+## Setup
 
-1. Terminal で次を実行する
+1. Run the following in Terminal.
 
    ```sh
    $ cd ~
-   # 初回の git 実行時は Xcode Command Line Tools のインストールが始まる。
-   # 完了後にもう一度実行する。
+   # The first `git` run may start installing the Xcode Command Line Tools.
+   # Run the command again after it finishes.
    $ git clone https://github.com/ohbarye/dotfiles.git
    $ ~/dotfiles/setup.sh
    ```
 
-2. 下記「手動で行う作業」を済ませる
+2. Do the "Manual steps" below.
 
-`setup.sh` は冪等で、何度実行してもよい。mise を用意し、`mise bootstrap` を実行する。
+`setup.sh` is idempotent: run it as many times as you like. It prepares mise and runs `mise bootstrap`.
 
-- `~/.config/mise/` に設定をリンクし、`MISE_ENV=macos|linux` で OS 別の設定を重ねる
-- dotfiles のリンクを作る(置き換え先に通常ファイルがあれば `*.bak` に退避する)
-- macOS: Homebrew のパッケージ(brew / cask / mas)を入れ、`defaults` を適用する
-- agent skill を `agents/skills.manifest` の ref で再現する(`scripts/install-skills.sh`。自作は `ohbarye/agent-skills`、他は上流)
-- `[tools]` のツールを入れる(言語ランタイム等は macOS のみ。Linux は `delta` `sheldon` `fzf` `jq`)
-- Linux: `apt` で `tree` `vim` `silversearcher-ag` などを入れる(失敗しても続行)
+- Links the configs into `~/.config/mise/` and layers OS-specific ones via `MISE_ENV=macos|linux`.
+  mise must be **2026.9.14 or newer** (for relative dotfile symlinks); `setup.sh` installs or upgrades it.
+- Links the dotfiles (a regular file in the way is moved to `*.bak` first).
+- macOS: installs Homebrew packages (brew / cask / mas) and applies `defaults`.
+- Installs the `[tools]` (language runtimes are macOS-only; Linux gets `delta`, `sheldon`, `fzf`, `jq`).
+- Linux: installs `tree`, `vim`, `silversearcher-ag`, etc. with `apt` (failures are tolerated).
+- Reproduces agent skills from `agents/skills.manifest` at pinned refs (`scripts/install-skills.sh`;
+  own skills come from [`ohbarye/agent-skills`](https://github.com/ohbarye/agent-skills), the rest from upstream).
 
-リンクだけ張りたい場合: `SETUP_LINKS_ONLY=1 ~/dotfiles/setup.sh`
-Dev Container は VS Code の dotfiles 連携が `setup.sh` を実行する。コンテナでは Homebrew を使わない。
+Link only: `SETUP_LINKS_ONLY=1 ~/dotfiles/setup.sh`.
+In Dev Containers, VS Code's dotfiles integration runs `setup.sh`; Homebrew is not used there.
 
-## 手動で行う作業
+## Manual steps
 
-`setup.sh` では自動化されないもの。
+Things `setup.sh` does not automate.
 
-- App Store にサインインする(`mas` で入れるアプリのため。`setup.sh` より前に)
-- 1Password にサインインし、CLI(`op`)連携と SSH agent を有効にする
-- `gh auth login` で GitHub にログインする
-- `.safe-chain` は MDM で配布される。未配布の環境でもシェルはエラーにならない
-- Claude Code / Codex 各アプリへのログイン
-- 社内向けプラグインのマーケットプレイスを登録する(リポジトリ名は公開しない方針のため `settings.json` には書かない):
-  `claude plugin marketplace add <社内の agent_skills リポジトリ>`
+- Sign in to the App Store (needed for the apps installed with `mas`; do this before `setup.sh`).
+- Sign in to 1Password and enable the CLI (`op`) integration and the SSH agent.
+- Log in to GitHub with `gh auth login`.
+- `.safe-chain` is distributed by MDM. Shells do not error where it is missing.
+- Log in to the Claude Code / Codex apps.
+- Register the company plugin marketplace (its repository name is kept out of this public repo):
+  `claude plugin marketplace add <company agent_skills repository>`
+- Re-register Claude Code MCP servers (they live in `~/.claude.json` and are not reproduced).
 
-## 構成
+## Layout
 
-| パス | 内容 |
+| Path | Contents |
 | --- | --- |
-| `mise/config.toml` | 共通: ツール、dotfiles のリンク(AI エージェント向けは相対リンク) |
-| `mise/config.macos.toml` | macOS: パッケージ(brew / cask / mas)、defaults、エディタ・Karabiner |
-| `mise/config.linux.toml` | Linux / Dev Container: OS 別の git 設定など |
-| `setup.sh` | mise を用意して `mise bootstrap` を呼ぶ起点 |
-| `.zshrc` ほか `.z*` | zsh(プラグインは `sheldon/plugins.toml`) |
-| `.gitconfig`, `.gitconfig.{macos,linux}` | git。OS 別設定は `~/.gitconfig.os` 経由で読み込む |
-| `editors/`, `karabiner/` | VS Code / Cursor / Karabiner の設定と拡張機能の一覧 |
-| `claude/`, `codex/` | AI エージェントの設定・コマンド |
-| `agents/skills.manifest` | skill の出所と固定 ref(自作は [ohbarye/agent-skills](https://github.com/ohbarye/agent-skills)、他は上流)。`agents/skills/` の実体は `.gitignore` で、`scripts/install-skills.sh` が再現する |
-| `test/setup_test.sh` | 回帰テスト |
+| `mise/config.toml` | Common: tools and dotfile links (relative links for AI-agent files) |
+| `mise/config.macos.toml` | macOS: packages (brew / cask / mas), defaults, editor and Karabiner settings |
+| `mise/config.linux.toml` | Linux / Dev Container: OS-specific git config, etc. |
+| `setup.sh` | Entry point: prepares mise and calls `mise bootstrap` |
+| `agents/skills.manifest` | Where each agent skill comes from, with a pinned ref. The contents of `agents/skills/` are git-ignored and reproduced by `scripts/install-skills.sh` |
+| `.zshrc` and other `.z*` | zsh (plugins in `sheldon/plugins.toml`) |
+| `.gitconfig`, `.gitconfig.{macos,linux}` | git; OS-specific settings are included through `~/.gitconfig.os` |
+| `editors/`, `karabiner/` | VS Code / Cursor / Karabiner settings and extension lists |
+| `claude/`, `codex/` | AI agent settings and commands |
+| `test/setup_test.sh` | Regression tests |
 
-## 日常の操作
+## Day to day
 
 ```sh
-$ mise bootstrap status            # 宣言と実機の差分
-$ mise bootstrap plan              # 適用内容のプレビュー
-$ mise bootstrap --dry-run         # 何も書き込まずに確認
-$ mise bootstrap                   # 適用(収束型。何度実行してもよい)
-$ mise bootstrap packages use brew:foo   # パッケージを宣言に追加してインストール
+$ mise bootstrap status                  # declared vs. actual
+$ mise bootstrap plan                    # preview what would change
+$ mise bootstrap --dry-run               # check without writing anything
+$ mise bootstrap                         # apply (convergent; safe to repeat)
+$ mise bootstrap packages use brew:foo   # declare a package and install it
 ```
 
-`MISE_ENV` は `.zshenv` が OS から決める。
+`MISE_ENV` is derived from the OS in `.zshenv`.
 
-## 方針
+## Policy
 
-- このリポジトリは公開されている。社内のリポジトリ名・ホスト名・パス・秘密情報は置かない
-- Codex アプリは `codex/config.toml` に `[projects.*]` を自動追記する。コミット時に除外する
-- `~/.claude/settings.json` などはリンクなので、アプリが書き換えるとこのリポジトリに差分が出る
-- `mise bootstrap` は experimental。挙動が変わる可能性があるので、変更時は `--dry-run` で確認する
+- This repository is public. Do not put company repository names, hostnames, paths or secrets here.
+- The Codex app appends `[projects.*]` to `codex/config.toml`. Leave those hunks out when committing.
+- Files such as `~/.claude/settings.json` are links, so changes made by the apps show up as diffs here.
+- `mise bootstrap` is experimental and may change. Check with `--dry-run` when changing things.
 
-## テスト
+## Tests
 
 ```sh
 $ test/setup_test.sh
 ```
 
-静的チェックに加え、実際の `mise` で dotfiles をサンドボックスの HOME に適用し、全体フローは `brew` / `gh` などをスタブにして確認する。実環境のパッケージや defaults には触れない。
+Besides static checks, it applies the dotfiles to a sandboxed HOME with the real `mise`, and runs the whole
+`setup.sh` flow with `brew` / `gh` / etc. stubbed. It never touches real packages or defaults.
+CI runs the same script on macOS.
 
-## 環境
+## Environments
 
-- macOS (Apple Silicon)。履歴: M1 Pro (2022-04-17) → M2 Pro (2023-08-31)
+- macOS (Apple Silicon). History: M1 Pro (2022-04-17) → M2 Pro (2023-08-31).
