@@ -119,16 +119,24 @@ refute "claude settings has no .entire rule" grep -q '\.entire' "$REPO/claude/se
 assert "settings declares ruby-skills marketplace" \
   python3 -c "import json,sys;d=json.load(open('$REPO/claude/settings.json'));sys.exit(0 if 'ruby-skills' in d['extraKnownMarketplaces'] else 1)"
 
-echo "== static: 第三者 skill のマニフェスト =="
+echo "== static: skill のマニフェスト(自作は ohbarye/agent-skills、第三者は上流) =="
 MF="$REPO/agents/skills.manifest"
 assert "skills manifest exists"           test -f "$MF"
 assert "skills installer is executable"   test -x "$REPO/scripts/install-skills.sh"
 assert "setup.sh installs manifest skills" grep -q 'install-skills.sh' "$REPO/setup.sh"
-for n in archify find-skills gh-stack grill-me grilling; do
-  assert "manifest lists $n"               grep -qE "^$n[[:space:]]" "$MF"
-  assert "$n is gitignored (installed from manifest)" grep -qxF "agents/skills/$n/" "$REPO/.gitignore"
-  refute "$n is not tracked in git"        test -n "$(git -C "$REPO" ls-files "agents/skills/$n")"
+for n in cosense-memo magi-decision-support pr-lead-time review spotify-playlist-creator; do
+  assert "own skill $n comes from ohbarye/agent-skills" grep -qE "^$n[[:space:]]+ohbarye/agent-skills[[:space:]]+skills/$n[[:space:]]+v[0-9]" "$MF"
 done
+assert "agent-browser comes from upstream" grep -qE '^agent-browser[[:space:]]+vercel-labs/agent-browser[[:space:]]+skills/agent-browser[[:space:]]' "$MF"
+assert "gog comes from upstream"           grep -qE '^gog[[:space:]]+steipete/gogcli[[:space:]]+\.agents/skills/gog[[:space:]]' "$MF"
+assert "summarize comes from upstream"     grep -qE '^summarize[[:space:]]+steipete/summarize[[:space:]]+\.agents/skills/summarize[[:space:]]' "$MF"
+for n in archify find-skills gh-stack grill-me grilling; do
+  assert "third-party skill $n is in the manifest" grep -qE "^$n[[:space:]]" "$MF"
+done
+assert "all skills are gitignored except .gitkeep" bash -c "grep -qxF 'agents/skills/*' '$REPO/.gitignore' && grep -qxF '!agents/skills/.gitkeep' '$REPO/.gitignore'"
+assert "agents/skills/.gitkeep is tracked (link source must exist)" test -n "$(git -C "$REPO" ls-files agents/skills/.gitkeep)"
+refute "no skill files are tracked under agents/skills" \
+  bash -c "git -C '$REPO' ls-files agents/skills | grep -v '^agents/skills/.gitkeep$' | grep -q ."
 refute "manifest refs are pinned (no main/master/HEAD/latest)" \
   bash -c "grep -vE '^[[:space:]]*(#|$)' '$MF' | awk '{print \$4}' | grep -qxE 'main|master|HEAD|latest'"
 
@@ -195,8 +203,8 @@ if [ -n "$REAL_MISE" ]; then
   assert "sheldon config linked"          test -L "$HOME/.config/sheldon/plugins.toml"
   assert "claude settings link is relative" test "$(readlink "$HOME/.claude/settings.json")" = "../dotfiles/claude/settings.json"
   assert "claude settings resolve"        test -f "$HOME/.claude/settings.json"
-  assert "claude skills resolve"          test -d "$HOME/.claude/skills/review"
-  assert "codex skills resolve"           test -d "$HOME/.codex/skills/review"
+  assert "claude skills dir resolves"     test -e "$HOME/.claude/skills/.gitkeep"
+  assert "codex skills dir resolves"      test -e "$HOME/.codex/skills/.gitkeep"
   assert "codex config resolves"          test -f "$HOME/.codex/config.toml"
   assert "Code settings linked"           test "$(readlink "$HOME/Library/Application Support/Code/User/settings.json")" = "$HOME/dotfiles/editors/vscode/settings.json"
   assert "Cursor keybindings linked"      test "$(readlink "$HOME/Library/Application Support/Cursor/User/keybindings.json")" = "$HOME/dotfiles/editors/cursor/keybindings.json"
