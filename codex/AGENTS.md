@@ -37,7 +37,7 @@ Review methods:
 
 # ExecPlans
 
-When writing complex features or significant refactors, use an ExecPlan (as described in .agents/PLANS.md) from design to implementation.
+When writing complex features or significant refactors, use an ExecPlan from design to implementation.
 
 - Multi-step implementation across multiple files
 - Ambiguous requirements or technical risk that needs staged validation
@@ -52,7 +52,7 @@ ExecPlan expectations:
 - Record key decisions, tradeoffs, and blockers encountered during execution
 - Link or mention tests/verification steps and their outcomes
 
-Keep plans concise and executable. Prefer one active plan per task, and archive or overwrite stale plans instead of letting `PLANS.md` drift.
+Keep plans concise and executable. Prefer one active plan per task, and archive or overwrite stale plans instead of letting them drift.
 
 ## Web Application Development
 

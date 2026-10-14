@@ -154,10 +154,10 @@ for k in '\.zlogin' '\.zlogout' '\.bundle"' 'PLANS\.md'; do
 done
 refute ".bash_profile has no rbenv PATH"      grep -q 'rbenv' "$REPO/.bash_profile"
 refute ".bashrc has no ciopen"                grep -q 'ciopen' "$REPO/.bashrc"
-for k in 'alias rbl=' 'alias gol=' 'alias cdl=' 'alias bepr=' 'zprof'; do
+for k in 'alias rbl=' 'alias gol=' 'alias cdl=' 'alias bepr=' 'zsh/zprof' 'which zprof'; do
   refute ".zshrc has no $k"                   grep -q "$k" "$REPO/.zshrc"
 done
-refute ".zshenv has no zprof comment"         grep -q 'zprof' "$REPO/.zshenv"
+refute ".zshenv has no zprof comment"         grep -q 'zsh/zprof' "$REPO/.zshenv"
 refute "codex AGENTS.md does not reference PLANS.md" grep -q 'PLANS' "$REPO/codex/AGENTS.md"
 assert "codex AGENTS.md keeps ExecPlan guidance"    grep -q 'ExecPlan' "$REPO/codex/AGENTS.md"
 

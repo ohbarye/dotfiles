@@ -3,15 +3,10 @@ setrepo() {
   GIT_CURRENT_REPO=$( git config --get remote.origin.url |  sed 's/^[^:]*://; s/\.git$//' )
 }
 
-# ciopen / propen command
+# propen command
 propen() {
   setrepo
   open "https://github.com/${GIT_CURRENT_REPO}/pull/${GIT_CURRENT_BRANCH}"
-}
-
-ciopen() {
-  setrepo
-  open "https://circleci.com/gh/${GIT_CURRENT_REPO}/tree/${GIT_CURRENT_BRANCH}"
 }
 
 # rails

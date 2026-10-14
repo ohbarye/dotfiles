@@ -47,7 +47,6 @@ alias r='rails'
 alias bi='bundle install'
 alias be='bundle exec'
 alias ber='bundle exec rspec'
-alias bepr='bundle exec parallel_rspec'
 
 # git
 alias g='git'
@@ -60,15 +59,6 @@ function cd-ghq-list() {
 }
 alias gr='cd-ghq-list'
 alias ghb='gh browse -R $(ghq list | fzf | cut -d "/" -f 2,3)'
-
-# RubyMine
-alias rbl='rubymine $(ghq root)/$(ghq list | fzf)'
-
-# Goland
-alias gol='goland $(ghq root)/$(ghq list | fzf)'
-
-# VSCode
-alias cdl='code $(ghq root)/$(ghq list | fzf)'
 
 # docker
 alias d='docker'
@@ -148,12 +138,6 @@ autoload -U colors; colors
 # Go
 export GOPATH="$HOME/.go"
 export PATH=$GOPATH/bin:$PATH
-
-# For profiling https://qiita.com/vintersnow/items/7343b9bf60ea468a4180
-# If it's unnecessary, comment out `zmodload zsh/zprof && zprof` in .zshenv
-if (which zprof > /dev/null 2>&1) ;then
-  zprof
-fi
 
 eval "$(mise activate zsh)"
 

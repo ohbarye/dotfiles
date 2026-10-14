@@ -38,8 +38,6 @@ tflint = { version = "latest", os = ["macos"] }
 "~/.bashrc" = { source = "~/dotfiles/.bashrc", mode = "symlink" }
 "~/.gitconfig" = { source = "~/dotfiles/.gitconfig", mode = "symlink" }
 "~/.gitignore_global" = { source = "~/dotfiles/.gitignore_global", mode = "symlink" }
-"~/.zlogin" = { source = "~/dotfiles/.zlogin", mode = "symlink" }
-"~/.zlogout" = { source = "~/dotfiles/.zlogout", mode = "symlink" }
 "~/.zprofile" = { source = "~/dotfiles/.zprofile", mode = "symlink" }
 "~/.zshenv" = { source = "~/dotfiles/.zshenv", mode = "symlink" }
 "~/.zshrc" = { source = "~/dotfiles/.zshrc", mode = "symlink" }
@@ -47,7 +45,6 @@ tflint = { version = "latest", os = ["macos"] }
 "~/.irbrc" = { source = "~/dotfiles/.irbrc", mode = "symlink" }
 "~/.vimrc" = { source = "~/dotfiles/.vimrc", mode = "symlink" }
 "~/.vim" = { source = "~/dotfiles/.vim", mode = "symlink" }
-"~/.bundle" = { source = "~/dotfiles/.bundle", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "~/dotfiles/mise/config.toml", mode = "symlink" }
 "~/.config/mise/config.macos.toml" = { source = "~/dotfiles/mise/config.macos.toml", mode = "symlink" }
 "~/.config/mise/config.linux.toml" = { source = "~/dotfiles/mise/config.linux.toml", mode = "symlink" }
@@ -62,5 +59,4 @@ tflint = { version = "latest", os = ["macos"] }
 "~/.claude/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }
 "~/.codex/config.toml" = { source = "~/dotfiles/codex/config.toml", mode = "symlink", relative = true }
 "~/.codex/AGENTS.md" = { source = "~/dotfiles/codex/AGENTS.md", mode = "symlink", relative = true }
-"~/.codex/PLANS.md" = { source = "~/dotfiles/codex/PLANS.md", mode = "symlink", relative = true }
 "~/.codex/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }
