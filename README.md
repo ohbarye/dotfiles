@@ -22,7 +22,7 @@
 - `~/.config/mise/` に設定をリンクし、`MISE_ENV=macos|linux` で OS 別の設定を重ねる
 - dotfiles のリンクを作る(置き換え先に通常ファイルがあれば `*.bak` に退避する)
 - macOS: Homebrew のパッケージ(brew / cask / mas)を入れ、`defaults` を適用する
-- 第三者の agent skill を `agents/skills.manifest` の ref で再現する(`scripts/install-skills.sh`。自作 skill は実体をコミット)
+- agent skill を `agents/skills.manifest` の ref で再現する(`scripts/install-skills.sh`。自作は `ohbarye/agent-skills`、他は上流)
 - `[tools]` のツールを入れる(言語ランタイム等は macOS のみ。Linux は `delta` `sheldon` `fzf` `jq`)
 - Linux: `apt` で `tree` `vim` `silversearcher-ag` などを入れる(失敗しても続行)
 
@@ -52,8 +52,8 @@ Dev Container は VS Code の dotfiles 連携が `setup.sh` を実行する。�
 | `.zshrc` ほか `.z*` | zsh(プラグインは `sheldon/plugins.toml`) |
 | `.gitconfig`, `.gitconfig.{macos,linux}` | git。OS 別設定は `~/.gitconfig.os` 経由で読み込む |
 | `editors/`, `karabiner/` | VS Code / Cursor / Karabiner の設定と拡張機能の一覧 |
-| `claude/`, `codex/`, `agents/skills/` | AI エージェントの設定・コマンド・スキル(自作) |
-| `agents/skills.manifest` | 第三者 skill の出所と固定 ref(実体は `.gitignore`、`scripts/install-skills.sh` が再現) |
+| `claude/`, `codex/` | AI エージェントの設定・コマンド |
+| `agents/skills.manifest` | skill の出所と固定 ref(自作は [ohbarye/agent-skills](https://github.com/ohbarye/agent-skills)、他は上流)。`agents/skills/` の実体は `.gitignore` で、`scripts/install-skills.sh` が再現する |
 | `test/setup_test.sh` | 回帰テスト |
 
 ## 日常の操作

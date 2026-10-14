@@ -1,7 +1,21 @@
-# 第三者の agent skill の出所。実体は .gitignore しており、setup.sh(scripts/install-skills.sh)が再現する。
+# agent skill の出所。実体は agents/skills/ に置かず(.gitignore)、setup.sh(scripts/install-skills.sh)が再現する。
 # 形式: <name> <github owner/repo> <repo 内のパス> <固定する ref(タグ or コミット SHA)>
-# 更新: ref を書き換えて scripts/install-skills.sh を実行する。内容は必ず事前に確認すること。
-# (自作の skill は agents/skills/ に実体をコミットしている。社内専用のものは dotfiles に置かない)
+# 更新: ref を書き換えて scripts/install-skills.sh を実行する。第三者のものは内容を必ず事前に確認すること。
+# 社内専用の skill は dotfiles に置かない(agents/skills/ 配下に直接置けば .gitignore で追跡されない)。
+
+# --- 自作(ohbarye/agent-skills) ---
+cosense-memo              ohbarye/agent-skills  skills/cosense-memo              v0.1.0
+magi-decision-support     ohbarye/agent-skills  skills/magi-decision-support     v0.1.0
+pr-lead-time              ohbarye/agent-skills  skills/pr-lead-time              v0.1.0
+review                    ohbarye/agent-skills  skills/review                    v0.1.0
+spotify-playlist-creator  ohbarye/agent-skills  skills/spotify-playlist-creator  v0.1.0
+
+# --- CLI の上流が配布している skill(CLI 側のバージョンと合わせて更新する) ---
+agent-browser  vercel-labs/agent-browser  skills/agent-browser        v0.39.1
+gog            steipete/gogcli            .agents/skills/gog          v0.44.0
+summarize      steipete/summarize         .agents/skills/summarize    v0.25.2
+
+# --- 第三者 ---
 archify      tt-a1i/archify          archify                       58ab0b98d2d0def8e49dced705c7b566936723ec
 find-skills  vercel-labs/skills      skills/find-skills            v1.7.2
 gh-stack     github/gh-stack         skills/gh-stack               v0.2.1
