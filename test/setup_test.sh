@@ -112,6 +112,9 @@ assert "settings declares ruby-skills marketplace" \
   python3 -c "import json,sys;d=json.load(open('$REPO/claude/settings.json'));sys.exit(0 if 'ruby-skills' in d['extraKnownMarketplaces'] else 1)"
 assert "README documents company marketplace step" grep -q 'marketplace add' "$REPO/README.md"
 
+# --- Homebrew API に存在しない(無効化された) cask ---
+refute "Brewfile.macos has no wkhtmltopdf (cask no longer exists)" grep -q 'wkhtmltopdf' "$REPO/Brewfile.macos"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 echo "== setup.sh run (sandboxed HOME, stubbed brew/mise) =="
