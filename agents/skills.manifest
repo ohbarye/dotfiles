@@ -1,0 +1,9 @@
+# 第三者の agent skill の出所。実体は .gitignore しており、setup.sh(scripts/install-skills.sh)が再現する。
+# 形式: <name> <github owner/repo> <repo 内のパス> <固定する ref(タグ or コミット SHA)>
+# 更新: ref を書き換えて scripts/install-skills.sh を実行する。内容は必ず事前に確認すること。
+# (自作の skill は agents/skills/ に実体をコミットしている。社内専用のものは dotfiles に置かない)
+archify      tt-a1i/archify          archify                       58ab0b98d2d0def8e49dced705c7b566936723ec
+find-skills  vercel-labs/skills      skills/find-skills            v1.7.2
+gh-stack     github/gh-stack         skills/gh-stack               v0.2.1
+grill-me     mattpocock/skills       skills/productivity/grill-me  v1.3.1
+grilling     mattpocock/skills       skills/productivity/grilling  v1.3.1

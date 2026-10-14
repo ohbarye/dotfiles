@@ -11,3 +11,9 @@
 tmp/
 agents/skills/.system/
 agents/skills/m43-core-dev-db/
+# 第三者 skill(agents/skills.manifest から scripts/install-skills.sh が再現する)
+agents/skills/archify/
+agents/skills/find-skills/
+agents/skills/gh-stack/
+agents/skills/grill-me/
+agents/skills/grilling/

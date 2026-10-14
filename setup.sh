@@ -108,6 +108,9 @@ backup_conflicting_files
 mise bootstrap --force-dotfiles --yes || echo "Warning: mise bootstrap reported errors"
 
 # 5. bootstrap で宣言できない後処理(失敗しても続行)
+# 第三者 skill(agents/skills.manifest)を固定した ref で再現する
+"$DOTFILES_DIR/scripts/install-skills.sh" || echo "Warning: some skills failed to install"
+
 if command -v gh >/dev/null 2>&1; then
   if ! gh extension list 2>/dev/null | grep -q 'github/gh-stack'; then
     gh extension install github/gh-stack || echo "Warning: failed to install gh-stack extension (run 'gh auth login' first?)"
