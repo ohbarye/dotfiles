@@ -144,6 +144,23 @@ refute "no skill files are tracked under agents/skills" \
 refute "manifest refs are pinned (no main/master/HEAD/latest)" \
   bash -c "grep -vE '^[[:space:]]*(#|$)' '$MF' | awk '{print \$4}' | grep -qxE 'main|master|HEAD|latest'"
 
+echo "== static: 不要な設定の除去 =="
+for f in .vim/colors/jellybeans.vim .vim/colors/solarized.vim .zlogin .zlogout .bundle/config \
+         claude/agents/web-searcher.md claude/commands/gemini-search.md codex/PLANS.md; do
+  refute "$f is removed" test -e "$REPO/$f"
+done
+for k in '\.zlogin' '\.zlogout' '\.bundle"' 'PLANS\.md'; do
+  refute "mise config has no link for $k" grep -qE "$k" "$C"
+done
+refute ".bash_profile has no rbenv PATH"      grep -q 'rbenv' "$REPO/.bash_profile"
+refute ".bashrc has no ciopen"                grep -q 'ciopen' "$REPO/.bashrc"
+for k in 'alias rbl=' 'alias gol=' 'alias cdl=' 'alias bepr=' 'zprof'; do
+  refute ".zshrc has no $k"                   grep -q "$k" "$REPO/.zshrc"
+done
+refute ".zshenv has no zprof comment"         grep -q 'zprof' "$REPO/.zshenv"
+refute "codex AGENTS.md does not reference PLANS.md" grep -q 'PLANS' "$REPO/codex/AGENTS.md"
+assert "codex AGENTS.md keeps ExecPlan guidance"    grep -q 'ExecPlan' "$REPO/codex/AGENTS.md"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
