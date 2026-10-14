@@ -82,6 +82,8 @@ refute "setup.sh no longer uses brew bundle" grep -q 'brew bundle' "$REPO/setup.
 assert "setup.sh backs up conflicting files" grep -q 'not a symlink' "$REPO/setup.sh"
 assert "setup.sh apt step has tree and vim"  grep -qE 'apt-get install.*tree.*vim|apt-get install.*vim.*tree' "$REPO/setup.sh"
 assert "setup.sh installs gh-stack extension" grep -q 'extension install github/gh-stack' "$REPO/setup.sh"
+assert "setup.sh requires mise >= 2026.9.14 (relative dotfile symlinks)" grep -q '2026.9.14' "$REPO/setup.sh"
+assert "CI updates Homebrew before installing mise" grep -qE 'brew update' "$REPO/.github/workflows/test.yml"
 
 assert ".zshrc guards safe-chain"     grep -qE '\[\[? -f .*safe-chain.*\]\]? *(&&|;)' "$REPO/.zshrc"
 assert ".bashrc guards safe-chain"    grep -qE '\[\[? -f .*safe-chain.*\]\]? *(&&|;)' "$REPO/.bashrc"
@@ -94,7 +96,9 @@ refute ".bashrc does not shadow gh"        grep -qE "^alias gh=" "$REPO/.bashrc"
 assert ".gitignore_global ignores claude settings.local.json" grep -qxF '**/.claude/settings.local.json' "$REPO/.gitignore_global"
 
 assert "README documents the test script" grep -q 'test/setup_test.sh' "$REPO/README.md"
-assert "README documents manual steps"    grep -q '手動' "$REPO/README.md"
+assert "README documents manual steps"    grep -q 'Manual steps' "$REPO/README.md"
+refute "README is written in English (no CJK characters)" \
+  python3 -c "import re,sys;sys.exit(0 if re.search(r'[\u3040-\u30ff\u3400-\u9fff]', open('$REPO/README.md',encoding='utf-8').read()) else 1)"
 assert "README documents mise bootstrap"  grep -q 'mise bootstrap' "$REPO/README.md"
 refute "README has no stale macOS versions" grep -q 'Monterey' "$REPO/README.md"
 assert "README documents company marketplace step" grep -q 'marketplace add' "$REPO/README.md"
@@ -190,6 +194,9 @@ assert "a commit SHA ref works"              test "$(cat "$SK_DEST/foo/SKILL.md"
 if [ -n "$REAL_MISE" ]; then
   echo "== real mise (sandboxed HOME, dotfiles only) =="
   ln -sf "$REAL_MISE" "$TMP/realbin/mise"
+  MISE_VER="$("$REAL_MISE" --version 2>/dev/null | awk '{print $1}')"
+  assert "real mise supports relative dotfile symlinks (>= 2026.9.14), got $MISE_VER" \
+    awk -v a="$MISE_VER" 'BEGIN{n=split(a,x,/[.]/);split("2026.9.14",y,/[.]/);for(i=1;i<=3;i++){if(x[i]+0>y[i]+0)exit 0;if(x[i]+0<y[i]+0)exit 1}exit 0}'
   new_home real
   export MISE_STATE_DIR="$TMP/mise-state" MISE_CACHE_DIR="$TMP/mise-cache" MISE_DATA_DIR="$TMP/mise-data"
   export PATH="$TMP/realbin:/usr/bin:/bin"
@@ -227,6 +234,7 @@ done
 cat > "$TMP/bin/mise" <<EOF
 #!/bin/sh
 echo "mise \$* env=\$MISE_ENV" >> "$LOG"
+if [ "\$1" = "--version" ]; then echo "\${STUB_MISE_VERSION:-2026.10.8} macos-arm64 (stub)"; exit 0; fi
 if [ "\$1" = "dotfiles" ] && [ "\$2" = "status" ]; then
   echo "~/.zshrc                  symlink  ~/dotfiles/.zshrc  ~/.config/mise/config.toml  differs (exists but is not a symlink)"
 fi
@@ -252,8 +260,13 @@ assert "vscode extensions installed"    grep -q '^code --install-extension esben
 assert "mise config symlinked for bootstrap" test -L "$HOME/.config/mise/config.macos.toml"
 assert "setup.sh installed manifest skills"  test "$(cat "$SK_DEST/foo/SKILL.md" 2>/dev/null)" = "v1"
 
+refute "up-to-date mise is not upgraded" grep -q '^brew upgrade mise' "$LOG"
 zsh "$REPO/setup.sh" > "$TMP/stub2.log" 2>&1
 assert "second run exits 0 (idempotent)" test $? -eq 0
+
+: > "$LOG"
+STUB_MISE_VERSION=2026.9.1 zsh "$REPO/setup.sh" > "$TMP/stub_old.log" 2>&1
+assert "old mise (2026.9.1) is upgraded via brew" grep -q '^brew upgrade mise' "$LOG"
 
 : > "$LOG"
 SETUP_LINKS_ONLY=1 zsh "$REPO/setup.sh" > "$TMP/stub3.log" 2>&1
