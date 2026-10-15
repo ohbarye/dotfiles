@@ -165,10 +165,6 @@ refute "terraform is not a brew package (removed from Homebrew core)" pkg brew:t
 assert "terraform is a macOS-only mise tool"    grep -qE '^terraform = \{.*os = \["macos"\]' "$C"
 refute "no tap-based entries in [bootstrap.packages] (need Ruby 3+ to evaluate)" \
   grep -qE '^"(brew|brew-cask):[^"/]+/[^"/]+/[^"]+" = ' "$M"
-assert "tap-based packages are installed by the post-packages hook" bash -c "grep -q '^post-packages = ' '$M'"
-for n in steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite grishka/grishka/neardrop; do
-  assert "post-packages hook installs $n" grep -qE "^post-packages = .*$n" "$M"
-done
 assert "setup.sh runs dotfiles as its own stage"  grep -qE 'run_stage "dotfiles" --only dotfiles' "$REPO/setup.sh"
 assert "setup.sh runs packages as its own stage"  grep -qE 'run_stage "packages" --only packages' "$REPO/setup.sh"
 assert "setup.sh runs the remaining stages"       grep -qE 'run_stage .* --skip dotfiles,packages' "$REPO/setup.sh"
@@ -207,10 +203,21 @@ assert "README mentions accepting the Xcode license" grep -q 'xcodebuild -licens
 
 echo "== static: 2 回目の実行で見つかった問題 =="
 refute "ngrok cask is not in packages (mise fails on its \$HOMEBREW_PREFIX completion path)" pkg brew-cask:ngrok
-assert "post-packages hook installs the ngrok cask with brew" grep -qE '^post-packages = .*install --cask .*ngrok' "$M"
 for id in 409183694 409201541 409203825; do
   refute "iWork mas id $id is not declared (apps were renamed to Creator Studio)" bash -c "grep -qE '^\"mas:$id\" = ' '$M'"
 done
+
+echo "== static: cask / tap パッケージは brew で直接入れる(mise の cask 処理が不安定なため) =="
+BD="$REPO/mise/brew-direct.txt"
+assert "brew-direct list exists"                 test -f "$BD"
+for n in steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite; do
+  assert "brew-direct lists formula $n" grep -qxF "formula $n" "$BD"
+done
+for n in grishka/grishka/neardrop ngrok; do
+  assert "brew-direct lists cask $n"    grep -qxF "cask $n" "$BD"
+done
+refute "no post-packages hook (installs happen in setup.sh, independent of the packages stage)" grep -q '^post-packages' "$M"
+assert "setup.sh pre-installs casks with brew before mise" grep -q 'install --cask' "$REPO/setup.sh"
 
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
@@ -296,7 +303,7 @@ echo "== setup.sh full flow (stubbed brew/mise/gh/cursor/code) =="
 new_home stub
 LOG="$TMP/calls.log"; : > "$LOG"
 for cmd in brew gh cursor code; do
-  printf '#!/bin/sh\necho "%s $*" >> "%s"\nexit 0\n' "$cmd" "$LOG" > "$TMP/bin/$cmd"
+  printf '#!/bin/sh\necho "%s $*" >> "%s"\n[ "%s" = brew ] && [ "$1" = list ] && exit 1\nexit 0\n' "$cmd" "$LOG" "$cmd" > "$TMP/bin/$cmd"
   chmod +x "$TMP/bin/$cmd"
 done
 cat > "$TMP/bin/mise" <<EOF
@@ -322,6 +329,11 @@ assert "setup.sh exits 0" test $? -eq 0
 assert "conflicting regular file backed up" test "$(cat "$HOME/.zshrc.bak" 2>/dev/null)" = "legacy"
 assert "dotfiles stage runs first with --force-dotfiles (MISE_ENV=macos)" grep -qE '^mise bootstrap --only dotfiles .*--force-dotfiles.* env=macos$' "$LOG"
 assert "packages stage runs"            grep -qE '^mise bootstrap --only packages' "$LOG"
+assert "declared casks are installed by brew (raycast)"  grep -qE '^brew install --cask raycast$' "$LOG"
+assert "declared casks are installed by brew (slack)"    grep -qE '^brew install --cask slack$' "$LOG"
+assert "tap formula is installed by brew (summarize)"    grep -qE '^brew install steipete/tap/summarize$' "$LOG"
+assert "brew-direct cask is installed (ngrok)"           grep -qE '^brew install --cask ngrok$' "$LOG"
+assert "brew installs run before the mise packages stage" bash -c "b=\$(grep -nE '^brew install --cask raycast\$' '$LOG' | head -1 | cut -d: -f1); m=\$(grep -nE '^mise bootstrap --only packages' '$LOG' | head -1 | cut -d: -f1); [ -n \"\$b\" ] && [ \"\$b\" -lt \"\$m\" ]"
 assert "remaining stages (defaults, tools) run" grep -qE '^mise bootstrap --skip dotfiles,packages' "$LOG"
 assert "stages run in order: dotfiles < packages < rest" bash -c "n=\$(grep -nE '^mise bootstrap' '$LOG' | cut -d: -f1 | tr '\n' ' '); set -- \$n; [ \$1 -lt \$2 ] && [ \$2 -lt \$3 ]"
 refute "brew bundle is not used"        grep -q '^brew bundle' "$LOG"
