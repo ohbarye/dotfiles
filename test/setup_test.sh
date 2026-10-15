@@ -219,6 +219,14 @@ done
 refute "no post-packages hook (installs happen in setup.sh, independent of the packages stage)" grep -q '^post-packages' "$M"
 assert "setup.sh pre-installs casks with brew before mise" grep -q 'install --cask' "$REPO/setup.sh"
 
+echo "== static: brew で直接入れるのは、原因が分かっているものだけ =="
+assert "brew-direct lists the raycast cask (TLS 1.3-only redirect host vs mise's Secure Transport)" grep -qxF 'cask raycast' "$BD"
+refute "raycast is not declared in mise packages (installed via brew-direct)" pkg brew-cask:raycast
+refute "setup.sh does not pre-install every declared cask (only brew-direct)" grep -q 'brew-cask:' "$REPO/setup.sh"
+for n in raycast ngrok; do
+  assert "brew-direct documents why $n is handled by brew" grep -qi "$n" "$BD"
+done
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -329,8 +337,8 @@ assert "setup.sh exits 0" test $? -eq 0
 assert "conflicting regular file backed up" test "$(cat "$HOME/.zshrc.bak" 2>/dev/null)" = "legacy"
 assert "dotfiles stage runs first with --force-dotfiles (MISE_ENV=macos)" grep -qE '^mise bootstrap --only dotfiles .*--force-dotfiles.* env=macos$' "$LOG"
 assert "packages stage runs"            grep -qE '^mise bootstrap --only packages' "$LOG"
-assert "declared casks are installed by brew (raycast)"  grep -qE '^brew install --cask raycast$' "$LOG"
-assert "declared casks are installed by brew (slack)"    grep -qE '^brew install --cask slack$' "$LOG"
+assert "brew-direct cask is installed by brew (raycast)" grep -qE '^brew install --cask raycast$' "$LOG"
+refute "ordinary declared casks are left to mise (slack)" grep -qE '^brew install --cask slack$' "$LOG"
 assert "tap formula is installed by brew (summarize)"    grep -qE '^brew install steipete/tap/summarize$' "$LOG"
 assert "brew-direct cask is installed (ngrok)"           grep -qE '^brew install --cask ngrok$' "$LOG"
 assert "brew installs run before the mise packages stage" bash -c "b=\$(grep -nE '^brew install --cask raycast\$' '$LOG' | head -1 | cut -d: -f1); m=\$(grep -nE '^mise bootstrap --only packages' '$LOG' | head -1 | cut -d: -f1); [ -n \"\$b\" ] && [ \"\$b\" -lt \"\$m\" ]"
