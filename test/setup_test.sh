@@ -205,6 +205,13 @@ assert "setup.sh skips already installed editor extensions" grep -q -- '--list-e
 assert "macOS config restarts Dock/Finder after defaults (post-defaults hook)" grep -qE '^post-defaults = .*killall' "$M"
 assert "README mentions accepting the Xcode license" grep -q 'xcodebuild -license' "$REPO/README.md"
 
+echo "== static: 2 回目の実行で見つかった問題 =="
+refute "ngrok cask is not in packages (mise fails on its \$HOMEBREW_PREFIX completion path)" pkg brew-cask:ngrok
+assert "post-packages hook installs the ngrok cask with brew" grep -qE '^post-packages = .*install --cask .*ngrok' "$M"
+for id in 409183694 409201541 409203825; do
+  refute "iWork mas id $id is not declared (apps were renamed to Creator Studio)" bash -c "grep -qE '^\"mas:$id\" = ' '$M'"
+done
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
