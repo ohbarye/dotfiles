@@ -61,7 +61,6 @@
 "brew-cask:karabiner-elements" = "latest"
 "brew-cask:libreoffice" = "latest"
 "brew-cask:monitorcontrol" = "latest"
-"brew-cask:ngrok" = "latest"
 "brew-cask:orbstack" = "latest"
 "brew-cask:proxyman" = "latest"
 "brew-cask:raycast" = "latest"
@@ -72,12 +71,9 @@
 "brew-cask:wireshark-app" = "latest"
 "mas:682658836" = "latest"  # GarageBand
 "mas:408981434" = "latest"  # iMovie
-"mas:409183694" = "latest"  # Keynote
 "mas:302584613" = "latest"  # Kindle
 "mas:539883307" = "latest"  # LINE
 "mas:1295203466" = "latest"  # Microsoft Remote Desktop
-"mas:409203825" = "latest"  # Numbers
-"mas:409201541" = "latest"  # Pages
 "mas:497799835" = "latest"  # Xcode
 "mas:457622435" = "latest"  # Yoink
 
@@ -118,4 +114,4 @@ ShowSeconds = true
 # 他のパッケージごと止まる。brew 自身(portable Ruby 同梱)に任せるため、フックで入れる。
 [bootstrap.hooks]
 post-defaults = "killall Dock Finder SystemUIServer || true"
-post-packages = "brew install steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite || true; brew install --cask grishka/grishka/neardrop || true"
+post-packages = "brew install steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite || true; brew install --cask grishka/grishka/neardrop || true; brew install --cask ngrok || true"
