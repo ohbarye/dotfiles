@@ -227,6 +227,11 @@ for n in raycast ngrok; do
   assert "brew-direct documents why $n is handled by brew" grep -qi "$n" "$BD"
 done
 
+assert "brew-direct lists the warp cask (download endpoint only answers Homebrew's User-Agent)" grep -qxF 'cask warp' "$BD"
+refute "warp is not declared in mise packages (installed via brew-direct)" pkg brew-cask:warp
+refute "vscode extension list has no github.copilot (built-in Copilot Chat conflicts)" grep -qxF 'github.copilot' "$REPO/editors/vscode/extensions.txt"
+assert "brew calls are isolated from the loop's stdin" grep -qE 'install --cask "\$name" </dev/null' "$REPO/setup.sh"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -311,7 +316,8 @@ echo "== setup.sh full flow (stubbed brew/mise/gh/cursor/code) =="
 new_home stub
 LOG="$TMP/calls.log"; : > "$LOG"
 for cmd in brew gh cursor code; do
-  printf '#!/bin/sh\necho "%s $*" >> "%s"\n[ "%s" = brew ] && [ "$1" = list ] && exit 1\nexit 0\n' "$cmd" "$LOG" "$cmd" > "$TMP/bin/$cmd"
+  # brew は list を「未導入」とし、install では標準入力を読み切る(実際の brew が while read ループの入力を食べた挙動の再現)
+  printf '#!/bin/sh\necho "%s $*" >> "%s"\n[ "%s" = brew ] && [ "$1" = list ] && exit 1\n[ "%s" = brew ] && [ "$1" = install ] && cat >/dev/null\nexit 0\n' "$cmd" "$LOG" "$cmd" "$cmd" > "$TMP/bin/$cmd"
   chmod +x "$TMP/bin/$cmd"
 done
 cat > "$TMP/bin/mise" <<EOF
@@ -337,7 +343,12 @@ assert "setup.sh exits 0" test $? -eq 0
 assert "conflicting regular file backed up" test "$(cat "$HOME/.zshrc.bak" 2>/dev/null)" = "legacy"
 assert "dotfiles stage runs first with --force-dotfiles (MISE_ENV=macos)" grep -qE '^mise bootstrap --only dotfiles .*--force-dotfiles.* env=macos$' "$LOG"
 assert "packages stage runs"            grep -qE '^mise bootstrap --only packages' "$LOG"
-assert "brew-direct cask is installed by brew (raycast)" grep -qE '^brew install --cask raycast$' "$LOG"
+for n in steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite; do
+  assert "brew-direct formula $n is installed (even if brew reads stdin)" grep -qxF "brew install $n" "$LOG"
+done
+for n in grishka/grishka/neardrop ngrok raycast warp; do
+  assert "brew-direct cask $n is installed (even if brew reads stdin)" grep -qxF "brew install --cask $n" "$LOG"
+done
 refute "ordinary declared casks are left to mise (slack)" grep -qE '^brew install --cask slack$' "$LOG"
 assert "tap formula is installed by brew (summarize)"    grep -qE '^brew install steipete/tap/summarize$' "$LOG"
 assert "brew-direct cask is installed (ngrok)"           grep -qE '^brew install --cask ngrok$' "$LOG"
