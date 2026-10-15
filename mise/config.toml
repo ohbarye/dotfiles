@@ -32,6 +32,8 @@ tflint = { version = "latest", os = ["macos"] }
 "aqua:fujiwara/lambroll" = { version = "latest", os = ["macos"] }
 "aqua:fujiwara/tfstate-lookup" = { version = "latest", os = ["macos"] }
 "pipx:poetry" = { version = "latest", os = ["macos"] }
+# Homebrew のコアから削除されたため brew ではなく mise で入れる(ライセンスの都合で OpenTofu も選択肢)
+terraform = { version = "latest", os = ["macos"] }
 
 [dotfiles]
 "~/.bash_profile" = { source = "~/dotfiles/.bash_profile", mode = "symlink" }

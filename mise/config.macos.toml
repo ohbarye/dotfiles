@@ -39,16 +39,12 @@
 "brew:sheldon" = "latest"
 "brew:tailspin" = "latest"
 "brew:tesseract-lang" = "latest"
-"brew:terraform" = "latest"
 "brew:the_silver_searcher" = "latest"
 "brew:tree" = "latest"
 "brew:vim" = "latest"
 "brew:vips" = "latest"
 "brew:xpdf" = "latest"
 "brew:zsh" = "latest"
-"brew:steipete/tap/summarize" = "latest"
-"brew:openclaw/tap/gogcli" = "latest"
-"brew:withgraphite/tap/graphite" = "latest"
 "brew-cask:1password" = "latest"
 "brew-cask:1password-cli" = "latest"
 "brew-cask:arc" = "latest"
@@ -66,7 +62,6 @@
 "brew-cask:karabiner-elements" = "latest"
 "brew-cask:libreoffice" = "latest"
 "brew-cask:monitorcontrol" = "latest"
-"brew-cask:grishka/grishka/neardrop" = "latest"
 "brew-cask:ngrok" = "latest"
 "brew-cask:orbstack" = "latest"
 "brew-cask:proxyman" = "latest"
@@ -119,3 +114,8 @@ Clicking = true
 [bootstrap.macos.defaults."com.apple.menuextra.clock"]
 ShowSeconds = true
 
+# tap 由来のパッケージは、mise が Homebrew の API で解決できず、tap の Ruby 定義を評価しようとする。
+# そのとき Ruby 3 以上が必要になり、macOS 標準の Ruby(2.x)しかない新しい Mac では失敗して
+# 他のパッケージごと止まる。brew 自身(portable Ruby 同梱)に任せるため、フックで入れる。
+[bootstrap.hooks]
+post-packages = "brew install steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite || true; brew install --cask grishka/grishka/neardrop || true"

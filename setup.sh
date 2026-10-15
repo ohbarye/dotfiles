@@ -125,8 +125,18 @@ fi
 # 4. macOS は Homebrew、全環境で mise を用意して bootstrap を適用する
 [ "$OS_TYPE" = "macos" ] && ensure_brew
 ensure_mise || { echo "mise is required"; exit 1; }
+
+# 段階ごとに独立して実行する(`mise bootstrap` は途中で失敗するとそこで止まり、残りが適用されないため)。
+# 順序: dotfiles(設定を最優先で反映) → パッケージ(ツールのビルドに必要) → defaults と tools
+run_stage() { # run_stage <label> <mise bootstrap args...>
+  local label="$1"; shift
+  echo "==> mise bootstrap: $label"
+  mise bootstrap "$@" || echo "Warning: mise bootstrap stage '$label' reported errors (continuing)"
+}
 backup_conflicting_files
-mise bootstrap --force-dotfiles --yes || echo "Warning: mise bootstrap reported errors"
+run_stage "dotfiles" --only dotfiles --force-dotfiles --yes
+[ "$OS_TYPE" = "macos" ] && run_stage "packages" --only packages --yes
+run_stage "defaults / tools" --skip dotfiles,packages --yes
 
 # 5. bootstrap で宣言できない後処理(失敗しても続行)
 # 第三者 skill(agents/skills.manifest)を固定した ref で再現する

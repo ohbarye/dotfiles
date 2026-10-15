@@ -36,9 +36,8 @@ refute "mise config has no ignored trusted_config_paths" grep -q 'trusted_config
 refute "mise config does not manage aws-cli (brew awscli is used)" grep -qE '^aws-cli = ' "$C"
 
 # パッケージ(macOS)
-for p in brew:ripgrep brew:steipete/tap/summarize brew:withgraphite/tap/graphite brew:openclaw/tap/gogcli \
-         brew:awscli brew:mysql@8.0 brew:ffmpeg brew:vips brew:xpdf brew:tesseract-lang \
-         brew-cask:claude brew-cask:grishka/grishka/neardrop mas:302584613; do
+for p in brew:ripgrep brew:awscli brew:mysql@8.0 brew:ffmpeg brew:vips brew:xpdf brew:tesseract-lang \
+         brew-cask:claude mas:302584613; do
   assert "macos packages has $p" pkg "$p"
 done
 for n in folly fizz wangle fbthrift fb303 mvfst boost cffi cryptography pycparser docutils \
@@ -170,9 +169,9 @@ assert "tap-based packages are installed by the post-packages hook" bash -c "gre
 for n in steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite grishka/grishka/neardrop; do
   assert "post-packages hook installs $n" grep -qE "^post-packages = .*$n" "$M"
 done
-assert "setup.sh runs dotfiles as its own stage"  grep -qE 'mise bootstrap --only dotfiles' "$REPO/setup.sh"
-assert "setup.sh runs packages as its own stage"  grep -qE 'mise bootstrap --only packages' "$REPO/setup.sh"
-assert "setup.sh runs the remaining stages"       grep -qE 'mise bootstrap --skip dotfiles,packages' "$REPO/setup.sh"
+assert "setup.sh runs dotfiles as its own stage"  grep -qE 'run_stage "dotfiles" --only dotfiles' "$REPO/setup.sh"
+assert "setup.sh runs packages as its own stage"  grep -qE 'run_stage "packages" --only packages' "$REPO/setup.sh"
+assert "setup.sh runs the remaining stages"       grep -qE 'run_stage .* --skip dotfiles,packages' "$REPO/setup.sh"
 # 宣言した brew / cask が Homebrew のコア(名前の一覧)に存在すること(キャッシュがある環境のみ)
 IDX="$(brew --cache 2>/dev/null)/api"
 if [ -f "$IDX/formula_names.txt" ] && [ -f "$IDX/cask_names.txt" ]; then
