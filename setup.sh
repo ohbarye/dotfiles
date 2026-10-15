@@ -149,11 +149,15 @@ if command -v gh >/dev/null 2>&1; then
 fi
 
 install_editor_extensions() { # install_editor_extensions <cli> <list-file>
-  local cli="$1" list="$2" ext
+  local cli="$1" list="$2" ext installed
   command -v "$cli" >/dev/null 2>&1 && [ -f "$list" ] || return 0
+  # Node の非推奨警告(DEP0169)は拡張機能 CLI 由来でノイズになるため抑制する
+  installed="$(NODE_NO_WARNINGS=1 "$cli" --list-extensions 2>/dev/null)"
   while IFS= read -r ext; do
     [ -z "$ext" ] && continue
-    "$cli" --install-extension "$ext" || echo "Warning: failed to install $cli extension $ext"
+    # 導入済みはスキップ(拡張 ID は大文字小文字を区別しない)
+    if printf '%s\n' "$installed" | grep -qixF "$ext"; then continue; fi
+    NODE_NO_WARNINGS=1 "$cli" --install-extension "$ext" || echo "Warning: failed to install $cli extension $ext"
   done < "$list"
 }
 if [ "$OS_TYPE" = "macos" ]; then

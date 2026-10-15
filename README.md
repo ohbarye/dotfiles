@@ -38,6 +38,8 @@ Things `setup.sh` does not automate.
 - Sign in to the App Store (needed for the apps installed with `mas`; do this before `setup.sh`).
 - Sign in to 1Password and enable the CLI (`op`) integration and the SSH agent.
 - Log in to GitHub with `gh auth login`.
+- Accept the Xcode license once Xcode is installed (otherwise native-extension builds such as `pipx:poetry` fail):
+  `sudo xcodebuild -license accept`, then re-run `mise install`.
 - `.safe-chain` is distributed by MDM. Shells do not error where it is missing.
 - Log in to the Claude Code / Codex apps.
 - Register the company plugin marketplace (its repository name is kept out of this public repo):

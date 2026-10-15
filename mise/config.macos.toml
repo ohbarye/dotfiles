@@ -117,4 +117,5 @@ ShowSeconds = true
 # そのとき Ruby 3 以上が必要になり、macOS 標準の Ruby(2.x)しかない新しい Mac では失敗して
 # 他のパッケージごと止まる。brew 自身(portable Ruby 同梱)に任せるため、フックで入れる。
 [bootstrap.hooks]
+post-defaults = "killall Dock Finder SystemUIServer || true"
 post-packages = "brew install steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite || true; brew install --cask grishka/grishka/neardrop || true"
