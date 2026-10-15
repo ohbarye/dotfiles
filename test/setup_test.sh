@@ -232,6 +232,10 @@ refute "warp is not declared in mise packages (installed via brew-direct)" pkg b
 refute "vscode extension list has no github.copilot (built-in Copilot Chat conflicts)" grep -qxF 'github.copilot' "$REPO/editors/vscode/extensions.txt"
 assert "brew calls are isolated from the loop's stdin" grep -qE 'install --cask "\$name" </dev/null' "$REPO/setup.sh"
 
+echo "== static: sudo の認証は最初に済ませる(mise の進捗表示に Password: が隠れてハングして見えるため) =="
+assert "setup.sh acquires sudo up front"        grep -q 'sudo -v' "$REPO/setup.sh"
+assert "setup.sh keeps the sudo timestamp alive" grep -q 'sudo -n true' "$REPO/setup.sh"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -315,7 +319,7 @@ fi
 echo "== setup.sh full flow (stubbed brew/mise/gh/cursor/code) =="
 new_home stub
 LOG="$TMP/calls.log"; : > "$LOG"
-for cmd in brew gh cursor code; do
+for cmd in brew gh cursor code sudo; do
   # brew は list を「未導入」とし、install では標準入力を読み切る(実際の brew が while read ループの入力を食べた挙動の再現)
   printf '#!/bin/sh\necho "%s $*" >> "%s"\n[ "%s" = brew ] && [ "$1" = list ] && exit 1\n[ "%s" = brew ] && [ "$1" = install ] && cat >/dev/null\nexit 0\n' "$cmd" "$LOG" "$cmd" "$cmd" > "$TMP/bin/$cmd"
   chmod +x "$TMP/bin/$cmd"
@@ -331,7 +335,7 @@ exit 0
 EOF
 chmod +x "$TMP/bin/mise"
 export PATH="$TMP/bin:/usr/bin:/bin" BREW_BIN="$TMP/bin/brew"
-for cmd in brew mise gh cursor code; do
+for cmd in brew mise gh cursor code sudo; do
   if [ "$(command -v $cmd)" != "$TMP/bin/$cmd" ]; then echo "ABORT: real $cmd reachable"; exit 2; fi
 done
 
@@ -352,6 +356,7 @@ done
 refute "ordinary declared casks are left to mise (slack)" grep -qE '^brew install --cask slack$' "$LOG"
 assert "tap formula is installed by brew (summarize)"    grep -qE '^brew install steipete/tap/summarize$' "$LOG"
 assert "brew-direct cask is installed (ngrok)"           grep -qE '^brew install --cask ngrok$' "$LOG"
+assert "sudo is authenticated (sudo -v) once, before packages" bash -c "v=\$(grep -nE '^sudo -v\$' '$LOG' | head -1 | cut -d: -f1); m=\$(grep -nE '^mise bootstrap --only packages' '$LOG' | head -1 | cut -d: -f1); [ -n \"\$v\" ] && [ \"\$v\" -lt \"\$m\" ]"
 assert "brew installs run before the mise packages stage" bash -c "b=\$(grep -nE '^brew install --cask raycast\$' '$LOG' | head -1 | cut -d: -f1); m=\$(grep -nE '^mise bootstrap --only packages' '$LOG' | head -1 | cut -d: -f1); [ -n \"\$b\" ] && [ \"\$b\" -lt \"\$m\" ]"
 assert "remaining stages (defaults, tools) run" grep -qE '^mise bootstrap --skip dotfiles,packages' "$LOG"
 assert "stages run in order: dotfiles < packages < rest" bash -c "n=\$(grep -nE '^mise bootstrap' '$LOG' | cut -d: -f1 | tr '\n' ' '); set -- \$n; [ \$1 -lt \$2 ] && [ \$2 -lt \$3 ]"
@@ -374,7 +379,7 @@ assert "old mise (2026.9.1) is upgraded via brew" grep -q '^brew upgrade mise' "
 SETUP_LINKS_ONLY=1 zsh "$REPO/setup.sh" > "$TMP/stub3.log" 2>&1
 assert "links-only run exits 0"         test $? -eq 0
 assert "links-only runs only dotfiles"  grep -qE '^mise bootstrap --only dotfiles' "$LOG"
-refute "links-only does not call gh/cursor/code/brew" grep -qE '^(gh|cursor|code|brew) ' "$LOG"
+refute "links-only does not call gh/cursor/code/brew/sudo" grep -qE '^(gh|cursor|code|brew|sudo) ' "$LOG"
 
 echo
 echo "FAILS=$FAILS"
