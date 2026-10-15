@@ -122,7 +122,24 @@ if [ "$OS_TYPE" = "linux" ] && command -v apt-get >/dev/null 2>&1; then
     || echo "Warning: Failed to install some packages"
 fi
 
+# macOS: cask のインストーラ(.pkg など)は sudo を要求する。mise の進捗表示の途中でパスワード入力待ちに
+# なると、プロンプトが画面の書き換えに隠れて「ハングした」ように見えるため、最初に認証を済ませ、
+# 実行中は有効期限が切れないよう維持する(終了時に停止する)。
+acquire_sudo() {
+  [ "$OS_TYPE" = "macos" ] || return 0
+  command -v sudo >/dev/null 2>&1 || return 0
+  echo "==> Administrator privileges are needed by some installers; authenticating once up front."
+  if ! sudo -v; then
+    echo "Warning: could not authenticate sudo; installers that need it may fail or wait for a hidden prompt"
+    return 0
+  fi
+  ( while kill -0 "$$" 2>/dev/null; do sudo -n true 2>/dev/null; sleep 50; done ) &
+  SUDO_KEEPALIVE_PID=$!
+  trap 'kill "$SUDO_KEEPALIVE_PID" 2>/dev/null' EXIT
+}
+
 # 4. macOS は Homebrew、全環境で mise を用意して bootstrap を適用する
+acquire_sudo
 [ "$OS_TYPE" = "macos" ] && ensure_brew
 ensure_mise || { echo "mise is required"; exit 1; }
 
