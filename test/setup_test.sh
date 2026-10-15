@@ -161,6 +161,37 @@ refute ".zshenv has no zprof comment"         grep -q 'zsh/zprof' "$REPO/.zshenv
 refute "codex AGENTS.md does not reference PLANS.md" grep -q 'PLANS' "$REPO/codex/AGENTS.md"
 assert "codex AGENTS.md keeps ExecPlan guidance"    grep -q 'ExecPlan' "$REPO/codex/AGENTS.md"
 
+echo "== static: 新しい Mac で bootstrap が止まらないこと =="
+refute "terraform is not a brew package (removed from Homebrew core)" pkg brew:terraform
+assert "terraform is a macOS-only mise tool"    grep -qE '^terraform = \{.*os = \["macos"\]' "$C"
+refute "no tap-based entries in [bootstrap.packages] (need Ruby 3+ to evaluate)" \
+  grep -qE '^"(brew|brew-cask):[^"/]+/[^"/]+/[^"]+" = ' "$M"
+assert "tap-based packages are installed by the post-packages hook" bash -c "grep -q '^post-packages = ' '$M'"
+for n in steipete/tap/summarize openclaw/tap/gogcli withgraphite/tap/graphite grishka/grishka/neardrop; do
+  assert "post-packages hook installs $n" grep -qE "^post-packages = .*$n" "$M"
+done
+assert "setup.sh runs dotfiles as its own stage"  grep -qE 'mise bootstrap --only dotfiles' "$REPO/setup.sh"
+assert "setup.sh runs packages as its own stage"  grep -qE 'mise bootstrap --only packages' "$REPO/setup.sh"
+assert "setup.sh runs the remaining stages"       grep -qE 'mise bootstrap --skip dotfiles,packages' "$REPO/setup.sh"
+# 宣言した brew / cask が Homebrew のコア(名前の一覧)に存在すること(キャッシュがある環境のみ)
+IDX="$(brew --cache 2>/dev/null)/api"
+if [ -f "$IDX/formula_names.txt" ] && [ -f "$IDX/cask_names.txt" ]; then
+  assert "declared brew/cask packages exist in Homebrew core" python3 - "$IDX" "$M" <<'PYEOF'
+import re,sys,os
+idx,cfg=sys.argv[1:3]
+def names(fn): return {l.strip().split('/')[-1] for l in open(os.path.join(idx,fn))}
+f=names('formula_names.txt')|names('formula_aliases.txt') if os.path.exists(os.path.join(idx,'formula_aliases.txt')) else names('formula_names.txt')
+c=names('cask_names.txt')
+bad=[]
+for m in re.finditer(r'^"(brew|brew-cask):([^"/]+)" = ',open(cfg).read(),re.M):
+    k,n=m.groups()
+    if n not in (f if k=='brew' else c): bad.append(n)
+sys.exit(1 if bad else 0)
+PYEOF
+else
+  echo "  skip - Homebrew name index not cached"
+fi
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -269,7 +300,10 @@ echo "legacy" > "$HOME/.zshrc"
 zsh "$REPO/setup.sh" > "$TMP/stub1.log" 2>&1
 assert "setup.sh exits 0" test $? -eq 0
 assert "conflicting regular file backed up" test "$(cat "$HOME/.zshrc.bak" 2>/dev/null)" = "legacy"
-assert "mise bootstrap invoked with MISE_ENV=macos" grep -qE '^mise bootstrap .*--force-dotfiles.* env=macos$' "$LOG"
+assert "dotfiles stage runs first with --force-dotfiles (MISE_ENV=macos)" grep -qE '^mise bootstrap --only dotfiles .*--force-dotfiles.* env=macos$' "$LOG"
+assert "packages stage runs"            grep -qE '^mise bootstrap --only packages' "$LOG"
+assert "remaining stages (defaults, tools) run" grep -qE '^mise bootstrap --skip dotfiles,packages' "$LOG"
+assert "stages run in order: dotfiles < packages < rest" bash -c "n=\$(grep -nE '^mise bootstrap' '$LOG' | cut -d: -f1 | tr '\n' ' '); set -- \$n; [ \$1 -lt \$2 ] && [ \$2 -lt \$3 ]"
 refute "brew bundle is not used"        grep -q '^brew bundle' "$LOG"
 assert "gh-stack extension installed"   grep -q '^gh extension install github/gh-stack' "$LOG"
 assert "cursor extensions installed"    grep -q '^cursor --install-extension esbenp.prettier-vscode' "$LOG"
