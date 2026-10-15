@@ -191,6 +191,10 @@ else
   echo "  skip - Homebrew name index not cached"
 fi
 
+# docker-desktop cask と補完ファイルが衝突する(cask が補完を提供する)
+refute "docker-completion formula is not declared (conflicts with docker-desktop cask)" pkg brew:docker-completion
+assert "docker-desktop cask is declared"        pkg brew-cask:docker-desktop
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
