@@ -195,6 +195,16 @@ fi
 refute "docker-completion formula is not declared (conflicts with docker-desktop cask)" pkg brew:docker-completion
 assert "docker-desktop cask is declared"        pkg brew-cask:docker-desktop
 
+echo "== static: 新しい Mac での初回実行で見つかった問題 =="
+for e in codesandbox-io.codesandbox-projects github.codespaces github.remotehub ics.japanese-proofreading \
+         jakebecker.elixir-ls mame.ruby-typeprof ms-vscode.azure-repos ms-vscode.remote-repositories soutaro.steep-vscode; do
+  refute "cursor extensions list has no $e (not available in Cursor)" grep -qxF "$e" "$REPO/editors/cursor/extensions.txt"
+done
+assert "setup.sh silences Node deprecation warnings of the editor CLIs" grep -q 'NODE_NO_WARNINGS' "$REPO/setup.sh"
+assert "setup.sh skips already installed editor extensions" grep -q -- '--list-extensions' "$REPO/setup.sh"
+assert "macOS config restarts Dock/Finder after defaults (post-defaults hook)" grep -qE '^post-defaults = .*killall' "$M"
+assert "README mentions accepting the Xcode license" grep -q 'xcodebuild -license' "$REPO/README.md"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
