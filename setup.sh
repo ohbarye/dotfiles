@@ -137,14 +137,16 @@ run_stage() { # run_stage <label> <mise bootstrap args...>
 # brew で 1 件ずつ先に入れる。1 件失敗しても残りを続行する。それ以外の cask と formula は mise に任せる。
 brew_install_tolerant() { # brew_install_tolerant <formula|cask> <name>
   local kind="$1" name="$2"
+  # `while read` ループの中で呼ぶため、brew には標準入力を渡さない(</dev/null)。
+  # 渡すと brew(や依存の post-install)がループの入力を読み切り、最初の 1 件で終わってしまう。
   if [ "$kind" = "cask" ]; then
-    "$BREW_BIN" list --cask "$name" >/dev/null 2>&1 && return 0
+    "$BREW_BIN" list --cask "$name" >/dev/null 2>&1 </dev/null && return 0
     echo "==> brew install --cask $name"
-    "$BREW_BIN" install --cask "$name" || echo "Warning: failed to install cask $name"
+    "$BREW_BIN" install --cask "$name" </dev/null || echo "Warning: failed to install cask $name"
   else
-    "$BREW_BIN" list --formula "$name" >/dev/null 2>&1 && return 0
+    "$BREW_BIN" list --formula "$name" >/dev/null 2>&1 </dev/null && return 0
     echo "==> brew install $name"
-    "$BREW_BIN" install "$name" || echo "Warning: failed to install formula $name"
+    "$BREW_BIN" install "$name" </dev/null || echo "Warning: failed to install formula $name"
   fi
 }
 
@@ -183,7 +185,7 @@ install_editor_extensions() { # install_editor_extensions <cli> <list-file>
     [ -z "$ext" ] && continue
     # 導入済みはスキップ(拡張 ID は大文字小文字を区別しない)
     if printf '%s\n' "$installed" | grep -qixF "$ext"; then continue; fi
-    NODE_NO_WARNINGS=1 "$cli" --install-extension "$ext" || echo "Warning: failed to install $cli extension $ext"
+    NODE_NO_WARNINGS=1 "$cli" --install-extension "$ext" </dev/null || echo "Warning: failed to install $cli extension $ext"
   done < "$list"
 }
 if [ "$OS_TYPE" = "macos" ]; then

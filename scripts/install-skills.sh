@@ -30,11 +30,12 @@ while read -r name repo path ref _; do
   fi
 
   tmp="$(mktemp -d)"
+  # ループの入力(マニフェスト)を git に読ませないよう、標準入力を切り離す
   if ! { git init -q "$tmp" \
       && git -C "$tmp" remote add origin "$BASE/$repo" \
       && git -C "$tmp" fetch -q --depth 1 --filter=blob:none origin "$ref" \
       && git -C "$tmp" sparse-checkout set "$path" \
-      && git -C "$tmp" -c advice.detachedHead=false checkout -q FETCH_HEAD; } >/dev/null 2>&1; then
+      && git -C "$tmp" -c advice.detachedHead=false checkout -q FETCH_HEAD; } >/dev/null 2>&1 </dev/null; then
     echo "install-skills: failed to fetch $repo@$ref for '$name'" >&2
     status=1; rm -rf "$tmp"; continue
   fi

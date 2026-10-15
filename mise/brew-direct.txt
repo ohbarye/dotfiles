@@ -12,6 +12,10 @@
 #       mise の macOS 向けビルド(native-tls = Secure Transport)は TLS 1.2 までなので
 #       "bad protocol version"(Security の -9836)で失敗する。
 #
+#   warp:
+#       ダウンロード用のエンドポイント(app.warp.dev/download/brew)が Homebrew の User-Agent にだけ応答し、
+#       それ以外(curl や mise の User-Agent)には 404 を返す。brew なら成功する。
+#
 # 形式: formula <名前> | cask <名前>   (tap のものは owner/tap/name で書く)
 formula steipete/tap/summarize
 formula openclaw/tap/gogcli
@@ -19,3 +23,4 @@ formula withgraphite/tap/graphite
 cask grishka/grishka/neardrop
 cask ngrok
 cask raycast
+cask warp
