@@ -52,6 +52,7 @@ Things `setup.sh` does not automate.
 | --- | --- |
 | `mise/config.toml` | Common: tools and dotfile links (relative links for AI-agent files) |
 | `mise/config.macos.toml` | macOS: packages (brew / cask / mas), defaults, editor and Karabiner settings |
+| `mise/brew-direct.txt` | Homebrew packages that `setup.sh` installs with `brew` directly (tap formulae and a few casks mise handles badly) |
 | `mise/config.linux.toml` | Linux / Dev Container: OS-specific git config, etc. |
 | `setup.sh` | Entry point: prepares mise and calls `mise bootstrap` |
 | `agents/skills.manifest` | Where each agent skill comes from, with a pinned ref. The contents of `agents/skills/` are git-ignored and reproduced by `scripts/install-skills.sh` |

@@ -1,0 +1,9 @@
+# mise bootstrap が扱えない、または不安定な Homebrew パッケージ。setup.sh が brew で直接入れる。
+#   - tap 由来のパッケージ: 新しい Mac では tap の Ruby 定義の評価に Ruby 3 以上が必要になり失敗する
+#   - 一部の cask(ngrok など): mise の cask 処理が $HOMEBREW_PREFIX を展開できず失敗する
+# 形式: formula <名前> | cask <名前>   (tap のものは owner/tap/name で書く)
+formula steipete/tap/summarize
+formula openclaw/tap/gogcli
+formula withgraphite/tap/graphite
+cask grishka/grishka/neardrop
+cask ngrok
