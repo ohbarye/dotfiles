@@ -133,10 +133,8 @@ run_stage() { # run_stage <label> <mise bootstrap args...>
   echo "==> mise bootstrap: $label"
   mise bootstrap "$@" || echo "Warning: mise bootstrap stage '$label' reported errors (continuing)"
 }
-# macOS: cask と tap 由来のパッケージは brew で 1 件ずつ先に入れる。
-# mise の cask 処理は不安定で(例: ngrok は $HOMEBREW_PREFIX を展開できず、raycast は接続エラー)、
-# 1 件の失敗で後ろの cask がすべて止まるため。brew なら 1 件失敗しても残りを続行できる。
-# 宣言(config.macos.toml の "brew-cask:...")は status / plan のために残し、導入済みなら mise は何もしない。
+# macOS: mise では導入できないことが分かっているパッケージ(mise/brew-direct.txt。理由は同ファイルに記載)を、
+# brew で 1 件ずつ先に入れる。1 件失敗しても残りを続行する。それ以外の cask と formula は mise に任せる。
 brew_install_tolerant() { # brew_install_tolerant <formula|cask> <name>
   local kind="$1" name="$2"
   if [ "$kind" = "cask" ]; then
@@ -150,24 +148,18 @@ brew_install_tolerant() { # brew_install_tolerant <formula|cask> <name>
   fi
 }
 
-preinstall_brew_packages() {
+preinstall_brew_direct_packages() {
   local kind name
-  # 1) mise が扱えないもの(mise/brew-direct.txt)
   while read -r kind name _; do
     case "$kind" in ''|'#'*) continue ;; esac
     brew_install_tolerant "$kind" "$name"
   done < "$DOTFILES_DIR/mise/brew-direct.txt"
-  # 2) 宣言済みの cask(config.macos.toml の "brew-cask:<name>")
-  grep -oE '^"brew-cask:[^"]+"' "$DOTFILES_DIR/mise/config.macos.toml" | sed -E 's/^"brew-cask:(.*)"$/\1/' |
-  while read -r name; do
-    brew_install_tolerant cask "$name"
-  done
 }
 
 backup_conflicting_files
 run_stage "dotfiles" --only dotfiles --force-dotfiles --yes
 if [ "$OS_TYPE" = "macos" ]; then
-  preinstall_brew_packages
+  preinstall_brew_direct_packages
   run_stage "packages" --only packages --yes
 fi
 run_stage "defaults / tools" --skip dotfiles,packages --yes
