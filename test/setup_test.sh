@@ -236,6 +236,17 @@ echo "== static: sudo の認証は最初に済ませる(mise の進捗表示に 
 assert "setup.sh acquires sudo up front"        grep -q 'sudo -v' "$REPO/setup.sh"
 assert "setup.sh keeps the sudo timestamp alive" grep -q 'sudo -n true' "$REPO/setup.sh"
 
+echo "== static: キーチェーンに項目が無くてもシェルの起動時にエラーを出さない =="
+assert ".zshrc silences the keychain lookup (security ... 2>/dev/null)" \
+  grep -qE 'security find-generic-password -s "docker-compose-path" -w 2>/dev/null' "$REPO/.zshrc"
+# 実際に zsh で、項目が無い環境を再現して stderr が空であること(security をエラーを出すスタブに差し替える)
+assert ".zshrc prints nothing to stderr when the keychain item is missing" bash -c "
+  T=\$(mktemp -d); mkdir -p \$T/bin
+  printf '#!/bin/sh\necho \"security: SecKeychainSearchCopyNext: The specified item could not be found in the keychain.\" >&2\nexit 44\n' > \$T/bin/security; chmod +x \$T/bin/security
+  sed -n '/^# For non-personal use/,/^fi\$/p' '$REPO/.zshrc' > \$T/block.zsh
+  err=\$(PATH=\$T/bin:/usr/bin:/bin zsh -c 'OSTYPE=darwin23; id() { echo someone-else; }; source '\$T'/block.zsh' 2>&1 >/dev/null)
+  rm -rf \$T; [ -z \"\$err\" ]"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
