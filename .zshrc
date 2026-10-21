@@ -80,7 +80,7 @@ if [[ $(id -un) != 'ohbarye' ]]; then
   # The path may be a kind of secret information, so it's retrieved via macOS keychain
   # ref https://qiita.com/kroyagis/items/66ca139a4c41b710a53c
   if [[ "$OSTYPE" == "darwin"* ]]; then
-    export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w)
+    export CUSTOM_DOCKER_COMPOSE_PATH=$(security find-generic-password -s "docker-compose-path" -w 2>/dev/null)
   else
     # Linux: Skip keychain access
     export CUSTOM_DOCKER_COMPOSE_PATH=""
