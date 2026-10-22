@@ -67,6 +67,11 @@
 "brew-cask:spotify" = "latest"
 "brew-cask:visual-studio-code" = "latest"
 "brew-cask:wireshark-app" = "latest"
+"brew-cask:chatgpt" = "latest"
+"brew-cask:cleanshot" = "latest"
+"brew-cask:grok-bot" = "latest"
+"brew-cask:homerow" = "latest"
+"brew-cask:thebrowsercompany-dia" = "latest"
 "mas:682658836" = "latest"  # GarageBand
 "mas:408981434" = "latest"  # iMovie
 "mas:302584613" = "latest"  # Kindle
@@ -74,6 +79,9 @@
 "mas:1295203466" = "latest"  # Microsoft Remote Desktop
 "mas:497799835" = "latest"  # Xcode
 "mas:457622435" = "latest"  # Yoink
+"mas:361285480" = "latest"  # Keynote (Creator Studio)
+"mas:361304891" = "latest"  # Numbers (Creator Studio)
+"mas:361309726" = "latest"  # Pages (Creator Studio)
 
 [dotfiles]
 "~/.gitconfig.os" = { source = "~/dotfiles/.gitconfig.macos", mode = "symlink" }
