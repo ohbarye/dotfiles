@@ -247,6 +247,14 @@ assert ".zshrc prints nothing to stderr when the keychain item is missing" bash 
   err=\$(PATH=\$T/bin:/usr/bin:/bin zsh -c 'OSTYPE=darwin23; id() { echo someone-else; }; source '\$T'/block.zsh' 2>&1 >/dev/null)
   rm -rf \$T; [ -z \"\$err\" ]"
 
+echo "== static: 新しい Mac で追加したアプリを宣言に反映 =="
+for c in chatgpt cleanshot grok-bot homerow thebrowsercompany-dia; do
+  assert "cask $c is declared" pkg brew-cask:$c
+done
+for id in 361285480 361304891 361309726; do
+  assert "iWork (Creator Studio) mas id $id is declared" pkg mas:$id
+done
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
