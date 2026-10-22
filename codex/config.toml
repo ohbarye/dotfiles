@@ -30,7 +30,6 @@ developer_instructions = "Think in English, but generate responses in Japanese."
 # Notifications
 ################################################################################
 
-
 ################################################################################
 # Approval & Sandbox
 ################################################################################
@@ -72,9 +71,6 @@ personality = "pragmatic"
 # Centralized Feature Flags (preferred)
 ################################################################################
 
-
-notify = ["/Users/m-ohba/.codex/computer-use/Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient", "turn-ended", "--previous-notify", "[\"bash\",\"-lc\",\"[[ \\\"$OSTYPE\\\" == darwin* ]] && afplay \\/System\\/Library\\/Sounds\\/Ping.aiff\"]"]
-
 [features]
 unified_exec = true
 apply_patch_freeform = true
@@ -93,13 +89,6 @@ inherit = "all"
 include_only = ["PATH","HOME","USER"]
 exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
 
-[shell_environment_policy.set]
-NODE_REPL_TRUSTED_BROWSER_CLIENT_SHA256S = "87e84e5b4db45250b323ac54ab2f33585d867d0d13abc198e73a4e28420b657b"
-
-################################################################################
-# UI, Notifications, and Misc (tables)
-################################################################################
-
 [tui]
 #　デスクトップ通知に関する設定
 # - "agent-turn-complete": エージェントの１ターン処理が完了した際に通知
@@ -115,37 +104,6 @@ notifications = ["agent-turn-complete","approval-requested"]
 # cached returns pre-indexed results; live fetches the most recent data.
 # If you use --yolo or another full access sandbox setting, web search defaults to live.
 web_search = "live"
-
-[tui.model_availability_nux]
-"gpt-5.5" = 4
-
-[mcp_servers.computer-use]
-command = "./Codex Computer Use.app/Contents/SharedSupport/SkyComputerUseClient.app/Contents/MacOS/SkyComputerUseClient"
-args = ["mcp"]
-cwd = "."
-enabled = false
-
-[mcp_servers.node_repl]
-args = []
-command = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node_repl"
-startup_timeout_sec = 120
-
-[mcp_servers.node_repl.env]
-NODE_REPL_NATIVE_PIPE_CONNECT_TIMEOUT_MS = "1000"
-NODE_REPL_NODE_MODULE_DIRS = "/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-NODE_REPL_NODE_PATH = "/Applications/ChatGPT.app/Contents/Resources/cua_node/bin/node"
-NODE_REPL_TRUSTED_CODE_PATHS = "/Users/m-ohba/.codex:/Applications/ChatGPT.app/Contents/Resources/cua_node/lib/node_modules"
-CODEX_HOME = "/Users/m-ohba/.codex"
-BROWSER_USE_AVAILABLE_BACKENDS = "chrome,iab"
-BROWSER_USE_TINYSKY_ENABLED = "1"
-NODE_REPL_INSTRUCTIONS_USE_CASE_BROWSER = ""
-NODE_REPL_INSTRUCTIONS_USE_CASE_CHROME = ""
-NODE_REPL_INSTRUCTIONS_USE_CASE_COMPUTER_USE = ""
-BROWSER_USE_CODEX_APP_BUILD_FLAVOR = "prod"
-BROWSER_USE_CODEX_APP_VERSION = "26.915.31029"
-NODE_REPL_TRUSTED_SERVICES = '{"browser":"/Users/m-ohba/.codex/plugins/cache/openai-bundled/browser/26.915.31029/scripts/browser-service.mjs","sky":"@oai/sky/service"}'
-SKY_CUA_SERVICE_PATH = "/Users/m-ohba/.codex/computer-use/Codex Computer Use.app"
-CODEX_CLI_PATH = "/Applications/ChatGPT.app/Contents/Resources/codex"
 
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
@@ -194,14 +152,6 @@ enabled = true
 [plugins."unified-computer-use@openai-bundled"]
 enabled = true
 
-[marketplaces.openai-bundled]
-source_type = "local"
-source = "/Users/m-ohba/.codex/.tmp/bundled-marketplaces/openai-bundled"
-
-[marketplaces.openai-primary-runtime]
-source_type = "local"
-source = "/Users/m-ohba/.cache/codex-runtimes/codex-primary-runtime/plugins/openai-primary-runtime"
-
 [desktop]
 preventSleepWhileRunning = true
 keepRemoteControlAwakeWhilePluggedIn = true
@@ -216,7 +166,6 @@ open-link-in-target-preference = "external-browser"
 
 [desktop.open-in-target-preferences]
 global = "cursor"
-
 
 [desktop.appearanceDarkChromeTheme]
 accent = "#3d59a1"
