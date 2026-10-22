@@ -116,7 +116,7 @@ assert "vscode extensions has prettier"    grep -qx 'esbenp.prettier-vscode' "$R
 
 assert "CI workflow runs this test" grep -q 'test/setup_test.sh' "$REPO/.github/workflows/test.yml"
 refute "tracked files have no private names" \
-  git -C "$REPO" grep -qEi 'smartbank-inc/|factoring-core|bocal|core01\.b43|b43-core' -- . ':!test/setup_test.sh'
+  git -C "$REPO" grep --cached -qEi 'smartbank-inc/|factoring-core|bocal|core01\.b43|b43-core' -- . ':!test/setup_test.sh'
 refute ".entire is not tracked"            test -n "$(git -C "$REPO" ls-files .entire)"
 refute "claude settings has no .entire rule" grep -q '\.entire' "$REPO/claude/settings.json"
 assert "settings declares ruby-skills marketplace" \
@@ -189,7 +189,7 @@ fi
 
 # docker-desktop cask と補完ファイルが衝突する(cask が補完を提供する)
 refute "docker-completion formula is not declared (conflicts with docker-desktop cask)" pkg brew:docker-completion
-assert "docker-desktop cask is declared"        pkg brew-cask:docker-desktop
+refute "docker-desktop cask is not declared (OrbStack is the container runtime)" pkg brew-cask:docker-desktop
 
 echo "== static: 新しい Mac での初回実行で見つかった問題 =="
 for e in codesandbox-io.codesandbox-projects github.codespaces github.remotehub ics.japanese-proofreading \
@@ -254,6 +254,21 @@ done
 for id in 361285480 361304891 361309726; do
   assert "iWork (Creator Studio) mas id $id is declared" pkg mas:$id
 done
+
+echo "== static: codex/config.toml(コミットされる版)にはマシン固有・アプリ生成の項目を置かない =="
+codex_cfg() { git -C "$REPO" show :codex/config.toml; }
+refute "codex config has no absolute home paths"       bash -c "cd '$REPO' && git show :codex/config.toml | grep -q '/Users/'"
+refute "codex config has no notify command (app bundle path)" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '^notify *='"
+for sec in 'projects\.' 'marketplaces\.' 'mcp_servers\.node_repl' 'mcp_servers\.computer-use' 'tui\.model_availability_nux' 'shell_environment_policy\.set'; do
+  refute "codex config has no [$sec] section" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '^\\[$sec'"
+done
+refute "codex config has no NODE_REPL / SKY_CUA state" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE 'NODE_REPL|SKY_CUA|CODEX_CLI_PATH'"
+refute "codex config has no per-path preferences"       bash -c "cd '$REPO' && git show :codex/config.toml | grep -q 'perPath'"
+for keep in '^model *=' '^sandbox_mode *=' '^approval_policy *=' '^\\[features\\]' '^\\[shell_environment_policy\\]' '^\\[mcp_servers\\.notion\\]' '^developer_instructions *='; do
+  assert "codex config keeps $keep" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '$keep'"
+done
+python3 -c "import tomllib,subprocess,sys;tomllib.loads(subprocess.check_output(['git','-C','$REPO','show',':codex/config.toml']).decode())" >/dev/null 2>&1 \
+  && pass "codex config (committed version) is valid TOML" || fail "codex config (committed version) is valid TOML"
 
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
