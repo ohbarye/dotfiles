@@ -256,19 +256,28 @@ for id in 361285480 361304891 361309726; do
 done
 
 echo "== static: codex/config.toml(コミットされる版)にはマシン固有・アプリ生成の項目を置かない =="
-codex_cfg() { git -C "$REPO" show :codex/config.toml; }
-refute "codex config has no absolute home paths"       bash -c "cd '$REPO' && git show :codex/config.toml | grep -q '/Users/'"
-refute "codex config has no notify command (app bundle path)" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '^notify *='"
-for sec in 'projects\.' 'marketplaces\.' 'mcp_servers\.node_repl' 'mcp_servers\.computer-use' 'tui\.model_availability_nux' 'shell_environment_policy\.set'; do
-  refute "codex config has no [$sec] section" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '^\\[$sec'"
-done
-refute "codex config has no NODE_REPL / SKY_CUA state" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE 'NODE_REPL|SKY_CUA|CODEX_CLI_PATH'"
-refute "codex config has no per-path preferences"       bash -c "cd '$REPO' && git show :codex/config.toml | grep -q 'perPath'"
-for keep in '^model *=' '^sandbox_mode *=' '^approval_policy *=' '^\\[features\\]' '^\\[shell_environment_policy\\]' '^\\[mcp_servers\\.notion\\]' '^developer_instructions *='; do
-  assert "codex config keeps $keep" bash -c "cd '$REPO' && git show :codex/config.toml | grep -qE '$keep'"
-done
-python3 -c "import tomllib,subprocess,sys;tomllib.loads(subprocess.check_output(['git','-C','$REPO','show',':codex/config.toml']).decode())" >/dev/null 2>&1 \
-  && pass "codex config (committed version) is valid TOML" || fail "codex config (committed version) is valid TOML"
+# 次にコミットされる版(インデックス)を対象にする。Codex アプリが作業ツリーに書き戻す内容には左右されない
+idx_has() { git -C "$REPO" show :codex/config.toml 2>/dev/null | grep -qE -e "$1"; }
+refute "codex config has no absolute home paths"              idx_has '/Users/'
+refute "codex config has no notify command (app bundle path)" idx_has '^notify *='
+refute "codex config has no [projects.*] section"             idx_has '^\[projects\.'
+refute "codex config has no [marketplaces.*] section"         idx_has '^\[marketplaces\.'
+refute "codex config has no [mcp_servers.node_repl*] section" idx_has '^\[mcp_servers\.node_repl'
+refute "codex config has no [mcp_servers.computer-use] section" idx_has '^\[mcp_servers\.computer-use'
+refute "codex config has no [tui.model_availability_nux]"     idx_has '^\[tui\.model_availability_nux'
+refute "codex config has no [shell_environment_policy.set]"   idx_has '^\[shell_environment_policy\.set'
+refute "codex config has no NODE_REPL / SKY_CUA / CODEX_CLI_PATH state" idx_has 'NODE_REPL|SKY_CUA|CODEX_CLI_PATH'
+refute "codex config has no per-path preferences"             idx_has 'perPath'
+assert "codex config keeps model"                 idx_has '^model *='
+assert "codex config keeps sandbox_mode"          idx_has '^sandbox_mode *='
+assert "codex config keeps approval_policy"       idx_has '^approval_policy *='
+assert "codex config keeps developer_instructions" idx_has '^developer_instructions *='
+assert "codex config keeps [features]"            idx_has '^\[features\]'
+assert "codex config keeps [shell_environment_policy]" idx_has '^\[shell_environment_policy\]'
+assert "codex config keeps [mcp_servers.notion]"  idx_has '^\[mcp_servers\.notion\]'
+assert "codex config keeps [mcp_servers.aws-mcp]" idx_has '^\[mcp_servers\.aws-mcp\]'
+assert "codex config (committed version) is valid TOML" \
+  bash -c "git -C '$REPO' show :codex/config.toml | python3 -c 'import sys,tomllib;tomllib.loads(sys.stdin.read())'"
 
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
