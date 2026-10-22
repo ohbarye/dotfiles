@@ -279,6 +279,12 @@ assert "codex config keeps [mcp_servers.aws-mcp]" idx_has '^\[mcp_servers\.aws-m
 assert "codex config (committed version) is valid TOML" \
   bash -c "git -C '$REPO' show :codex/config.toml | python3 -c 'import sys,tomllib;tomllib.loads(sys.stdin.read())'"
 
+# web_search は TOML のトップレベルのキー。[tui] などのテーブルの下に書くと tui.web_search になり、効かない
+assert "codex config: web_search is a top-level key (not under a table)" \
+  bash -c "git -C '$REPO' show :codex/config.toml | python3 -c 'import sys,tomllib;d=tomllib.loads(sys.stdin.read());sys.exit(0 if d.get(\"web_search\")==\"live\" else 1)'"
+refute "codex config: no web_search nested under [tui]" \
+  bash -c "git -C '$REPO' show :codex/config.toml | python3 -c 'import sys,tomllib;d=tomllib.loads(sys.stdin.read());sys.exit(0 if \"web_search\" in d.get(\"tui\",{}) else 1)'"
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
