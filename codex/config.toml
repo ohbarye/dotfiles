@@ -71,6 +71,16 @@ personality = "pragmatic"
 # Centralized Feature Flags (preferred)
 ################################################################################
 
+################################################################################
+# Web Search
+################################################################################
+
+# Web search mode: disabled | cached | live. Default: "cached"
+# cached serves results from a web search cache (an OpenAI-maintained index).
+# cached returns pre-indexed results; live fetches the most recent data.
+# If you use --yolo or another full access sandbox setting, web search defaults to live.
+web_search = "live"
+
 [features]
 unified_exec = true
 apply_patch_freeform = true
@@ -94,16 +104,6 @@ exclude = ["AWS_*","AZURE_*","*TOKEN*","*SECRET*","*KEY*"]
 # - "agent-turn-complete": エージェントの１ターン処理が完了した際に通知
 # - "approval-requested": ユーザーの操作や承認が必要な時に通知
 notifications = ["agent-turn-complete","approval-requested"]
-
-################################################################################
-# Web Search
-################################################################################
-
-# Web search mode: disabled | cached | live. Default: "cached"
-# cached serves results from a web search cache (an OpenAI-maintained index).
-# cached returns pre-indexed results; live fetches the most recent data.
-# If you use --yolo or another full access sandbox setting, web search defaults to live.
-web_search = "live"
 
 [mcp_servers.notion]
 url = "https://mcp.notion.com/mcp"
