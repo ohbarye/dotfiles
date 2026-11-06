@@ -5,6 +5,7 @@
 
 # --- 自作(ohbarye/agent-skills) ---
 cosense-memo              ohbarye/agent-skills  skills/cosense-memo              v0.1.0
+devin-outer-loop          ohbarye/agent-skills  skills/devin-outer-loop          v0.2.0
 magi-decision-support     ohbarye/agent-skills  skills/magi-decision-support     v0.1.0
 pr-lead-time              ohbarye/agent-skills  skills/pr-lead-time              v0.1.0
 review                    ohbarye/agent-skills  skills/review                    v0.1.0
