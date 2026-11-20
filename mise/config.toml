@@ -17,7 +17,6 @@ go = { version = "1.25", os = ["macos"] }
 node = { version = "24", os = ["macos"] }
 "npm:@openai/codex" = { version = "latest", os = ["macos"] }
 "npm:@devcontainers/cli" = { version = "latest", os = ["macos"] }
-"npm:@google/gemini-cli" = { version = "latest", os = ["macos"] }
 "npm:agent-browser" = { version = "latest", os = ["macos"] }
 "pipx:aws-mfa" = { version = "latest", os = ["macos"] }
 ruby = { version = "latest", os = ["macos"] }
@@ -35,6 +34,7 @@ tflint = { version = "latest", os = ["macos"] }
 # Homebrew のコアから削除されたため brew ではなく mise で入れる(ライセンスの都合で OpenTofu も選択肢)
 terraform = { version = "latest", os = ["macos"] }
 pnpm = "11.28.6"
+antigravity-cli = "latest"
 
 [dotfiles]
 "~/.bash_profile" = { source = "~/dotfiles/.bash_profile", mode = "symlink" }

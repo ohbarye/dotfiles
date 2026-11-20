@@ -81,8 +81,9 @@
   },
   "skipDangerousModePermissionPrompt": true,
   "skipWorkflowUsageWarning": true,
+  "theme": "dark",
   "inputNeededNotifEnabled": true,
   "agentPushNotifEnabled": true,
   "skipAutoPermissionPrompt": true,
-  "theme": "dark"
+  "tui": "fullscreen"
 }
