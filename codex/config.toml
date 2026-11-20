@@ -3,8 +3,8 @@
 ################################################################################
 # Core Model Selection
 ################################################################################
-model = "gpt-6-astra"
-review_model = "gpt-5.5"
+model = "gpt-6.1-sol"
+review_model = "gpt-6.1-sol"
 model_verbosity = "medium" # 詳細な応答の冗長さ（情報量の多さ）
 
 # from https://steipete.me/posts/2025/shipping-at-inference-speed#the-model-shift
@@ -18,7 +18,7 @@ tool_output_token_limit = 25000
 # Reasoning & Verbosity (Responses API capable models)
 ################################################################################
 
-model_reasoning_effort = "low" # モデルがどれだけ「考える」かの深さ
+model_reasoning_effort = "medium" # モデルがどれだけ「考える」かの深さ
 
 ################################################################################
 # Instruction Overrides
