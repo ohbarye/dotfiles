@@ -1,3 +1,6 @@
+" === Color Scheme ===
+Plug 'altercation/vim-colors-solarized'
+
 " === Fuzzy Finder (replaces unite.vim, ctrlp, ag.vim) ===
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
