@@ -10,6 +10,7 @@ magi-decision-support     ohbarye/agent-skills  skills/magi-decision-support    
 pr-lead-time              ohbarye/agent-skills  skills/pr-lead-time              v0.1.0
 review                    ohbarye/agent-skills  skills/review                    v0.1.0
 spotify-playlist-creator  ohbarye/agent-skills  skills/spotify-playlist-creator  v0.1.0
+writing                   ohbarye/agent-skills  skills/writing                   v0.3.0
 
 # --- CLI の上流が配布している skill(CLI 側のバージョンと合わせて更新する) ---
 agent-browser  vercel-labs/agent-browser  skills/agent-browser        v0.39.1
