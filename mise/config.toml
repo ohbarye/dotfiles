@@ -13,7 +13,7 @@ sheldon = "latest"
 fzf = "latest"
 
 # macOS のみ(コンテナではプロジェクト側が用意する)
-go = { version = "1.25", os = ["macos"] }
+go = { version = "1.27", os = ["macos"] }
 node = { version = "24", os = ["macos"] }
 "npm:@openai/codex" = { version = "latest", os = ["macos"] }
 "npm:@devcontainers/cli" = { version = "latest", os = ["macos"] }
@@ -33,7 +33,7 @@ tflint = { version = "latest", os = ["macos"] }
 "pipx:poetry" = { version = "latest", os = ["macos"] }
 # Homebrew のコアから削除されたため brew ではなく mise で入れる(ライセンスの都合で OpenTofu も選択肢)
 terraform = { version = "latest", os = ["macos"] }
-pnpm = "11.28.6"
+pnpm = "12.23.0"
 antigravity-cli = "latest"
 
 [dotfiles]
