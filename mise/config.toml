@@ -63,3 +63,6 @@ antigravity-cli = "latest"
 "~/.codex/config.toml" = { source = "~/dotfiles/codex/config.toml", mode = "symlink", relative = true }
 "~/.codex/AGENTS.md" = { source = "~/dotfiles/codex/AGENTS.md", mode = "symlink", relative = true }
 "~/.codex/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }
+# antigravity CLI は保存時に settings.json を置き換えて symlink を壊すため、リンクせず管理するキーだけ反映する
+"~/.gemini/antigravity-cli/settings.json/shared" = { source = "~/dotfiles/antigravity/settings.json", merge = true }
+"~/.gemini/config/skills" = { source = "~/dotfiles/agents/skills", mode = "symlink", relative = true }

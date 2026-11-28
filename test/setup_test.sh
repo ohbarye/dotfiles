@@ -63,6 +63,12 @@ assert "claude settings link is relative (Dev Container safe)" grep -qE '^"~/.cl
 assert "codex config link is relative"   grep -qE '^"~/.codex/config.toml" = .*relative = true' "$C"
 assert "skills dir is linked for claude" grep -qE '^"~/.claude/skills" = ' "$C"
 assert "skills dir is linked for codex"  grep -qE '^"~/.codex/skills" = ' "$C"
+assert "antigravity settings are merged, not linked (the CLI replaces a symlink on save)" \
+  grep -qE '^"~/.gemini/antigravity-cli/settings.json(/[A-Za-z0-9_-]+)?" = .*merge = true' "$C"
+refute "antigravity settings.json has no symlink entry" \
+  grep -qE '^"~/.gemini/antigravity-cli/settings.json[^"]*" = .*mode = "symlink"' "$C"
+assert "skills dir is linked for antigravity"  grep -qE '^"~/.gemini/config/skills" = .*agents/skills.*relative = true' "$C"
+refute "antigravity hooks.json is not linked (Orca generates machine-specific paths)" grep -qE '^"~/.gemini/config/hooks.json"' "$C"
 assert "karabiner is managed on macOS"   grep -q 'karabiner.json' "$M"
 assert "cursor settings managed on macOS" grep -q 'Cursor/User/settings.json' "$M"
 assert "gitconfig.os is macos on macOS"  grep -q 'gitconfig.macos' "$M"
@@ -285,6 +291,20 @@ assert "codex config: web_search is a top-level key (not under a table)" \
 refute "codex config: no web_search nested under [tui]" \
   bash -c "git -C '$REPO' show :codex/config.toml | python3 -c 'import sys,tomllib;d=tomllib.loads(sys.stdin.read());sys.exit(0 if \"web_search\" in d.get(\"tui\",{}) else 1)'"
 
+echo "== static: antigravity/settings.json(コミットされる版)にはマシン固有の項目を置かない =="
+# インデックスにあればその版、まだ add していなければ作業ツリーの版を対象にする
+ag_settings() { git -C "$REPO" show :antigravity/settings.json 2>/dev/null || cat "$REPO/antigravity/settings.json" 2>/dev/null; }
+ag_has() { ag_settings | grep -qE -e "$1"; }
+ag_json() { ag_settings | python3 -c "import sys,json;d=json.load(sys.stdin);$1"; }
+assert "antigravity settings.json exists"              test -f "$REPO/antigravity/settings.json"
+assert "antigravity settings is valid JSON"            ag_json 'pass'
+refute "antigravity settings has no absolute home paths" ag_has '/Users/|/home/'
+refute "antigravity settings has no trustedWorkspaces (company repo paths)" ag_has 'trustedWorkspaces'
+assert "antigravity settings keeps colorScheme"        ag_has '"colorScheme"'
+assert "antigravity settings keeps toolPermission"     ag_has '"toolPermission"'
+assert "antigravity settings keeps permissions.allow"  ag_json 'sys.exit(0 if d["permissions"]["allow"] else 1)'
+refute "antigravity settings has no hooks key (the CLI never loads it)" ag_has '"hooks"'
+
 [ "${STATIC_ONLY:-0}" = "1" ] && { echo; echo "FAILS=$FAILS"; exit $((FAILS > 0)); }
 
 # ---------------------------------------------------------------------------
@@ -342,6 +362,9 @@ if [ -n "$REAL_MISE" ]; then
   export MISE_STATE_DIR="$TMP/mise-state" MISE_CACHE_DIR="$TMP/mise-cache" MISE_DATA_DIR="$TMP/mise-data"
   export PATH="$TMP/realbin:/usr/bin:/bin"
   echo "legacy" > "$HOME/.zshrc"                      # 通常ファイルは .bak に退避されること
+  # antigravity CLI が既に書いた settings.json: 管理するキーだけ上書きし、trustedWorkspaces は残ること
+  mkdir -p "$HOME/.gemini/antigravity-cli"
+  printf '{\n  "colorScheme": "light",\n  "trustedWorkspaces": ["/seed/ws"]\n}\n' > "$HOME/.gemini/antigravity-cli/settings.json"
   SETUP_LINKS_ONLY=1 zsh "$REPO/setup.sh" > "$TMP/real1.log" 2>&1
   assert "links-only run exits 0" test $? -eq 0
   assert ".zshrc is symlink to repo"      test "$(readlink "$HOME/.zshrc")" = "$HOME/dotfiles/.zshrc"
@@ -354,11 +377,24 @@ if [ -n "$REAL_MISE" ]; then
   assert "claude skills dir resolves"     test -e "$HOME/.claude/skills/.gitkeep"
   assert "codex skills dir resolves"      test -e "$HOME/.codex/skills/.gitkeep"
   assert "codex config resolves"          test -f "$HOME/.codex/config.toml"
+  AGS="$HOME/.gemini/antigravity-cli/settings.json"
+  assert "antigravity settings is a regular file (not a symlink)" bash -c "test -f '$AGS' && ! test -L '$AGS'"
+  assert "antigravity settings: repo key colorScheme is applied" \
+    bash -c "python3 -c 'import json,sys;sys.exit(0 if json.load(open(sys.argv[1]))[\"colorScheme\"]==\"solarized dark\" else 1)' '$AGS'"
+  assert "antigravity settings: app-written trustedWorkspaces is kept" \
+    bash -c "python3 -c 'import json,sys;sys.exit(0 if json.load(open(sys.argv[1])).get(\"trustedWorkspaces\")==[\"/seed/ws\"] else 1)' '$AGS'"
+  refute "antigravity settings: no .bak is created for the merged file" test -e "$AGS.bak"
+  assert "antigravity skills link is relative" test "$(readlink "$HOME/.gemini/config/skills")" = "../../dotfiles/agents/skills"
+  assert "antigravity skills dir resolves" test -e "$HOME/.gemini/config/skills/.gitkeep"
   assert "Code settings linked"           test "$(readlink "$HOME/Library/Application Support/Code/User/settings.json")" = "$HOME/dotfiles/editors/vscode/settings.json"
   assert "Cursor keybindings linked"      test "$(readlink "$HOME/Library/Application Support/Cursor/User/keybindings.json")" = "$HOME/dotfiles/editors/cursor/keybindings.json"
   assert "karabiner.json linked"          test "$(readlink "$HOME/.config/karabiner/karabiner.json")" = "$HOME/dotfiles/karabiner/karabiner.json"
   SETUP_LINKS_ONLY=1 zsh "$REPO/setup.sh" > "$TMP/real2.log" 2>&1
   assert "second links-only run exits 0 (idempotent)" test $? -eq 0
+  assert "antigravity settings: still a regular file after the second run" bash -c "test -f '$AGS' && ! test -L '$AGS'"
+  assert "antigravity settings: trustedWorkspaces still kept after the second run" \
+    bash -c "python3 -c 'import json,sys;sys.exit(0 if json.load(open(sys.argv[1])).get(\"trustedWorkspaces\")==[\"/seed/ws\"] else 1)' '$AGS'"
+  refute "antigravity settings: second run creates no .bak" test -e "$AGS.bak"
   refute "second run creates no extra .bak" test -e "$HOME/.zshrc.bak.bak"
   unset MISE_STATE_DIR MISE_CACHE_DIR MISE_DATA_DIR
 else

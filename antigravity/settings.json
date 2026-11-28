@@ -1,0 +1,9 @@
+{
+  "colorScheme": "solarized dark",
+  "permissions": {
+    "allow": [
+      "mcp(mcp_t3-code/*)"
+    ]
+  },
+  "toolPermission": "always-proceed"
+}

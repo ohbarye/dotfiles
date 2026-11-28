@@ -59,7 +59,7 @@ Things `setup.sh` does not automate.
 | `.zshrc` and other `.z*` | zsh (plugins in `sheldon/plugins.toml`) |
 | `.gitconfig`, `.gitconfig.{macos,linux}` | git; OS-specific settings are included through `~/.gitconfig.os` |
 | `editors/`, `karabiner/` | VS Code / Cursor / Karabiner settings and extension lists |
-| `claude/`, `codex/` | AI agent settings and commands |
+| `claude/`, `codex/`, `antigravity/` | AI agent settings and commands |
 | `test/setup_test.sh` | Regression tests |
 
 ## Day to day
@@ -78,6 +78,7 @@ $ mise bootstrap packages use brew:foo   # declare a package and install it
 
 - This repository is public. Do not put company repository names, hostnames, paths or secrets here.
 - The Codex app appends `[projects.*]` to `codex/config.toml`. Leave those hunks out when committing.
+- `~/.gemini/antigravity-cli/settings.json` is not a link, because the Antigravity CLI replaces a symlink when it saves. `mise bootstrap` sets only the keys written in `antigravity/settings.json` and keeps the rest, such as `trustedWorkspaces`. Changes made in the CLI do not flow back to this repository, so edit `antigravity/settings.json` instead. `~/.gemini/config/hooks.json` is not managed, because Orca generates it with machine-specific paths.
 - Files such as `~/.claude/settings.json` are links, so changes made by the apps show up as diffs here.
 - `mise bootstrap` is experimental and may change. Check with `--dry-run` when changing things.
 
