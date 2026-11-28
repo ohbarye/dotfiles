@@ -150,3 +150,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 
 export PATH="$HOME/.local/bin:$PATH"
 [[ -f ~/.safe-chain/scripts/init-posix.sh ]] && source ~/.safe-chain/scripts/init-posix.sh # Safe-chain Zsh initialization script
+
+export T3CODE_TELEMETRY_ENABLED=false
+export T3CODE_OTEL_SDK_DISABLED=true
+
